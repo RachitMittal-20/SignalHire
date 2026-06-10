@@ -1,6 +1,8 @@
 .venv
 .vscode
 /data
+/output
+/artifacts
 *.pyc
 __pycache__/
 submission_metadata_template.yaml
