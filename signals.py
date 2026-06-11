@@ -292,11 +292,12 @@ def _check_education_tier(candidate: dict) -> int:
     raw_tiers = []
     for e in edu_entries:
         t = e.get("tier")
-        if t is not None:
-            try:
-                raw_tiers.append(int(t))
-            except (ValueError, TypeError):
-                pass
+        if t is None:
+            continue
+        # Dataset uses strings like "tier_1".."tier_4" / "unknown".
+        m = re.search(r"\d+", str(t))
+        if m:
+            raw_tiers.append(int(m.group(0)))
     if raw_tiers:
         best = min(raw_tiers)
         if best <= 2:
