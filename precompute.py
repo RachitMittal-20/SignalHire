@@ -13,6 +13,7 @@ from config import (
     CANDIDATES_PATH,
     CHUNK_SIZE,
     EMBEDDING_BATCH_SIZE,
+    EMBEDDING_DEVICE,
     EMBEDDING_MODEL,
     JD_DOCX_PATH,
     JD_PATH,
@@ -79,8 +80,8 @@ def compute_subscores(candidate: dict) -> dict:
 
 
 def main():
-    log.info("Loading embedding model: %s", EMBEDDING_MODEL)
-    model = SentenceTransformer(EMBEDDING_MODEL)
+    log.info("Loading embedding model: %s (device: %s)", EMBEDDING_MODEL, EMBEDDING_DEVICE)
+    model = SentenceTransformer(EMBEDDING_MODEL, device=EMBEDDING_DEVICE)
 
     log.info("Extracting JD text")
     jd_text = extract_jd_text()
