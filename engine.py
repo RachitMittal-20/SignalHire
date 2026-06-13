@@ -9,7 +9,24 @@ from typing import Dict, List, Tuple
 
 import numpy as np
 
+from config import SCORE_DECIMALS, SCORE_SCALE
+
 SUBSCORE_ORDER = ["technical_fit", "career_quality", "availability_signal", "seniority_fit"]
+
+
+def scale_score(raw: float, scale: float = SCORE_SCALE) -> float:
+    """Map a raw composite (~[0, 1]) onto a 0..scale display scale.
+
+    Scaling is monotonic, so it preserves ranking order. Raw scores can dip
+    slightly below 0 (negative semantic similarity) or brush past 1, so the
+    value is clamped to keep the displayed score within [0, scale].
+    """
+    return max(0.0, min(float(raw), 1.0)) * scale
+
+
+def format_score(raw: float, scale: float = SCORE_SCALE, decimals: int = SCORE_DECIMALS) -> str:
+    """Render a raw composite as a fixed-precision x/scale string."""
+    return f"{scale_score(raw, scale):.{decimals}f}"
 
 
 def build_matrices(candidate_ids, subscores_dict) -> Tuple[np.ndarray, np.ndarray]:

@@ -16,6 +16,7 @@ from config import (
     VALIDATE_SCRIPT,
     WEIGHTS,
 )
+from engine import format_score
 from evidence import generate_reasoning
 
 
@@ -108,7 +109,10 @@ def main():
     top_indices = np.argpartition(-scores, TOP_K)[:TOP_K]
     top_k_pairs = [(float(scores[i]), str(candidate_ids[i])) for i in top_indices]
 
-    top_k_pairs.sort(key=lambda x: (-round(x[0], 3), x[1]))
+    # Sort on the emitted (rescaled, rounded) score so the CSV is provably
+    # non-increasing at output precision, with candidate_id ascending as the
+    # tie-break the validator requires for equal scores.
+    top_k_pairs.sort(key=lambda x: (-float(format_score(x[0])), x[1]))
 
     top_ids = np.array([p[1] for p in top_k_pairs], dtype=object)
 
@@ -129,7 +133,7 @@ def main():
             rank = rank_idx + 1
             cand = top_candidates[rank_idx]
             reasoning = generate_reasoning(cand or {})
-            writer.writerow([cid, rank, f"{round(score_val, 3):.3f}", reasoning])
+            writer.writerow([cid, rank, format_score(score_val), reasoning])
 
     elapsed = time.time() - t0
     print(f"Ranking complete in {elapsed:.1f}s")

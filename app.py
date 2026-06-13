@@ -20,6 +20,7 @@ from config import (
     ARTIFACTS_DIR,
     CANDIDATES_PATH,
     EMBEDDING_MODEL,
+    SCORE_SCALE,
     TOP_K,
     WEIGHTS,
 )
@@ -27,7 +28,9 @@ from engine import (
     SUBSCORE_ORDER,
     build_matrices,
     compute_scores,
+    format_score,
     mmr_rerank,
+    scale_score,
     stability_analysis,
     top_k_indices,
 )
@@ -218,6 +221,12 @@ def _reset_weights():
         st.session_state[f"w_{name}"] = float(WEIGHTS[name])
 
 
+def _load_more(step: int):
+    # Reveal `step` more shortlist rows. Runs as an on_click callback so the
+    # new count is in place before the shortlist re-renders this run.
+    st.session_state["shortlist_n"] = st.session_state.get("shortlist_n", 10) + step
+
+
 # ------------------------------------------------------------------- sidebar
 
 def render_sidebar(artifacts_ready: bool, n_candidates: int, n_disqualified: int) -> dict:
@@ -358,11 +367,17 @@ def render_shortlist(artifacts, top_idx, scores, semantic_sim, controls, stabili
     top_ids = [str(ids[i]) for i in top_idx]
     candidates_by_id = cached_candidates(tuple(top_ids))
 
+    total = len(top_idx)
+    page = 10
+    if "shortlist_n" not in st.session_state:
+        st.session_state["shortlist_n"] = page
+    show_n = min(st.session_state["shortlist_n"], total)
+
     header_l, header_r = st.columns([3, 1])
     with header_l:
-        st.subheader(f"Top {len(top_idx)} candidates")
+        st.subheader(f"Top {total} candidates")
     with header_r:
-        show_n = st.selectbox("Show", [25, 50, 100], index=0, label_visibility="collapsed")
+        st.caption(f"Showing {show_n} of {total}")
 
     for rank_pos, i in enumerate(top_idx[:show_n]):
         rank = rank_pos + 1
@@ -377,7 +392,7 @@ def render_shortlist(artifacts, top_idx, scores, semantic_sim, controls, stabili
 
         title_line = candidate_display_name(cand, rank, controls["anonymized"])
         with st.expander(
-            f"#{rank}  ·  {title_line}  ·  score {scores[i]:.3f}",
+            f"#{rank}  ·  {title_line}  ·  score {format_score(scores[i])}/{SCORE_SCALE:g}",
             expanded=(rank <= 3),
         ):
             col1, col2 = st.columns([1.1, 1.6])
@@ -420,6 +435,18 @@ def render_shortlist(artifacts, top_idx, scores, semantic_sim, controls, stabili
             render_evidence(ev)
             st.caption(f"*{generate_reasoning(cand, ev)}*")
 
+    if show_n < total:
+        remaining = total - show_n
+        step = min(page, remaining)
+        st.button(
+            f"➕ Load {step} more  ·  {remaining} of {total} hidden",
+            width="stretch",
+            on_click=_load_more,
+            args=(step,),
+        )
+    elif total > page:
+        st.caption(f"All {total} candidates shown.")
+
 
 # -------------------------------------------------------------- insights tab
 
@@ -436,13 +463,14 @@ def render_insights(artifacts, top_idx, scores):
 
     st.subheader("Score landscape")
     pool_n = min(5000, len(scores))
-    top_pool = np.sort(scores)[-pool_n:]
-    cutoff = scores[top_idx].min()
+    top_pool = np.array([scale_score(s) for s in np.sort(scores)[-pool_n:]])
+    cutoff = scale_score(scores[top_idx].min())
     fig = go.Figure(go.Histogram(x=top_pool, nbinsx=60, marker_color=ACCENT, opacity=0.85))
     fig.add_vline(x=float(cutoff), line_dash="dash", line_color=RED,
                   annotation_text="top-100 cutoff", annotation_font_color=RED)
     fig.update_layout(
-        height=300, xaxis_title="Composite score", yaxis_title=f"Count (top {pool_n:,})",
+        height=300, xaxis_title=f"Composite score (x/{SCORE_SCALE:g})",
+        yaxis_title=f"Count (top {pool_n:,})",
         **PLOT_LAYOUT,
     )
     st.plotly_chart(fig, width="stretch")
@@ -600,7 +628,7 @@ def render_compare(artifacts, top_idx, scores, semantic_sim, anonymized: bool):
             continue
         i = top_ids.index(cid)
         with col:
-            st.markdown(f"**#{i + 1} · score {scores[top_idx[i]]:.3f}**")
+            st.markdown(f"**#{i + 1} · score {format_score(scores[top_idx[i]])}/{SCORE_SCALE:g}**")
             ev = collect_evidence(cand)
             st.caption(generate_reasoning(cand, ev))
             missing = ", ".join(m["criterion"] for m in ev["missing_must_haves"]) or "none"
@@ -613,11 +641,17 @@ def build_submission_csv(top_idx, scores, ids, candidates_by_id) -> str:
     buf = io.StringIO()
     writer = csv.writer(buf)
     writer.writerow(["candidate_id", "rank", "score", "reasoning"])
-    for rank_pos, i in enumerate(top_idx):
-        cid = str(ids[i])
+    # Sort on the emitted (rescaled, rounded) score so the CSV is provably
+    # non-increasing at output precision, with candidate_id ascending as the
+    # tie-break the validator requires for equal scores.
+    rows = sorted(
+        ((str(ids[i]), float(scores[i])) for i in top_idx),
+        key=lambda r: (-float(format_score(r[1])), r[0]),
+    )
+    for rank_pos, (cid, raw) in enumerate(rows):
         cand = candidates_by_id.get(cid)
         writer.writerow(
-            [cid, rank_pos + 1, f"{round(float(scores[i]), 3):.3f}", generate_reasoning(cand or {})]
+            [cid, rank_pos + 1, format_score(raw), generate_reasoning(cand or {})]
         )
     return buf.getvalue()
 
@@ -637,7 +671,7 @@ def build_outreach_pack(top_idx, scores, ids, candidates_by_id, n: int = 10) -> 
         name = profile.get("anonymized_name", cid)
         notice = signals.get("notice_period_days", 90) or 90
         lines += [
-            f"## #{rank_pos + 1} — {name} ({cid}) · score {scores[i]:.3f}",
+            f"## #{rank_pos + 1} — {name} ({cid}) · score {format_score(scores[i])}/{SCORE_SCALE:g}",
             "",
             f"*{generate_reasoning(cand, ev)}*",
             "",
@@ -671,7 +705,7 @@ def render_export(artifacts, top_idx, scores, weights):
             mime="text/csv",
             width="stretch",
         )
-        st.caption("Challenge-format CSV (id, rank, score, evidence-based reasoning).")
+        st.caption(f"Top-100 CSV (id, rank, score out of {SCORE_SCALE:g}, evidence-based reasoning).")
     with col2:
         st.download_button(
             "✉️ Outreach pack (top 10)",
@@ -737,8 +771,8 @@ def main():
     k1, k2, k3, k4, k5 = st.columns(5)
     k1.metric("Pool ranked", f"{n:,}", help="Candidates scored on this rerun")
     k2.metric("Re-rank time", f"{rank_ms:.0f} ms", help="Full 100K re-score on this interaction")
-    k3.metric("Top score", f"{scores[top_idx[0]]:.3f}")
-    k4.metric("Top-100 cutoff", f"{scores[top_idx].min():.3f}")
+    k3.metric("Top score", f"{format_score(scores[top_idx[0]])}/{SCORE_SCALE:g}")
+    k4.metric("Top-100 cutoff", f"{format_score(scores[top_idx].min())}/{SCORE_SCALE:g}")
     k5.metric(
         "Shortlist stability",
         f"{avg_stability:.0%}",

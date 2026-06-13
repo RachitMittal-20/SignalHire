@@ -34,6 +34,12 @@ PROFILE_BLOB_MAX_CHARS = 1024
 TOP_K = 100
 SEED = 42
 
+# Composite scores are computed in a ~[0, 1] range. For display and CSV
+# export they are rescaled onto a 0..SCORE_SCALE scale (set to 10 -> "x/10",
+# set to 100 -> "x/100"). SCORE_DECIMALS controls the emitted precision.
+SCORE_SCALE = 10
+SCORE_DECIMALS = 2
+
 WEIGHTS = {
     "technical_fit": 0.35,
     "career_quality": 0.25,
