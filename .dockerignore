@@ -1,0 +1,11 @@
+.git
+.gitignore
+.venv
+venv
+site
+__pycache__
+*.pyc
+.DS_Store
+artifacts
+output
+data
