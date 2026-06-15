@@ -1,0 +1,1088 @@
+<!--
+  ---------------------------------------------------------------
+  docmd : the zero-config documentation engine.
+  @website https://docmd.io
+  [docmd-source] - Please do not remove this header.
+  ---------------------------------------------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="generator" content="docmd v0.5.x">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+    <style>
+      html {
+        visibility: hidden;
+      }
+    </style>
+    
+    <script>
+      var root = "../../";
+      if (root && !root.endsWith('/')) root += '/';
+      if (root === '') root = './';
+      window.DOCMD_ROOT = root;
+
+      var siteRoot = "../../";
+      if (siteRoot && !siteRoot.endsWith('/')) siteRoot += '/';
+      if (siteRoot === '') siteRoot = './';
+      window.DOCMD_SITE_ROOT = siteRoot;
+
+      window.DOCMD_APPEARANCE = "system";
+      window.DOCMD_VERSION_ROOT = "/";
+      window.DOCMD_BASE = "/";
+      window.DOCMD_LOCALE = "";
+      window.DOCMD_DEFAULT_LOCALE = "";
+    </script>
+    <title>
+      UI/UX Design Document : SignalHire
+    </title>
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mqcpwj52">
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mqcpwj52" id="hljs-light" >
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mqcpwj52" id="hljs-dark" disabled>
+    
+    
+<meta name="description" content="">
+<link rel="canonical" href="/Documentation/UIUX_DESIGN/">
+<meta property="og:title" content="UI/UX Design Document - SignalHire">
+<meta property="og:description" content="">
+<meta property="og:url" content="/Documentation/UIUX_DESIGN/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UI/UX Design Document - SignalHire">
+<meta name="twitter:description" content="">
+
+
+
+<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mqcpwj52" >
+<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mqcpwj52" >
+
+    
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+  </head>
+  <body
+    class="sidebar-collapsible"
+    data-default-collapsed="false"
+    data-copy-code-enabled="false" data-spa-enabled="true" data-source-file="Documentation/UIUX_DESIGN.md">
+
+    <a href="#main-content" class="skip-link">skipToContent</a>
+
+    
+    
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          
+            <h1><a href="../../">
+                SignalHire
+              </a></h1>
+          
+          <span class="mobile-view sidebar-menu-button float-right">
+            
+<svg class="lucide-icon icon-menu " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-menu"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+
+          </span>
+        </div>
+        <div class="sidebar-top-group">
+          
+          
+          
+          
+        </div>
+        
+
+<nav class="sidebar-nav" aria-label="mainNavigation">
+  <ul>
+    
+      <li class="" >
+      
+        <a href="../../" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 SignalHire — AI-Powered Candidate Ranking
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../GOOD_FIRST_ISSUES/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 Good First Issues
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active-parent collapsible expanded nav-group"  aria-expanded="true" >
+      
+        <span class="nav-label nav-group">
+          
+          <span class="nav-item-title">
+            Documentation
+          </span>
+          
+            <span class="collapse-icon-wrapper">
+<svg class="lucide-icon icon-chevron-right collapse-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+          
+        </span>
+        
+
+        
+          <ul class="submenu">
+            
+      <li class="" >
+      
+        <a href="../../Documentation/APP_FLOW/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            App Flow Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/BACKEND_SCHEMA/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Backend Schema Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/IMPLEMENTATION_PLAN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Implementation Plan
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/RecruiterIQ_PRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            RecruiterIQ — Product Requirements Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/TRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Technical Requirements Document (TRD)
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active" >
+      
+        <a href="../../Documentation/UIUX_DESIGN/" class="active "
+          >
+          
+          <span class="nav-item-title">
+            UI/UX Design Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+          </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+        <div class="sidebar-bottom-group mt-auto">
+          
+          
+          
+          
+        </div>
+      </aside>
+      
+      <div class="main-content-wrapper">
+        
+        
+          <header class="page-header">
+            <div class="header-left">
+              
+                <button id="sidebar-toggle-button" class="sidebar-toggle-button"
+                  aria-label="toggleSidebar">
+                  
+<svg class="lucide-icon icon-chevron-left " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+
+                </button>
+              
+              <div class="header-titles-wrapper">
+                <span class="header-title">
+                  UI/UX Design Document
+                </span>
+              </div>
+            </div>
+            <div class="header-right">
+              
+                
+
+
+<div class="docmd-options-menu">
+    
+    <button class="docmd-search-trigger" aria-label="search">
+        
+<svg class="lucide-icon icon-search " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-search"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" />
+</svg>
+
+        <span class="search-label">search</span>
+        <span class="search-keys"><kbd class="docmd-kbd">⌘</kbd><kbd class="docmd-kbd">K</kbd></span>
+    </button>
+    
+
+    
+
+    
+
+    
+    <button class="theme-toggle-button" aria-label="toggleTheme">
+        
+<svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-sun"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg>
+ 
+<svg class="lucide-icon icon-moon icon-moon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-moon"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+</svg>
+
+    </button>
+    
+
+    
+</div>
+
+              
+            </div>
+          </header>
+        
+        <div class="content-theme-cover">
+          <main class="content-area" id="main-content">
+            <div class="content-layout">
+              <div class="main-content">
+                <div class="docmd-breadcrumbs-row">
+                  <div id="docmd-raw-markdown" data-content="%23%20UI%2FUX%20Design%20Document%0A**RecruiterIQ%20%E2%80%94%20Demo%20Sandbox%20Interface**%0A%0A%7C%20Field%20%7C%20Value%20%7C%0A%7C---%7C---%7C%0A%7C%20Interface%20%7C%20Streamlit%20app%20(HuggingFace%20Spaces%20deployment)%20%7C%0A%7C%20Audience%20%7C%20Hackathon%20judges%20%2B%20technical%20reviewers%20%7C%0A%7C%20Primary%20job%20%7C%20Show%20the%20ranking%20system%20working%2C%20explain%20every%20score%20%7C%0A%7C%20Platform%20%7C%20Web%20browser%20(desktop%20primary)%2C%20CPU%20backend%20%7C%0A%0A---%0A%0A%23%23%201.%20Design%20Principles%0A%0A**Signal%20over%20decoration.**%20Judges%20are%20engineers.%20Every%20visual%20element%20must%20carry%20information%20%E2%80%94%20no%20decorative%20gradients%2C%20no%20hero%20banners.%20The%20interface%20is%20a%20scoring%20dashboard%2C%20not%20a%20marketing%20page.%0A%0A**Explainability%20is%20the%20product.**%20The%20ranking%20is%20only%20as%20trustworthy%20as%20its%20explanation.%20Score%20breakdown%20bars%20per%20candidate%20must%20be%20more%20prominent%20than%20the%20composite%20score.%0A%0A**Speed%20of%20comprehension.**%20Judge%20scans%20top-10%20cards%20in%20under%2030%20seconds.%20Rank%20%2B%20name%20%2B%20headline%20%2B%20top%20reason%20%3D%20one%20glance.%20Deeper%20breakdown%20%3D%20one%20click%2Fexpand.%0A%0A---%0A%0A%23%23%202.%20Color%20%26%20Typography%0A%0A%23%23%23%20Palette%0A%60%60%60%0ABackground%3A%20%20%20%20%230F1117%20%20%20(Streamlit%20dark%20default)%0ASurface%3A%20%20%20%20%20%20%20%231A1D27%20%20%20(cards%2C%20panels)%0ASurface-alt%3A%20%20%20%23232636%20%20%20(alternate%20rows%2C%20inputs)%0AAccent-blue%3A%20%20%20%234F8EF7%20%20%20(primary%20CTA%2C%20rank%20badges%2C%20links)%0AAccent-green%3A%20%20%233ECF8E%20%20%20(availability%20signals%2C%20positive%20indicators)%0AAccent-amber%3A%20%20%23F59E0B%20%20%20(warnings%2C%20medium%20confidence)%0AAccent-red%3A%20%20%20%20%23EF4444%20%20%20(disqualifiers%2C%20low%20scores%2C%20honeypot%20flags)%0AText-primary%3A%20%20%23F1F5F9%0AText-muted%3A%20%20%20%20%2394A3B8%0ABorder%3A%20%20%20%20%20%20%20%20%232D3148%0A%60%60%60%0A%0A%23%23%23%20Type%0A-%20**Rank%20badge%20%2B%20score**%3A%20%60font-weight%3A%20800%2C%20font-size%3A%202rem%2C%20font-family%3A%20monospace%60%0A-%20**Candidate%20name%2Ftitle**%3A%20%60font-weight%3A%20600%2C%20font-size%3A%201.1rem%60%0A-%20**Reasoning%20text**%3A%20%60font-size%3A%200.9rem%2C%20color%3A%20text-muted%60%0A-%20**Score%20labels**%3A%20%60font-size%3A%200.75rem%2C%20uppercase%2C%20letter-spacing%3A%200.08em%60%0A%0A---%0A%0A%23%23%203.%20App%20Structure%20(Page%20Map)%0A%0A%60%60%60%0ARecruiterIQ%0A%E2%94%9C%E2%94%80%E2%94%80%20Sidebar%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20Mode%20toggle%3A%20%5BFull%20Pipeline%20%7C%20Demo%20Mode%5D%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20JD%20input%3A%20text%20area%20or%20file%20upload%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20Candidate%20input%3A%20JSON%20paste%20or%20file%20upload%20(demo%20mode)%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20Run%20button%0A%E2%94%82%20%20%20%E2%94%94%E2%94%80%E2%94%80%20System%20status%20(artifacts%20loaded%2C%20model%20ready)%0A%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%20Main%20Area%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20%5BTab%201%5D%20Ranked%20Shortlist%20%20%20%20%20%E2%86%90%20default%20view%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20%5BTab%202%5D%20Score%20Explorer%20%20%20%20%20%20%20%20%E2%86%90%20signal%20breakdown%20chart%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20%5BTab%203%5D%20Methodology%20%20%20%20%20%20%20%20%20%20%20%E2%86%90%20weights%2C%20formula%2C%20decisions%0A%E2%94%82%20%20%20%E2%94%94%E2%94%80%E2%94%80%20%5BTab%204%5D%20Disqualified%20%20%20%20%20%20%20%20%20%20%E2%86%90%20audit%20log%0A%60%60%60%0A%0A---%0A%0A%23%23%204.%20Screen%20Designs%0A%0A%23%23%23%204.1%20Ranked%20Shortlist%20Tab%0A%0A%60%60%60%0A%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%E2%94%82%20%20%F0%9F%8F%86%20%20Top%20100%20Candidates%20%20%C2%B7%20%20Ranked%20for%3A%20Senior%20AI%20Engineer%20%20%E2%94%82%0A%E2%94%82%20%20Showing%201%E2%80%9310%20of%20100%20%20%5B%E2%96%BC%20Filter%20by%20confidence%5D%20%20%5B%E2%AC%87%20Export%5D%20%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%A4%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%231%20%20%20%20%20%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%20%2092.4%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%20%20%20%20%20%20%20Candidate%3A%20CAND_0042871%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%20%20%20%20%20%20%20Senior%20ML%20Engineer%20%C2%B7%20Bangalore%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%20%20%20%20%20%20%207yr%20%C2%B7%20Swiggy%20%E2%86%92%20Flipkart%20%C2%B7%20open%20to%20work%20%E2%9C%93%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20Technical%20%20%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%91%20%2091%25%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20Career%20%20%20%20%20%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%91%E2%96%91%E2%96%91%20%2088%25%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20Available%20%20%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%20%2096%25%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20Seniority%20%20%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%91%E2%96%91%E2%96%91%E2%96%91%20%2082%25%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20Semantic%20%20%20%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%93%E2%96%91%E2%96%91%E2%96%91%20%2087%25%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%227yr%20ML%20engineer%20with%20production%20FAISS%20%2B%20Qdrant%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20experience%20at%20Swiggy%3B%20actively%20looking%2C%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20response%20rate%2094%25%2C%20notice%2030d.%22%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B%E2%96%BC%20Expand%5D%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%232%20%20%20%20%20%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%88%E2%96%91%E2%96%91%20%2089.1%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20...%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%20%20%20%E2%94%82%0A%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%60%60%60%0A%0A**Expanded%20card%20state**%20(on%20click)%3A%0A%60%60%60%0A%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%E2%94%82%20%20%231%20%20CAND_0042871%20%20%C2%B7%20%20Composite%3A%2092.4%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%A4%0A%E2%94%82%20%20CAREER%20HISTORY%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%202023%E2%80%93now%20%20%20Senior%20ML%20Engineer%20%C2%B7%20Swiggy%20(Series%20D)%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%202019%E2%80%932023%20%20ML%20Engineer%20%C2%B7%20Flipkart%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%202017%E2%80%932019%20%20Data%20Scientist%20%C2%B7%20Mu%20Sigma%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20TOP%20SKILLS%20(verified)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%97%8F%20Python%20%5Bexpert%5D%20%5Bplatform%20score%3A%2088%5D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%97%8F%20Sentence-Transformers%20%5Badvanced%5D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%97%8F%20Qdrant%20%5Badvanced%5D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%97%8F%20FAISS%20%5Bintermediate%5D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20BEHAVIORAL%20SIGNALS%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Last%20active%3A%203%20days%20ago%20%20%20%20%20%20Response%20rate%3A%2094%25%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Open%20to%20work%3A%20Yes%20%20%20%20%20%20%20%20%20%20%20%20Notice%3A%2030%20days%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20GitHub%20score%3A%2072%20%20%20%20%20%20%20%20%20%20%20%20%20Interview%20completion%3A%20100%25%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20RAW%20SCORE%20BREAKDOWN%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Technical%20Fit%20%20%20%20%C3%97%200.35%20%3D%20%200.91%20%C3%97%200.35%20%3D%200.319%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Career%20Quality%20%20%20%C3%97%200.25%20%3D%20%200.88%20%C3%97%200.25%20%3D%200.220%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Availability%20%20%20%20%20%C3%97%200.20%20%3D%20%200.96%20%C3%97%200.20%20%3D%200.192%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Seniority%20Fit%20%20%20%20%C3%97%200.12%20%3D%20%200.82%20%C3%97%200.12%20%3D%200.098%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Semantic%20Sim%20%20%20%20%20%C3%97%200.08%20%3D%20%200.87%20%C3%97%200.08%20%3D%200.070%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20COMPOSITE%20SCORE%20%20%20%20%20%20%20%20%20%20%20%20%20%3D%20%20%20%20%20%20%20%200.899%20%E2%86%92%2089.9%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%60%60%60%0A%0A---%0A%0A%23%23%23%204.2%20Score%20Explorer%20Tab%0A%0A%60%60%60%0A%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%E2%94%82%20%20Score%20Distribution%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20Composite%20Score%20Histogram%20(top%201000)%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20Bar%20chart%3A%20x%3Dscore%20bucket%2C%20y%3Dcount%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20Highlight%3A%20top%20100%20in%20accent-blue%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20Signal%20Correlation%20Scatter%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20x%20%3D%20Technical%20Fit%2C%20y%20%3D%20Career%20Quality%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20color%20%3D%20Availability%20(green%E2%86%92red)%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20size%20%3D%20Composite%20score%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Weight%20Sensitivity%20Slider%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Technical%20%20%E2%94%80%E2%94%80%E2%97%8F%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20%200.35%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Career%20%20%20%20%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%97%8F%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20%200.25%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Available%20%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%97%8F%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20%200.20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%5BRecalculate%20ranking%5D%20%20%E2%86%90%20shows%20how%20top-10%20shifts%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%60%60%60%0A%0A---%0A%0A%23%23%23%204.3%20Methodology%20Tab%0A%0A%60%60%60%0A%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%E2%94%82%20%20How%20RecruiterIQ%20Ranks%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%A4%0A%E2%94%82%20%20FORMULA%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20S%20%3D%200.35%C2%B7Tech%20%2B%200.25%C2%B7Career%20%2B%200.20%C2%B7Avail%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%20%20%20%20%2B%200.12%C2%B7Seniority%20%2B%200.08%C2%B7Semantic%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20PIPELINE%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%5BIngest%20100k%5D%20%E2%86%92%20%5BDisqualify%5D%20%E2%86%92%20%5BLoad%20Artifacts%5D%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%E2%86%92%20%5BScore%5D%20%E2%86%92%20%5BRank%5D%20%E2%86%92%20%5BGenerate%20Reasoning%5D%20%E2%86%92%20%5BCSV%5D%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20DISQUALIFIERS%20(5%20hard%20rules)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%9C%97%20All-consulting%20career%20(no%20product%20company)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%9C%97%20Honeypot%20(impossible%20experience%20timeline)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%9C%97%20Ghost%20profile%20(completeness%20%3C%205%2C%20no%20verified%20contact)%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%9C%97%20Pure%20research%20(no%20deployment%20evidence)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%9C%97%20No-code%20recent%20(title%20%2B%20activity%20signals)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%5BView%20full%20methodology%20doc%20%E2%86%97%5D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%60%60%60%0A%0A---%0A%0A%23%23%23%204.4%20Disqualified%20Tab%0A%0A%60%60%60%0A%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%E2%94%82%20%20Disqualified%20Candidates%20Audit%20Log%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Total%20disqualified%3A%201%2C842%20%20%C2%B7%20%20Honeypots%20detected%3A%2078%20%20%20%20%20%20%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%A4%0A%E2%94%82%20%20candidate_id%20%20%20%20reason%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20disqualify_type%20%20%20%20%E2%94%82%0A%E2%94%82%20%20CAND_0000041%20%20%20%20YoE%20%3E%20career%20timeline%20%20%20HONEYPOT%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20CAND_0002197%20%20%20%20All%20consulting%20career%20%20%20HARD_PENALTY%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20CAND_0003841%20%20%20%20Ghost%20profile%20%20%20%20%20%20%20%20%20%20%20HONEYPOT%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20...%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%5B%E2%AC%87%20Export%20audit%20log%5D%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%60%60%60%0A%0A---%0A%0A%23%23%205.%20Sidebar%20Design%0A%0A%60%60%60%0A%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%E2%94%82%20%20RecruiterIQ%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Mode%3A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%97%8F%20Full%20Pipeline%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%97%8B%20Demo%20(sample%2010)%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20Job%20Description%3A%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%5BUpload%20.docx%2F.txt%5D%20%E2%94%82%0A%E2%94%82%20%20or%20paste%20text%20%E2%96%BC%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%5B%E2%96%B6%20Run%20Ranking%5D%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20System%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%9C%93%20Model%20loaded%20%20%20%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%9C%93%20Artifacts%20ready%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%9C%93%20100k%20candidates%20%20%20%E2%94%82%0A%E2%94%82%20%20%E2%9C%97%20JD%20not%20loaded%20%20%20%20%20%E2%94%82%0A%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%60%60%60%0A%0A---%0A%0A%23%23%206.%20States%20%26%20Error%20Handling%0A%0A%7C%20State%20%7C%20Display%20%7C%0A%7C---%7C---%7C%0A%7C%20No%20JD%20loaded%20%7C%20Amber%20banner%3A%20%22Load%20a%20job%20description%20to%20begin%20ranking%22%20%7C%0A%7C%20Artifacts%20missing%20%7C%20Red%20banner%3A%20%22Run%20precompute.py%20first%20%E2%80%94%20embeddings%20not%20found%22%20%7C%0A%7C%20Running%20%7C%20Spinner%20%2B%20progress%20bar%3A%20%22Scoring%20candidates%E2%80%A6%2047%2C231%20%2F%20100%2C000%22%20%7C%0A%7C%20Done%20%7C%20Green%20banner%3A%20%22Top%20100%20ranked%20in%204.2%20seconds%22%20%7C%0A%7C%20Validator%20error%20%7C%20Red%20banner%20with%20exact%20error%20string%20from%20validate_submission.py%20%7C%0A%7C%20Honeypot%20limit%20exceeded%20%7C%20Red%20alert%3A%20%22WARNING%3A%20%3E10%20honeypots%20detected%20in%20top%20100%20%E2%80%94%20do%20not%20submit%22%20%7C%0A%0A---%0A%0A%23%23%207.%20Demo%20Mode%20(for%20judges%20without%20full%20dataset)%0A%0A-%20Load%20%60sample_candidates.json%60%20(10%20candidates%20provided)%0A-%20Accept%20JD%20paste%20in%20sidebar%0A-%20Show%20score%20breakdown%20for%20all%2010%0A-%20Label%20clearly%3A%20%22Demo%20Mode%20%E2%80%94%2010%20candidates%22%0A-%20Ranking%20logic%20identical%20to%20full%20pipeline%0A%0A---%0A%0A*RecruiterIQ%20UI%2FUX%20Design%20v1.0%20%C2%B7%202025*%0A" style="display: none;"></div>
+                  
+                    <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
+                      <ol>
+                        
+                        
+                          <li class="breadcrumb-item " >
+                            
+                              <span>Documentation</span>
+                            
+                            
+                              <span class="breadcrumb-separator">
+<svg class="lucide-icon icon-chevron-right " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+                            
+                          </li>
+                        
+                          <li class="breadcrumb-item active" aria-current=&quot;page&quot;>
+                            
+                              <span>UI/UX Design Document</span>
+                            
+                            
+                          </li>
+                        
+                      </ol>
+                    </nav>
+                  
+
+                  
+                    <div class="docmd-copy-widgets">
+                      
+                        <button class="docmd-copy-btn docmd-copy-raw-btn" data-copied="copiedToClipboard" title="copyMarkdown" aria-label="copyMarkdown">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-copy " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-copy"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+</svg>
+</span>
+                        </button>
+                      
+                      
+                        <button class="docmd-copy-btn docmd-copy-context-btn" data-copied="copiedToClipboard" title="copyContext">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-message-square " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-message-square"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+</svg>
+</span>
+                          <span class="docmd-btn-text">copyContext</span>
+                        </button>
+                      
+                    </div>
+                  
+                </div>
+                
+                <h1 id="uiux-design-document" class="docmd-heading"><a href="#uiux-design-document" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>UI/UX Design Document</h1>
+<p><strong>RecruiterIQ — Demo Sandbox Interface</strong></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interface</td>
+<td>Streamlit app (HuggingFace Spaces deployment)</td>
+</tr>
+<tr>
+<td>Audience</td>
+<td>Hackathon judges + technical reviewers</td>
+</tr>
+<tr>
+<td>Primary job</td>
+<td>Show the ranking system working, explain every score</td>
+</tr>
+<tr>
+<td>Platform</td>
+<td>Web browser (desktop primary), CPU backend</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="uiux-design-document-1-design-principles" class="docmd-heading"><a href="#uiux-design-document-1-design-principles" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>1. Design Principles</h2>
+<p><strong>Signal over decoration.</strong> Judges are engineers. Every visual element must carry information — no decorative gradients, no hero banners. The interface is a scoring dashboard, not a marketing page.</p>
+<p><strong>Explainability is the product.</strong> The ranking is only as trustworthy as its explanation. Score breakdown bars per candidate must be more prominent than the composite score.</p>
+<p><strong>Speed of comprehension.</strong> Judge scans top-10 cards in under 30 seconds. Rank + name + headline + top reason = one glance. Deeper breakdown = one click/expand.</p>
+<hr>
+<h2 id="uiux-design-document-2-color-typography" class="docmd-heading"><a href="#uiux-design-document-2-color-typography" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>2. Color &amp; Typography</h2>
+<h3 id="uiux-design-document-2-color-typography-palette" class="docmd-heading"><a href="#uiux-design-document-2-color-typography-palette" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Palette</h3>
+<pre class="hljs"><code>Background<span class="hljs-punctuation">:</span>    <span class="hljs-comment">#0F1117   (Streamlit dark default)</span>
+Surface<span class="hljs-punctuation">:</span>       <span class="hljs-comment">#1A1D27   (cards, panels)</span>
+Surface<span class="hljs-punctuation">-</span>alt<span class="hljs-punctuation">:</span>   <span class="hljs-comment">#232636   (alternate rows, inputs)</span>
+Accent<span class="hljs-punctuation">-</span>blue<span class="hljs-punctuation">:</span>   <span class="hljs-comment">#4F8EF7   (primary CTA, rank badges, links)</span>
+Accent<span class="hljs-punctuation">-</span>green<span class="hljs-punctuation">:</span>  <span class="hljs-comment">#3ECF8E   (availability signals, positive indicators)</span>
+Accent<span class="hljs-punctuation">-</span>amber<span class="hljs-punctuation">:</span>  <span class="hljs-comment">#F59E0B   (warnings, medium confidence)</span>
+Accent<span class="hljs-punctuation">-</span>red<span class="hljs-punctuation">:</span>    <span class="hljs-comment">#EF4444   (disqualifiers, low scores, honeypot flags)</span>
+Text<span class="hljs-punctuation">-</span>primary<span class="hljs-punctuation">:</span>  <span class="hljs-comment">#F1F5F9</span>
+Text<span class="hljs-punctuation">-</span>muted<span class="hljs-punctuation">:</span>    <span class="hljs-comment">#94A3B8</span>
+Border<span class="hljs-punctuation">:</span>        <span class="hljs-comment">#2D3148</span>
+</code></pre>
+<h3 id="uiux-design-document-2-color-typography-type" class="docmd-heading"><a href="#uiux-design-document-2-color-typography-type" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Type</h3>
+<ul>
+<li><strong>Rank badge + score</strong>: <code>font-weight: 800, font-size: 2rem, font-family: monospace</code></li>
+<li><strong>Candidate name/title</strong>: <code>font-weight: 600, font-size: 1.1rem</code></li>
+<li><strong>Reasoning text</strong>: <code>font-size: 0.9rem, color: text-muted</code></li>
+<li><strong>Score labels</strong>: <code>font-size: 0.75rem, uppercase, letter-spacing: 0.08em</code></li>
+</ul>
+<hr>
+<h2 id="uiux-design-document-3-app-structure-page-map" class="docmd-heading"><a href="#uiux-design-document-3-app-structure-page-map" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3. App Structure (Page Map)</h2>
+<pre class="hljs"><code>RecruiterIQ
+├── Sidebar
+│   ├── Mode toggle<span class="hljs-punctuation">:</span> [Full Pipeline <span class="hljs-punctuation">|</span> Demo Mode]
+│   ├── JD input<span class="hljs-punctuation">:</span> text area or file upload
+│   ├── Candidate input<span class="hljs-punctuation">:</span> JSON paste or file <span class="hljs-title function_">upload</span> (demo mode)
+│   ├── Run button
+│   └── System <span class="hljs-title function_">status</span> (artifacts loaded, model ready)
+│
+├── Main Area
+│   ├── [Tab <span class="hljs-number">1</span>] Ranked Shortlist     ← <span class="hljs-keyword">default</span> view
+│   ├── [Tab <span class="hljs-number">2</span>] Score Explorer        ← signal breakdown chart
+│   ├── [Tab <span class="hljs-number">3</span>] Methodology           ← weights, formula, decisions
+│   └── [Tab <span class="hljs-number">4</span>] Disqualified          ← audit log
+</code></pre>
+<hr>
+<h2 id="uiux-design-document-4-screen-designs" class="docmd-heading"><a href="#uiux-design-document-4-screen-designs" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4. Screen Designs</h2>
+<h3 id="uiux-design-document-4-screen-designs-41-ranked-shortlist-tab" class="docmd-heading"><a href="#uiux-design-document-4-screen-designs-41-ranked-shortlist-tab" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4.1 Ranked Shortlist Tab</h3>
+<pre class="hljs"><code>┌─────────────────────────────────────────────────────────────┐
+│  🏆  Top <span class="hljs-number">100</span> Candidates  ·  Ranked <span class="hljs-keyword">for</span><span class="hljs-punctuation">:</span> Senior AI Engineer  │
+│  Showing <span class="hljs-number">1</span>–<span class="hljs-number">10</span> <span class="hljs-keyword">of</span> <span class="hljs-number">100</span>  [▼ Filter by confidence]  [⬇ Export] │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  <span class="hljs-comment">#1     ████████████████████████████████  92.4      │   │</span>
+│  │         Candidate<span class="hljs-punctuation">:</span> CAND_0042871                     │   │
+│  │         Senior ML Engineer · Bangalore              │   │
+│  │         7yr · Swiggy → Flipkart · open to work ✓   │   │
+│  │                                                     │   │
+│  │  Technical  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░  <span class="hljs-number">91</span><span class="hljs-punctuation">%</span>                 │   │
+│  │  Career     ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░  <span class="hljs-number">88</span><span class="hljs-punctuation">%</span>                 │   │
+│  │  Available  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  <span class="hljs-number">96</span><span class="hljs-punctuation">%</span>                 │   │
+│  │  Seniority  ▓▓▓▓▓▓▓▓▓▓▓▓░░░░  <span class="hljs-number">82</span><span class="hljs-punctuation">%</span>                 │   │
+│  │  Semantic   ▓▓▓▓▓▓▓▓▓▓▓▓▓░░░  <span class="hljs-number">87</span><span class="hljs-punctuation">%</span>                 │   │
+│  │                                                     │   │
+│  │  <span class="hljs-string">&quot;7yr ML engineer with production FAISS + Qdrant   │   │
+│  │  experience at Swiggy; actively looking,           │   │
+│  │  response rate 94%, notice 30d.&quot;</span>                   │   │
+│  │                                      [▼ Expand]    │   │
+│  └─────────────────────────────────────────────────────┘   │
+│                                                             │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │  <span class="hljs-comment">#2     ████████████████████████████░░  89.1        │   │</span>
+│  │  ...                                                │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<p><strong>Expanded card state</strong> (on click):</p>
+<pre class="hljs"><code>┌─────────────────────────────────────────────────────────────┐
+│  <span class="hljs-comment">#1  CAND_0042871  ·  Composite: 92.4                      │</span>
+├─────────────────────────────────────────────────────────────┤
+│  CAREER HISTORY                                             │
+│  <span class="hljs-number">2023</span>–now   Senior ML Engineer · <span class="hljs-title function_">Swiggy</span> (Series D)         │
+│  <span class="hljs-number">2019</span>–<span class="hljs-number">2023</span>  ML Engineer · Flipkart                         │
+│  <span class="hljs-number">2017</span>–<span class="hljs-number">2019</span>  Data Scientist · Mu Sigma                      │
+│                                                             │
+│  TOP <span class="hljs-title function_">SKILLS</span> (verified)                                      │
+│  ● Python [expert] [platform score<span class="hljs-punctuation">:</span> <span class="hljs-number">88</span>]                    │
+│  ● Sentence<span class="hljs-punctuation">-</span>Transformers [advanced]                        │
+│  ● Qdrant [advanced]                                       │
+│  ● FAISS [intermediate]                                    │
+│                                                             │
+│  BEHAVIORAL SIGNALS                                         │
+│  Last active<span class="hljs-punctuation">:</span> <span class="hljs-number">3</span> days ago      Response rate<span class="hljs-punctuation">:</span> <span class="hljs-number">94</span><span class="hljs-punctuation">%</span>           │
+│  Open to work<span class="hljs-punctuation">:</span> Yes            Notice<span class="hljs-punctuation">:</span> <span class="hljs-number">30</span> days              │
+│  GitHub score<span class="hljs-punctuation">:</span> <span class="hljs-number">72</span>             Interview completion<span class="hljs-punctuation">:</span> <span class="hljs-number">100</span><span class="hljs-punctuation">%</span>   │
+│                                                             │
+│  RAW SCORE BREAKDOWN                                        │
+│  Technical Fit    × <span class="hljs-number">0.35</span> <span class="hljs-punctuation">=</span>  <span class="hljs-number">0.91</span> × <span class="hljs-number">0.35</span> <span class="hljs-punctuation">=</span> <span class="hljs-number">0.319</span>          │
+│  Career Quality   × <span class="hljs-number">0.25</span> <span class="hljs-punctuation">=</span>  <span class="hljs-number">0.88</span> × <span class="hljs-number">0.25</span> <span class="hljs-punctuation">=</span> <span class="hljs-number">0.220</span>          │
+│  Availability     × <span class="hljs-number">0.20</span> <span class="hljs-punctuation">=</span>  <span class="hljs-number">0.96</span> × <span class="hljs-number">0.20</span> <span class="hljs-punctuation">=</span> <span class="hljs-number">0.192</span>          │
+│  Seniority Fit    × <span class="hljs-number">0.12</span> <span class="hljs-punctuation">=</span>  <span class="hljs-number">0.82</span> × <span class="hljs-number">0.12</span> <span class="hljs-punctuation">=</span> <span class="hljs-number">0.098</span>          │
+│  Semantic Sim     × <span class="hljs-number">0.08</span> <span class="hljs-punctuation">=</span>  <span class="hljs-number">0.87</span> × <span class="hljs-number">0.08</span> <span class="hljs-punctuation">=</span> <span class="hljs-number">0.070</span>          │
+│  ─────────────────────────────────────────────            │
+│  COMPOSITE SCORE             <span class="hljs-punctuation">=</span>        <span class="hljs-number">0.899</span> → <span class="hljs-number">89.9</span>        │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h3 id="uiux-design-document-4-screen-designs-42-score-explorer-tab" class="docmd-heading"><a href="#uiux-design-document-4-screen-designs-42-score-explorer-tab" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4.2 Score Explorer Tab</h3>
+<pre class="hljs"><code>┌─────────────────────────────────────────────────────────────┐
+│  Score Distribution                                         │
+│                                                             │
+│  ┌──────────────────────────────────────────┐              │
+│  │  Composite Score <span class="hljs-title function_">Histogram</span> (<span class="hljs-keyword">top</span> <span class="hljs-number">1000</span>)    │              │
+│  │  Bar chart<span class="hljs-punctuation">:</span> x<span class="hljs-punctuation">=</span>score bucket, y<span class="hljs-punctuation">=</span>count      │              │
+│  │  Highlight<span class="hljs-punctuation">:</span> <span class="hljs-keyword">top</span> <span class="hljs-number">100</span> <span class="hljs-keyword">in</span> accent<span class="hljs-punctuation">-</span>blue       │              │
+│  └──────────────────────────────────────────┘              │
+│                                                             │
+│  ┌──────────────────────────────────────────┐              │
+│  │  Signal Correlation Scatter              │              │
+│  │  x <span class="hljs-punctuation">=</span> Technical Fit, y <span class="hljs-punctuation">=</span> Career Quality  │              │
+│  │  color <span class="hljs-punctuation">=</span> <span class="hljs-title function_">Availability</span> (green→red)        │              │
+│  │  size <span class="hljs-punctuation">=</span> Composite score                  │              │
+│  └──────────────────────────────────────────┘              │
+│                                                             │
+│  Weight Sensitivity Slider                                  │
+│  Technical  ──●──────────  <span class="hljs-number">0.35</span>                           │
+│  Career     ────●────────  <span class="hljs-number">0.25</span>                           │
+│  Available  ──────●──────  <span class="hljs-number">0.20</span>                           │
+│  [Recalculate ranking]  ← shows how <span class="hljs-keyword">top</span><span class="hljs-punctuation">-</span><span class="hljs-number">10</span> shifts         │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h3 id="uiux-design-document-4-screen-designs-43-methodology-tab" class="docmd-heading"><a href="#uiux-design-document-4-screen-designs-43-methodology-tab" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4.3 Methodology Tab</h3>
+<pre class="hljs"><code>┌─────────────────────────────────────────────────────────────┐
+│  How RecruiterIQ Ranks                                      │
+├─────────────────────────────────────────────────────────────┤
+│  FORMULA                                                    │
+│  ┌──────────────────────────────────────────────────────┐  │
+│  │  S <span class="hljs-punctuation">=</span> <span class="hljs-number">0.35</span>·Tech <span class="hljs-punctuation">+</span> <span class="hljs-number">0.25</span>·Career <span class="hljs-punctuation">+</span> <span class="hljs-number">0.20</span>·Avail           │  │
+│  │      <span class="hljs-punctuation">+</span> <span class="hljs-number">0.12</span>·Seniority <span class="hljs-punctuation">+</span> <span class="hljs-number">0.08</span>·Semantic                │  │
+│  └──────────────────────────────────────────────────────┘  │
+│                                                             │
+│  PIPELINE                                                   │
+│  [Ingest 100k] → [Disqualify] → [Load Artifacts]          │
+│       → [Score] → [Rank] → [Generate Reasoning] → [CSV]   │
+│                                                             │
+│  <span class="hljs-title function_">DISQUALIFIERS</span> (<span class="hljs-number">5</span> hard rules)                              │
+│  ✗ All<span class="hljs-punctuation">-</span>consulting <span class="hljs-title function_">career</span> (no product company)              │
+│  ✗ <span class="hljs-title function_">Honeypot</span> (impossible experience timeline)               │
+│  ✗ Ghost <span class="hljs-title function_">profile</span> (completeness <span class="hljs-punctuation">&lt;</span> <span class="hljs-number">5</span>, no verified contact)   │
+│  ✗ Pure <span class="hljs-title function_">research</span> (no deployment evidence)                  │
+│  ✗ No<span class="hljs-punctuation">-</span>code <span class="hljs-title function_">recent</span> (title <span class="hljs-punctuation">+</span> activity signals)               │
+│                                                             │
+│  [View full methodology doc ↗]                             │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h3 id="uiux-design-document-4-screen-designs-44-disqualified-tab" class="docmd-heading"><a href="#uiux-design-document-4-screen-designs-44-disqualified-tab" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4.4 Disqualified Tab</h3>
+<pre class="hljs"><code>┌─────────────────────────────────────────────────────────────┐
+│  Disqualified Candidates Audit Log                          │
+│  Total disqualified<span class="hljs-punctuation">:</span> <span class="hljs-number">1</span>,<span class="hljs-number">842</span>  ·  Honeypots detected<span class="hljs-punctuation">:</span> <span class="hljs-number">78</span>      │
+├─────────────────────────────────────────────────────────────┤
+│  candidate_id    reason                  disqualify_type    │
+│  CAND_0000041    YoE <span class="hljs-punctuation">&gt;</span> career timeline   HONEYPOT           │
+│  CAND_0002197    All consulting career   HARD_PENALTY       │
+│  CAND_0003841    Ghost profile           HONEYPOT           │
+│  ...                                                        │
+│                                                             │
+│  [⬇ Export audit log]                                      │
+└─────────────────────────────────────────────────────────────┘
+</code></pre>
+<hr>
+<h2 id="uiux-design-document-5-sidebar-design" class="docmd-heading"><a href="#uiux-design-document-5-sidebar-design" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>5. Sidebar Design</h2>
+<pre class="hljs"><code>┌──────────────────────┐
+│  RecruiterIQ         │
+│  ───────────────     │
+│  Mode<span class="hljs-punctuation">:</span>               │
+│  ● Full Pipeline     │
+│  ○ <span class="hljs-title function_">Demo</span> (sample <span class="hljs-number">10</span>)  │
+│                      │
+│  Job Description<span class="hljs-punctuation">:</span>    │
+│  [Upload .<span class="hljs-attr">docx</span><span class="hljs-punctuation">/</span>.<span class="hljs-attr">txt</span>] │
+│  or paste text ▼     │
+│  ┌──────────────┐    │
+│  │              │    │
+│  └──────────────┘    │
+│                      │
+│  [▶ Run Ranking]     │
+│                      │
+│  ──── System ────    │
+│  ✓ Model loaded      │
+│  ✓ Artifacts ready   │
+│  ✓ 100k candidates   │
+│  ✗ JD not loaded     │
+└──────────────────────┘
+</code></pre>
+<hr>
+<h2 id="uiux-design-document-6-states-error-handling" class="docmd-heading"><a href="#uiux-design-document-6-states-error-handling" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>6. States &amp; Error Handling</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>State</th>
+<th>Display</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No JD loaded</td>
+<td>Amber banner: “Load a job description to begin ranking”</td>
+</tr>
+<tr>
+<td>Artifacts missing</td>
+<td>Red banner: “Run <a href="http://precompute.py">precompute.py</a> first — embeddings not found”</td>
+</tr>
+<tr>
+<td>Running</td>
+<td>Spinner + progress bar: “Scoring candidates… 47,231 / 100,000”</td>
+</tr>
+<tr>
+<td>Done</td>
+<td>Green banner: “Top 100 ranked in 4.2 seconds”</td>
+</tr>
+<tr>
+<td>Validator error</td>
+<td>Red banner with exact error string from validate_submission.py</td>
+</tr>
+<tr>
+<td>Honeypot limit exceeded</td>
+<td>Red alert: “WARNING: &gt;10 honeypots detected in top 100 — do not submit”</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="uiux-design-document-7-demo-mode-for-judges-without-full-dataset" class="docmd-heading"><a href="#uiux-design-document-7-demo-mode-for-judges-without-full-dataset" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>7. Demo Mode (for judges without full dataset)</h2>
+<ul>
+<li>Load <code>sample_candidates.json</code> (10 candidates provided)</li>
+<li>Accept JD paste in sidebar</li>
+<li>Show score breakdown for all 10</li>
+<li>Label clearly: “Demo Mode — 10 candidates”</li>
+<li>Ranking logic identical to full pipeline</li>
+</ul>
+<hr>
+<p><em>RecruiterIQ UI/UX Design v1.0 · 2025</em></p>
+
+                
+              </div>
+              <div class="toc-sidebar">
+                
+
+
+  <div class="toc-container">
+    <h2 class="toc-title">onThisPage<span class="mobile-view toc-menu-button float-right">
+<svg class="lucide-icon icon-chevron-down " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-down"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</span></h2>
+    <ul class="toc-list">
+      
+        <li class="toc-item toc-level-1">
+          <a href="#uiux-design-document" class="toc-link">UI/UX Design Document</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#uiux-design-document-1-design-principles" class="toc-link">1. Design Principles</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#uiux-design-document-2-color-typography" class="toc-link">2. Color &amp; Typography</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#uiux-design-document-2-color-typography-palette" class="toc-link">Palette</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#uiux-design-document-2-color-typography-type" class="toc-link">Type</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#uiux-design-document-3-app-structure-page-map" class="toc-link">3. App Structure (Page Map)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#uiux-design-document-4-screen-designs" class="toc-link">4. Screen Designs</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#uiux-design-document-4-screen-designs-41-ranked-shortlist-tab" class="toc-link">4.1 Ranked Shortlist Tab</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#uiux-design-document-4-screen-designs-42-score-explorer-tab" class="toc-link">4.2 Score Explorer Tab</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#uiux-design-document-4-screen-designs-43-methodology-tab" class="toc-link">4.3 Methodology Tab</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#uiux-design-document-4-screen-designs-44-disqualified-tab" class="toc-link">4.4 Disqualified Tab</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#uiux-design-document-5-sidebar-design" class="toc-link">5. Sidebar Design</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#uiux-design-document-6-states-error-handling" class="toc-link">6. States &amp; Error Handling</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#uiux-design-document-7-demo-mode-for-judges-without-full-dataset" class="toc-link">7. Demo Mode (for judges without full dataset)</a>
+        </li>
+      
+    </ul>
+  </div>
+
+              </div>
+            </div>
+            <div class="page-footer-actions">
+              
+              
+                <span class="git-last-updated" data-timestamp="1781074771000">
+                  <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span class="git-label">Last updated:</span>
+                  <span class="git-time" data-timestamp="1781074771000"></span>
+                  
+                  <div class="git-commit-tooltip" role="tooltip">
+                    <div class="git-tooltip-title">Recent commits</div>
+                    <ul class="git-commit-list">
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="DevanshSrajput">
+                            
+                              <img src="https://www.gravatar.com/avatar/7f22948119fdb4e2d70c1be1a1f39659?d=mp&amp;s=64" alt="DevanshSrajput">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="Initialize the Project: (Add Initial Project Documentation)">Initialize the Project: (Add Initial ...</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">DevanshSrajput</span>
+                              <span class="git-commit-date" data-timestamp="1781074771000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                    </ul>
+                  </div>
+                  
+                </span>
+              
+              <span class="git-spacer"></span>
+              
+            </div>
+          </main>
+          
+
+
+<footer class="page-footer">
+  <div class="footer-content">
+    <div class="user-footer"></div>
+    
+      <div class="branding-footer">
+        builtWith <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
+      </div>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+      
+      <script src="../../assets/js/docmd-main.js?v=mqcpwj52"></script>
+      
+      <script src="../../assets/js/docmd-git.js?v=mqcpwj52"></script>
+      <script src="../../assets/js/docmd-image-lightbox.js?v=mqcpwj52" ></script>
+<script src="https://cdn.jsdelivr.net/npm/minisearch@7.2.0/dist/umd/index.min.js" ></script>
+<script src="../../assets/js/docmd-search.js?v=mqcpwj52" ></script>
+<script src="../../assets/js/init-mermaid.js?v=mqcpwj52" type="module"></script>
+<script src="../../assets/js/docmd-git.js?v=mqcpwj52" type="module"></script>
+
+  <!-- Search Modal (Injected by @docmd/plugin-search) -->
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-show-confidence="false" data-show-filters="true"
+       data-search-placeholder="Search documentation..."
+       data-search-no-results="No results found."
+       data-search-error="Failed to load search index."
+       data-search-initial="Type to start searching..."
+       data-search-navigate="to navigate"
+       data-search-escape="to close">
+      <div class="docmd-search-box">
+          <div class="docmd-search-header">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-search"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input type="text" id="docmd-search-input" placeholder="Search documentation..." autocomplete="off" spellcheck="false">
+              <button onclick="window.closeDocmdSearch()" class="docmd-search-close" aria-label="Close search">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+          </div>
+          <div id="docmd-search-results" class="docmd-search-results"></div>
+          <div class="docmd-search-footer">
+              <span><kbd class="docmd-kbd">↑</kbd> <kbd class="docmd-kbd">↓</kbd> to navigate</span>
+              <span><kbd class="docmd-kbd">ESC</kbd> to close</span>
+          </div>
+      </div>
+  </div>
+
+    <script>
+      (function() {
+        var searchDebounceTimer;
+
+        document.addEventListener('click', function(e) {
+          var link = e.target.closest('a');
+          if (!link || !window.gtag) return;
+          
+          var url = link.href;
+          var hostname = window.location.hostname;
+          var isExternal = link.hostname && link.hostname !== hostname;
+          var isDownload = link.hasAttribute('download') || url.match(/\.(pdf|zip|tar|gz|exe|pkg)$/i);
+          
+          if (isExternal) {
+            gtag('event', 'click_external', { 'url': url, 'link_text': link.innerText.trim() });
+          } else if (isDownload) {
+            gtag('event', 'download', { 'file_name': url.split('/').pop(), 'url': url });
+          }
+
+          // TOC tracking
+          if (link.classList.contains('toc-link')) {
+            gtag('event', 'toc_click', { 'target_id': link.getAttribute('href'), 'title': link.innerText.trim() });
+          }
+
+          // Permalink tracking
+          if (link.classList.contains('heading-anchor')) {
+            gtag('event', 'permalink_click', { 'url': url });
+          }
+        });
+
+        
+        // Search Keyword Tracking
+        document.addEventListener('input', function(e) {
+          if (e.target.id === 'docmd-search-input' && window.gtag) {
+            var query = e.target.value.trim();
+            if (query.length < 3) return;
+            
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(function() {
+              gtag('event', 'search', { 'search_term': query });
+            }, 1000);
+          }
+        });
+        
+      })();
+    </script>
+
+<script>window.__git_config={"repo":null,"branch":"main","editLink":false,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+      
+  </body>
+</html>

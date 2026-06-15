@@ -1,0 +1,1472 @@
+<!--
+  ---------------------------------------------------------------
+  docmd : the zero-config documentation engine.
+  @website https://docmd.io
+  [docmd-source] - Please do not remove this header.
+  ---------------------------------------------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="generator" content="docmd v0.5.x">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+    <style>
+      html {
+        visibility: hidden;
+      }
+    </style>
+    
+    <script>
+      var root = "../../";
+      if (root && !root.endsWith('/')) root += '/';
+      if (root === '') root = './';
+      window.DOCMD_ROOT = root;
+
+      var siteRoot = "../../";
+      if (siteRoot && !siteRoot.endsWith('/')) siteRoot += '/';
+      if (siteRoot === '') siteRoot = './';
+      window.DOCMD_SITE_ROOT = siteRoot;
+
+      window.DOCMD_APPEARANCE = "system";
+      window.DOCMD_VERSION_ROOT = "/";
+      window.DOCMD_BASE = "/";
+      window.DOCMD_LOCALE = "";
+      window.DOCMD_DEFAULT_LOCALE = "";
+    </script>
+    <title>
+      RecruiterIQ — Product Requirements Document : SignalHire
+    </title>
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mqcpwj52">
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mqcpwj52" id="hljs-light" >
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mqcpwj52" id="hljs-dark" disabled>
+    
+    
+<meta name="description" content="">
+<link rel="canonical" href="/Documentation/RecruiterIQ_PRD/">
+<meta property="og:title" content="RecruiterIQ — Product Requirements Document - SignalHire">
+<meta property="og:description" content="">
+<meta property="og:url" content="/Documentation/RecruiterIQ_PRD/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RecruiterIQ — Product Requirements Document - SignalHire">
+<meta name="twitter:description" content="">
+
+
+
+<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mqcpwj52" >
+<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mqcpwj52" >
+
+    
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+  </head>
+  <body
+    class="sidebar-collapsible"
+    data-default-collapsed="false"
+    data-copy-code-enabled="false" data-spa-enabled="true" data-source-file="Documentation/RecruiterIQ_PRD.md">
+
+    <a href="#main-content" class="skip-link">skipToContent</a>
+
+    
+    
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          
+            <h1><a href="../../">
+                SignalHire
+              </a></h1>
+          
+          <span class="mobile-view sidebar-menu-button float-right">
+            
+<svg class="lucide-icon icon-menu " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-menu"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+
+          </span>
+        </div>
+        <div class="sidebar-top-group">
+          
+          
+          
+          
+        </div>
+        
+
+<nav class="sidebar-nav" aria-label="mainNavigation">
+  <ul>
+    
+      <li class="" >
+      
+        <a href="../../" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 SignalHire — AI-Powered Candidate Ranking
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../GOOD_FIRST_ISSUES/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 Good First Issues
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active-parent collapsible expanded nav-group"  aria-expanded="true" >
+      
+        <span class="nav-label nav-group">
+          
+          <span class="nav-item-title">
+            Documentation
+          </span>
+          
+            <span class="collapse-icon-wrapper">
+<svg class="lucide-icon icon-chevron-right collapse-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+          
+        </span>
+        
+
+        
+          <ul class="submenu">
+            
+      <li class="" >
+      
+        <a href="../../Documentation/APP_FLOW/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            App Flow Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/BACKEND_SCHEMA/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Backend Schema Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/IMPLEMENTATION_PLAN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Implementation Plan
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active" >
+      
+        <a href="../../Documentation/RecruiterIQ_PRD/" class="active "
+          >
+          
+          <span class="nav-item-title">
+            RecruiterIQ — Product Requirements Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/TRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Technical Requirements Document (TRD)
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/UIUX_DESIGN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            UI/UX Design Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+          </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+        <div class="sidebar-bottom-group mt-auto">
+          
+          
+          
+          
+        </div>
+      </aside>
+      
+      <div class="main-content-wrapper">
+        
+        
+          <header class="page-header">
+            <div class="header-left">
+              
+                <button id="sidebar-toggle-button" class="sidebar-toggle-button"
+                  aria-label="toggleSidebar">
+                  
+<svg class="lucide-icon icon-chevron-left " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+
+                </button>
+              
+              <div class="header-titles-wrapper">
+                <span class="header-title">
+                  RecruiterIQ — Product Requirements Document
+                </span>
+              </div>
+            </div>
+            <div class="header-right">
+              
+                
+
+
+<div class="docmd-options-menu">
+    
+    <button class="docmd-search-trigger" aria-label="search">
+        
+<svg class="lucide-icon icon-search " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-search"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" />
+</svg>
+
+        <span class="search-label">search</span>
+        <span class="search-keys"><kbd class="docmd-kbd">⌘</kbd><kbd class="docmd-kbd">K</kbd></span>
+    </button>
+    
+
+    
+
+    
+
+    
+    <button class="theme-toggle-button" aria-label="toggleTheme">
+        
+<svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-sun"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg>
+ 
+<svg class="lucide-icon icon-moon icon-moon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-moon"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+</svg>
+
+    </button>
+    
+
+    
+</div>
+
+              
+            </div>
+          </header>
+        
+        <div class="content-theme-cover">
+          <main class="content-area" id="main-content">
+            <div class="content-layout">
+              <div class="main-content">
+                <div class="docmd-breadcrumbs-row">
+                  <div id="docmd-raw-markdown" data-content="%23%20RecruiterIQ%20%E2%80%94%20Product%20Requirements%20Document%0A**AI%20Candidate%20Ranking%20System%20%7C%20India%20Runs%20Hackathon%20(Redrob%20AI)**%0A%0A%7C%20Field%20%7C%20Value%20%7C%0A%7C---%7C---%7C%0A%7C%20Version%20%7C%202.0%20%7C%0A%7C%20Challenge%20%7C%20Intelligent%20Candidate%20Discovery%20%26%20Ranking%20%7C%0A%7C%20Target%20Role%20%7C%20Senior%20AI%20Engineer%20%E2%80%94%20Founding%20Team%20%40%20Redrob%20AI%20%7C%0A%7C%20Dataset%20%7C%20100%2C000%20candidates%20(%60candidates.jsonl%60)%20%7C%0A%7C%20Output%20%7C%20Top%20100%20ranked%20candidates%20(%60%3Cparticipant_id%3E.csv%60)%20%7C%0A%7C%20Sandbox%20Constraint%20%7C%20CPU-only%20%C2%B7%2016GB%20RAM%20%C2%B7%205%20min%20runtime%20%C2%B7%20No%20network%20calls%20%7C%0A%0A---%0A%0A%23%23%201.%20Problem%20Restatement%0A%0ARank%20top%20100%20out%20of%20100%2C000%20candidates%20for%20a%20**Senior%20AI%20Engineer**%20role.%20Dataset%20contains%3A%0A-%20Keyword%20stuffers%20(AI%20skills%20on%20non-technical%20profiles)%0A-%20Honeypots%20(~80%20impossible%20profiles%20%E2%80%94%20disqualify%20if%20%3E10%20in%20top%20100)%0A-%20Behavioral%20twins%20(same%20skills%2C%20wildly%20different%20availability)%0A-%20Plain-language%20strong%20engineers%20who%20don&#039;t%20buzzword-match%0A%0A**Core%20trap%20to%20avoid%3A**%20Ranking%20by%20skills%20keyword%20density.%20A%20candidate%20whose%20skills%20list%20contains%2015%20AI%20terms%20but%20has%20%22Marketing%20Manager%22%20in%20career%20history%20is%20noise%2C%20not%20signal.%0A%0A---%0A%0A%23%23%202.%20Winning%20Approach%0A%0A%23%23%23%20Architecture%20Decision%3A%20Offline%20Hybrid%20Scoring%20(No%20API%20calls%20at%20inference%20time)%0A%0A%60%60%60%0APre-computation%20(offline%2C%20before%20submission)%3A%0A%20%20candidates.jsonl%0A%20%20%20%20%20%20%E2%86%92%20Normalize%20%2B%20Disqualify%0A%20%20%20%20%20%20%E2%86%92%20Embed%20candidate%20profiles%20(sentence-transformers%2C%20CPU)%0A%20%20%20%20%20%20%E2%86%92%20Compute%20per-signal%20sub-scores%0A%20%20%20%20%20%20%E2%86%92%20Cache%20scoring%20artifacts%0A%0ARanking%20step%20(must%20run%20in%20%3C%205%20min%2C%20CPU%2C%2016GB)%3A%0A%20%20Load%20cached%20artifacts%0A%20%20%20%20%20%20%E2%86%92%20Weighted%20composite%20score%20per%20candidate%0A%20%20%20%20%20%20%E2%86%92%20Sort%20%E2%86%92%20Take%20top%20100%0A%20%20%20%20%20%20%E2%86%92%20Generate%20reasoning%20strings%0A%20%20%20%20%20%20%E2%86%92%20Write%20CSV%0A%60%60%60%0A%0A**Why%20this%20wins%3A**%0A-%20No%20LLM%20API%20needed%20at%20ranking%20time%20(satisfies%20no-network%20constraint)%0A-%20Pre-computed%20embeddings%20%3D%20fast%20inference%20pass%0A-%20Multi-signal%20scoring%20defeats%20keyword%20stuffers%20AND%20honeypots%0A-%20Behavioral%20signals%20surface%20available%20candidates%20over%20unavailable%20ones%0A-%20Fully%20reproducible%20in%20Docker%20sandbox%0A%0A---%0A%0A%23%23%203.%20Disqualification%20Layer%20(Pre-filter%20before%20scoring)%0A%0ARun%20before%20any%20scoring.%20Hard%20removes%3A%0A%0A%7C%20Rule%20%7C%20Signal%20%7C%20Threshold%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20Consulting-only%20%7C%20All%20career%20roles%20at%20TCS%2FInfosys%2FWipro%2FCapgemini%2FAccenture%20%7C%20Drop%20if%20zero%20product%20company%20roles%20%7C%0A%7C%20Pure%20research%20%7C%20All%20roles%20are%20%22Researcher%22%20with%20no%20deployment%20evidence%20%7C%20Drop%20%7C%0A%7C%20No%20code%20in%2018mo%20%7C%20%60last_active_date%60%20%2B%20%60career_history%60%20latest%20role%20end%20%7C%20Flag%2Fdown-rank%20%7C%0A%7C%20Title%20chaser%20%7C%20Median%20tenure%20%3C%201.5%20yrs%20across%20career%20%7C%20Down-rank%20%7C%0A%7C%20Honeypot%20%7C%20%60years_of_experience%60%20%3E%20(current_year%20-%20company_founded_year)%20on%20earliest%20role%20%7C%20Hard%20drop%20%7C%0A%7C%20CV%2FSpeech%2FRobotics%20only%20%7C%20Skills%20%2B%20titles%20contain%20zero%20NLP%2FIR%2Fretrieval%20signals%20%7C%20Down-rank%20%7C%0A%7C%20LangChain-only%20AI%20%7C%20Only%20AI%20exp%20%3D%20recent%20LangChain%20%2B%20OpenAI%20wrappers%2C%20no%20embeddings%2Fvector%20DBs%20%7C%20Down-rank%20%7C%0A%0A%3E%20Honeypot%20check%3A%20parse%20%60career_history%5B0%5D.dates%60%20start%20year%20vs%20company%20tenure.%20If%20a%20candidate%20claims%208%20years%20of%20experience%20at%20a%20company%20that%20has%20existed%20for%203%20years%2C%20ground%20truth%20relevance%20%3D%200.%20Drop%20these.%0A%0A---%0A%0A%23%23%204.%20Scoring%20Methodology%0A%0A%23%23%23%204.1%20Composite%20Score%20Formula%0A%0A%60%60%60%0AS%20%3D%20w1%C2%B7Technical_Fit%0A%20%20%2B%20w2%C2%B7Career_Quality%0A%20%20%2B%20w3%C2%B7Availability_Signal%0A%20%20%2B%20w4%C2%B7Seniority_Fit%0A%20%20%2B%20w5%C2%B7Semantic_Similarity%0A%60%60%60%0A%0AAll%20sub-scores%20normalized%20to%20%5B0%2C%201%5D%20before%20weighting.%0A%0A%23%23%23%204.2%20Weight%20Allocation%0A%0A%7C%20Signal%20%7C%20Weight%20%7C%20Rationale%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20%60Technical_Fit%60%20%7C%20**0.35**%20%7C%20Core%20JD%20requirements%20%E2%80%94%20embeddings%2C%20vector%20DBs%2C%20Python%2C%20eval%20frameworks%20%7C%0A%7C%20%60Career_Quality%60%20%7C%20**0.25**%20%7C%20Product%20company%20history%2C%20tenure%2C%20progression%2C%20shipped%20systems%20%7C%0A%7C%20%60Availability_Signal%60%20%7C%20**0.20**%20%7C%20Behavioral%20signals%20%E2%80%94%20availability%2C%20responsiveness%2C%20recency%20%7C%0A%7C%20%60Seniority_Fit%60%20%7C%20**0.12**%20%7C%20Years%20exp%2C%20title%20progression%2C%20company%20stage%20fit%20%7C%0A%7C%20%60Semantic_Similarity%60%20%7C%20**0.08**%20%7C%20Embedding%20cosine%20similarity%20%E2%80%94%20catch%20plain-language%20strong%20candidates%20%7C%0A%0A%23%23%23%204.3%20Sub-Score%20Definitions%0A%0A%23%23%23%23%20%60Technical_Fit%60%20(0%E2%80%931)%0A%0ACheck%20against%20JD%20must-haves%20using%20skill%20field%20%2B%20career%20description%20text%3A%0A%0A%7C%20Criterion%20%7C%20Points%20%7C%0A%7C---%7C---%7C%0A%7C%20Embeddings%2Fretrieval%20in%20production%20(sentence-transformers%2C%20BGE%2C%20E5)%20%7C%20%2B0.25%20%7C%0A%7C%20Vector%20DB%20experience%20(Pinecone%2C%20Milvus%2C%20Qdrant%2C%20Weaviate%2C%20FAISS)%20%7C%20%2B0.20%20%7C%0A%7C%20Strong%20Python%20(proficiency%3Dexpert%20OR%20skill_assessment%20score%20%E2%89%A570)%20%7C%20%2B0.15%20%7C%0A%7C%20Evaluation%20framework%20design%20(NDCG%2C%20MRR%2C%20MAP%2C%20A%2FB)%20%7C%20%2B0.15%20%7C%0A%7C%20LLM%20fine-tuning%20(LoRA%2C%20QLoRA%2C%20PEFT)%20%7C%20%2B0.10%20(nice-to-have)%20%7C%0A%7C%20Learning-to-rank%20(XGBoost%2C%20neural%20rankers)%20%7C%20%2B0.10%20(nice-to-have)%20%7C%0A%7C%20HR-tech%20%2F%20marketplace%20domain%20%7C%20%2B0.05%20(bonus)%20%7C%0A%0ACap%20at%201.0.%20Normalize%20raw%20points.%0A%0A**Skill%20proficiency%20weight%3A**%0A-%20%60expert%60%20%3D%201.0%20%C2%B7%20signal%20strength%0A-%20%60advanced%60%20%3D%200.75%0A-%20%60intermediate%60%20%3D%200.4%0A-%20%60beginner%60%20%3D%200.1%0A%0AUse%20%60skill_assessment_scores%60%20dict%20if%20present%20%E2%80%94%20platform-verified%20trumps%20self-reported%20proficiency.%0A%0A%23%23%23%23%20%60Career_Quality%60%20(0%E2%80%931)%0A%0A%7C%20Criterion%20%7C%20Points%20%7C%0A%7C---%7C---%7C%0A%7C%20%E2%89%A51%20product%20company%20role%20(non-consulting)%20%7C%20%2B0.30%20%7C%0A%7C%20%E2%89%A51%20role%20with%20title%3A%20Engineer%2FML%2FData%2FResearch%20at%20company_size%20%E2%89%A5%2050%20%7C%20%2B0.15%20%7C%0A%7C%20No%20solo%20consulting-only%20history%20%7C%20%2B0.15%20%7C%0A%7C%20Median%20tenure%20%E2%89%A5%202.0%20yrs%20%7C%20%2B0.20%20%7C%0A%7C%20Career%20progression%20(title%20seniority%20increases%20over%20time)%20%7C%20%2B0.20%20%7C%0A%0AConsulting%20company%20list%20to%20penalize%3A%20%60%5B%22TCS%22%2C%20%22Infosys%22%2C%20%22Wipro%22%2C%20%22Capgemini%22%2C%20%22Cognizant%22%2C%20%22Accenture%22%2C%20%22HCL%22%2C%20%22Mphasis%22%2C%20%22Tech%20Mahindra%22%2C%20%22Hexaware%22%5D%60%0A%0A%23%23%23%23%20%60Availability_Signal%60%20(0%E2%80%931)%0A%0ADerived%20entirely%20from%20%60redrob_signals%60%3A%0A%0A%7C%20Signal%20%7C%20Weight%20%7C%20Direction%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20%60open_to_work_flag%60%20%7C%200.25%20%7C%20True%20%3D%20%2B1%20%7C%0A%7C%20%60last_active_date%60%20recency%20%7C%200.20%20%7C%20%3C%2030d%20%3D%201.0%2C%20%3C%2090d%20%3D%200.6%2C%20%3C%20180d%20%3D%200.3%2C%20older%20%3D%200.0%20%7C%0A%7C%20%60recruiter_response_rate%60%20%7C%200.15%20%7C%20Direct%20use%20(0%E2%80%931)%20%7C%0A%7C%20%60avg_response_time_hours%60%20%7C%200.10%20%7C%20%E2%89%A44h%20%3D%201.0%2C%20%E2%89%A424h%20%3D%200.7%2C%20%E2%89%A472h%20%3D%200.4%2C%20%3E72h%20%3D%200.1%20%7C%0A%7C%20%60interview_completion_rate%60%20%7C%200.15%20%7C%20Direct%20use%20(0%E2%80%931)%20%7C%0A%7C%20%60applications_submitted_30d%60%20%7C%200.10%20%7C%20%E2%89%A53%20%3D%201.0%2C%201%E2%80%932%20%3D%200.5%2C%200%20%3D%200.0%20%7C%0A%7C%20%60notice_period_days%60%20%7C%200.05%20%7C%20%E2%89%A430%20%3D%201.0%2C%20%E2%89%A460%20%3D%200.7%2C%20%E2%89%A490%20%3D%200.4%2C%20%3E90%20%3D%200.1%20%7C%0A%0A%3E%20Key%20insight%20from%20dataset%20docs%3A%20%22A%20perfect-on-paper%20candidate%20with%20low%20response%20rate%20%2B%20old%20last_activity%20is%20effectively%20unavailable.%22%20Availability%20weight%20%3D%200.20%20of%20total%20ensures%20this%20doesn&#039;t%20bury%20good%20candidates%2C%20but%20a%20zero%20availability%20score%20meaningfully%20drops%20rank.%0A%0A%23%23%23%23%20%60Seniority_Fit%60%20(0%E2%80%931)%0A%0AJD%20target%3A%206%E2%80%938%20years%20total%2C%204%E2%80%935%20in%20applied%20ML%20at%20product%20companies.%0A%0A%7C%20Criterion%20%7C%20Score%20%7C%0A%7C---%7C---%7C%0A%7C%20%60years_of_experience%60%206%E2%80%939%20%7C%201.0%20%7C%0A%7C%204%E2%80%935%20or%2010%E2%80%9312%20%7C%200.7%20%7C%0A%7C%203%20or%2013%E2%80%9315%20%7C%200.4%20%7C%0A%7C%20%3C3%20or%20%3E15%20%7C%200.1%20%7C%0A%0AApply%20education%20tier%20bonus%3A%0A-%20%60tier%60%201%20(IIT%2FIISc%2FNIT%2FBITS)%20%3D%20%2B0.05%0A-%20%60tier%60%202%20%3D%20%2B0.02%0A-%20%60tier%60%203%E2%80%935%20%3D%200%0A%0ACap%20at%201.0.%0A%0A%23%23%23%23%20%60Semantic_Similarity%60%20(0%E2%80%931)%0A%0A**Purpose%3A**%20Catch%20strong%20candidates%20who%20describe%20skills%20in%20plain%20language%20rather%20than%20buzzwords.%0A%0A**Method%3A**%0A1.%20Pre-compute%20offline%3A%20embed%20all%20100k%20candidates%20using%20%60all-MiniLM-L6-v2%60%20(CPU-friendly%2C%2080MB%20model)%0A2.%20Embed%20JD%20once%0A3.%20At%20ranking%20time%3A%20cosine%20similarity%20between%20candidate%20embedding%20and%20JD%20embedding%0A4.%20Normalize%20to%20%5B0%2C%201%5D%0A%0A**Profile%20blob%20for%20embedding**%20(concatenate)%3A%0A%60%60%60%0A%7Bheadline%7D%20%7Bsummary%7D%20%7Bcurrent_title%7D%20%7Bcareer_history%5B*%5D.description%7D%20%7Bskills%5B*%5D.name%7D%0A%60%60%60%0A%0ADo%20NOT%20include%20skills%20list%20alone%20as%20proxy%20for%20capability%20%E2%80%94%20include%20role%20descriptions.%0A%0A---%0A%0A%23%23%205.%20Honeypot%20Detection%0A%0AHard%20drop%20candidates%20matching%20any%3A%0A%0A%60%60%60python%0Adef%20is_honeypot(candidate)%3A%0A%20%20%20%20for%20role%20in%20candidate%5B&#039;career_history&#039;%5D%3A%0A%20%20%20%20%20%20%20%20start_year%20%3D%20parse_year(role%5B&#039;dates&#039;%5D%5B&#039;start&#039;%5D)%0A%20%20%20%20%20%20%20%20current_year%20%3D%202025%0A%20%20%20%20%20%20%20%20if%20candidate%5B&#039;profile&#039;%5D%5B&#039;years_of_experience&#039;%5D%20%3E%20(current_year%20-%20start_year%20%2B%2010)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20return%20True%20%20%23%20Claimed%20more%20exp%20than%20career%20allows%0A%20%20%20%20%0A%20%20%20%20%23%20Profile%20completeness%200%20%2B%20no%20verified%20contact%20%3D%20ghost%20profile%0A%20%20%20%20signals%20%3D%20candidate%5B&#039;redrob_signals&#039;%5D%0A%20%20%20%20if%20(signals%5B&#039;profile_completeness_score&#039;%5D%20%3C%205%20and%20%0A%20%20%20%20%20%20%20%20not%20signals%5B&#039;verified_email&#039;%5D%20and%20%0A%20%20%20%20%20%20%20%20not%20signals%5B&#039;verified_phone&#039;%5D)%3A%0A%20%20%20%20%20%20%20%20return%20True%0A%20%20%20%20%0A%20%20%20%20return%20False%0A%60%60%60%0A%0ATarget%3A%20keep%20honeypots%20out%20of%20top%20100.%20%E2%89%A410%20allowed%20before%20disqualification.%0A%0A---%0A%0A%23%23%206.%20Implementation%20Plan%0A%0A%23%23%23%206.1%20File%20Structure%0A%0A%60%60%60%0Arecruiteriq%2F%0A%E2%94%9C%E2%94%80%E2%94%80%20precompute.py%20%20%20%20%20%20%20%20%20%20%23%20Run%20once%20offline%20%E2%80%94%20embeds%20%2B%20caches%20scores%0A%E2%94%9C%E2%94%80%E2%94%80%20rank.py%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Main%20ranking%20script%20(must%20run%20%3C%205%20min)%0A%E2%94%9C%E2%94%80%E2%94%80%20signals.py%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20All%20sub-score%20functions%0A%E2%94%9C%E2%94%80%E2%94%80%20disqualify.py%20%20%20%20%20%20%20%20%20%20%23%20Honeypot%20%2B%20hard%20disqualifier%20rules%0A%E2%94%9C%E2%94%80%E2%94%80%20config.py%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Weights%2C%20thresholds%2C%20consulting%20firm%20list%0A%E2%94%9C%E2%94%80%E2%94%80%20requirements.txt%0A%E2%94%9C%E2%94%80%E2%94%80%20Dockerfile%0A%E2%94%9C%E2%94%80%E2%94%80%20artifacts%2F%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20embeddings.npy%20%20%20%20%20%23%20Pre-computed%20candidate%20embeddings%20(cached)%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20jd_embedding.npy%20%20%20%23%20JD%20embedding%0A%E2%94%82%20%20%20%E2%94%94%E2%94%80%E2%94%80%20scores_cache.pkl%20%20%20%23%20Pre-computed%20sub-scores%20(optional)%0A%E2%94%94%E2%94%80%E2%94%80%20output%2F%0A%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%20%3Cparticipant_id%3E.csv%0A%60%60%60%0A%0A%23%23%23%206.2%20%60precompute.py%60%20(run%20before%20submission)%0A%0A%60%60%60python%0A%23%201.%20Load%20all%20100k%20candidates%20from%20candidates.jsonl%0A%23%202.%20Run%20disqualifier%20%E2%80%94%20mark%20honeypots%0A%23%203.%20Build%20profile%20blob%20per%20candidate%0A%23%204.%20Batch%20embed%20using%20sentence-transformers%20(all-MiniLM-L6-v2)%0A%23%20%20%20%20-%20Batch%20size%20512%20for%20CPU%20efficiency%0A%23%20%20%20%20-%20Estimated%20time%3A%20~20-40%20min%20on%20CPU%20for%20100k%0A%23%205.%20Compute%20Technical_Fit%2C%20Career_Quality%2C%20Availability%2C%20Seniority%20per%20candidate%0A%23%206.%20Save%20embeddings.npy%20%2B%20scores_cache.pkl%0A%60%60%60%0A%0A%23%23%23%206.3%20%60rank.py%60%20(sandbox%20execution%2C%20%3C%205%20min)%0A%0A%60%60%60python%0A%23%201.%20Load%20cached%20embeddings%20%2B%20sub-scores%20(precomputed)%0A%23%202.%20Load%20JD%20embedding%0A%23%203.%20Compute%20semantic%20similarity%20(fast%20cosine%20on%20cached%20vectors)%0A%23%204.%20Compute%20composite%20score%20S%20for%20all%20candidates%0A%23%205.%20Sort%20descending%2C%20take%20top%20100%0A%23%206.%20Generate%20reasoning%20string%20per%20candidate%0A%23%207.%20Validate%3A%20no%20score%20inversion%2C%20exactly%20100%20rows%2C%20ranks%201%E2%80%93100%0A%23%208.%20Write%20CSV%0A%60%60%60%0A%0A%23%23%23%206.4%20Reasoning%20String%20Template%0A%0A%60%60%60python%0Adef%20generate_reasoning(candidate%2C%20scores)%3A%0A%20%20%20%20top_skills%20%3D%20get_top_matching_skills(candidate%2C%20JD_SKILLS)%0A%20%20%20%20career_highlight%20%3D%20get_strongest_role(candidate)%0A%20%20%20%20availability%20%3D%20%22actively%20looking%22%20if%20candidate%5B&#039;redrob_signals&#039;%5D%5B&#039;open_to_work_flag&#039;%5D%20else%20%22passive%22%0A%20%20%20%20%0A%20%20%20%20return%20(%0A%20%20%20%20%20%20%20%20f%22%7Bcandidate%5B&#039;profile&#039;%5D%5B&#039;years_of_experience&#039;%5D%7Dyr%20ML%20engineer%20with%20production%20%22%0A%20%20%20%20%20%20%20%20f%22%7Btop_skills%5B0%5D%7D%20%2B%20%7Btop_skills%5B1%5D%7D%20experience%20at%20%7Bcareer_highlight%5B&#039;company&#039;%5D%7D%20%22%0A%20%20%20%20%20%20%20%20f%22(%7Bcareer_highlight%5B&#039;company_size&#039;%5D%7D%20co)%3B%20%7Bavailability%7D%2C%20%22%0A%20%20%20%20%20%20%20%20f%22response%20rate%20%7Bcandidate%5B&#039;redrob_signals&#039;%5D%5B&#039;recruiter_response_rate&#039;%5D%3A.0%25%7D.%22%0A%20%20%20%20)%0A%60%60%60%0A%0A---%0A%0A%23%23%207.%20Tech%20Stack%0A%0A%7C%20Layer%20%7C%20Tool%20%7C%20Why%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20Embeddings%20%7C%20%60sentence-transformers%60%20(all-MiniLM-L6-v2)%20%7C%20CPU-friendly%2C%2080MB%2C%20good%20IR%20quality%20%7C%0A%7C%20Vector%20similarity%20%7C%20%60numpy%60%20cosine%20(no%20FAISS%20needed%20%E2%80%94%20single%20JD%20query)%20%7C%20No%20overhead%2C%20pure%20CPU%20%7C%0A%7C%20Data%20parsing%20%7C%20%60json%60%20%2B%20%60pandas%60%20%7C%20JSONL%20native%20%7C%0A%7C%20Scoring%20%7C%20Pure%20Python%20%2B%20numpy%20%7C%20No%20GPU%20deps%20%7C%0A%7C%20Validation%20%7C%20%60validate_submission.py%60%20(provided)%20%7C%20Run%20before%20upload%20%7C%0A%7C%20Sandbox%20%7C%20Docker%20(CPU%2C%2016GB%2C%20Python%203.10)%20%7C%20Matches%20Stage%203%20constraint%20%7C%0A%7C%20Demo%20%7C%20HuggingFace%20Spaces%20or%20Streamlit%20Cloud%20%7C%20Required%20by%20submission%20rules%20%7C%0A%0A---%0A%0A%23%23%208.%20Evaluation%20Metric%20Alignment%0A%0A%60%60%60%0AFinal%20%3D%200.50%20%C3%97%20NDCG%4010%20%2B%200.30%20%C3%97%20NDCG%4050%20%2B%200.15%20%C3%97%20MAP%20%2B%200.05%20%C3%97%20P%4010%0A%60%60%60%0A%0A%7C%20Metric%20%7C%20What%20it%20penalizes%20%7C%20How%20we%20address%20it%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20NDCG%4010%20%7C%20Wrong%20candidates%20in%20top%2010%20%7C%20Strict%20disqualifier%20%2B%20high%20Technical_Fit%20weight%20%7C%0A%7C%20NDCG%4050%20%7C%20Score%20inversions%20in%20top%2050%20%7C%20Continuous%20scoring%20(no%20hard%20buckets)%20%2B%20monotonic%20output%20%7C%0A%7C%20MAP%20%7C%20Missing%20relevant%20candidates%20%7C%20Semantic%20similarity%20catches%20plain-language%20strong%20engineers%20%7C%0A%7C%20P%4010%20%7C%20Any%20irrelevant%20in%20top%2010%20%7C%20Honeypot%20detection%20%2B%20consulting%20filter%20%7C%0A%0ANDCG%4010%20is%2050%25%20of%20score%20%E2%80%94%20**top%2010%20precision%20is%20the%20win%20condition.**%20Technical_Fit%20(0.35)%20%2B%20Career_Quality%20(0.25)%20%3D%200.60%20of%20composite%20drives%20top-10%20quality.%0A%0A---%0A%0A%23%23%209.%20Traps%20%26%20Counter-measures%0A%0A%7C%20Trap%20%7C%20Counter%20%7C%0A%7C---%7C---%7C%0A%7C%20Keyword%20stuffers%20%7C%20Check%20role%20titles%20%2B%20career%20descriptions%2C%20not%20just%20skills%20field%20%7C%0A%7C%20Honeypots%20%7C%20Year-of-experience%20vs%20earliest%20company%20founding%20date%20check%20%7C%0A%7C%20Behavioral%20twins%20%7C%20Availability_Signal%20(0.20)%20creates%20meaningful%20tie-breaking%20%7C%0A%7C%20Plain-language%20engineers%20%7C%20Semantic%20similarity%20via%20embedding%20catches%20them%20%7C%0A%7C%20Consulting%20careers%20%7C%20Hard%20penalize%20in%20Career_Quality%20sub-score%20%7C%0A%7C%20LangChain-only%20%22AI%22%20%7C%20Check%20for%20embeddings%2Fvector%20DB%20evidence%20in%20career%20descriptions%20%7C%0A%7C%20Over-seniored%20%7C%20Seniority_Fit%20penalizes%2015%2B%20yr%20candidates%20(beyond%20target%20range)%20%7C%0A%0A---%0A%0A%23%23%2010.%20Clarifying%20Questions%20(Confirm%20Before%20Building)%0A%0A1.%20Does%20%60candidate_schema.json%60%20define%20all%20possible%20company%20names%2C%20or%20is%20consulting%20firm%20list%20custom-built%3F%0A2.%20Are%20%60skill_assessment_scores%60%20available%20for%20most%20candidates%2C%20or%20sparse%3F%0A3.%20Is%20%60career_history%5B*%5D.description%60%20free%20text%20(for%20embedding)%20or%20structured%20fields%3F%0A4.%20What&#039;s%20the%20%60education.tier%60%20encoding%20%E2%80%94%20numeric%201%E2%80%935%20or%20string%20labels%3F%0A5.%20Does%20%60dates%60%20in%20career_history%20contain%20structured%20%60%7Bstart%2C%20end%7D%60%20or%20raw%20string%20like%20%22Jan%202019%20%E2%80%93%20Mar%202022%22%3F%0A6.%20Is%20the%20sandbox%20pre-computation%20allowed%20(embeddings%20cached%20in%20Docker%20image)%2C%20or%20must%20everything%20run%20in%205%20min%20from%20cold%20start%3F%0A%0A---%0A%0A%23%23%2011.%20Submission%20Checklist%0A%0A-%20%5B%20%5D%20%60precompute.py%60%20runs%20clean%20on%20full%20%60candidates.jsonl%60%0A-%20%5B%20%5D%20%60rank.py%60%20completes%20in%20%3C%205%20min%20on%20CPU%2C%2016GB%0A-%20%5B%20%5D%20%60validate_submission.py%60%20passes%20with%20zero%20errors%0A-%20%5B%20%5D%20Exactly%20100%20rows%2C%20ranks%201%E2%80%93100%20each%20exactly%20once%0A-%20%5B%20%5D%20Scores%20non-increasing%20with%20rank%0A-%20%5B%20%5D%20Reasoning%20strings%201%E2%80%932%20sentences%2C%20specific%20(not%20generic)%0A-%20%5B%20%5D%20No%20score%20inversions%0A-%20%5B%20%5D%20%E2%89%A43%20submissions%20total%20%E2%80%94%20do%20not%20waste%20on%20untested%20builds%0A-%20%5B%20%5D%20Sandbox%20link%20live%20(HuggingFace%20Spaces%20%2F%20Streamlit%20%2F%20Colab)%0A-%20%5B%20%5D%20%60submission_metadata_template.yaml%60%20filled%0A-%20%5B%20%5D%20AI%20tool%20usage%20declared%0A%0A---%0A%0A%23%23%2012.%20Why%20This%20Wins%0A%0A%7C%20Judging%20Criterion%20%7C%20RecruiterIQ%20Answer%20%7C%0A%7C---%7C---%7C%0A%7C%20**Ranking%20quality**%20%7C%20Multi-signal%20composite%20defeats%20keyword%20systems%3B%20behavioral%20signals%20surface%20available%20candidates%3B%20honeypot%20detection%20prevents%20disqualification%20%7C%0A%7C%20**Methodology%20clarity**%20%7C%20Explicit%20weights%2C%20documented%20sub-scores%2C%20reproducible%20in%20Docker%20%7C%0A%7C%20**Explainability**%20%7C%20Per-candidate%20reasoning%20string%2C%20score%20breakdown%20by%20signal%20category%2C%20interpretable%20weights%20%7C%0A%7C%20**Code%20reproduction**%20%7C%20Pure%20Python%20%2B%20numpy%20%2B%20sentence-transformers%2C%20no%20GPU%2C%20runs%20in%20sandbox%20%7C%0A%7C%20**Interview%20defense**%20%7C%20Every%20weight%20choice%20is%20JD-grounded%20and%20documented%20here%20%7C%0A%0A---%0A%0A*RecruiterIQ%20%E2%80%94%20Built%20for%20India%20Runs%20Hackathon%20%C2%B7%20Redrob%20AI%20Challenge%20%C2%B7%202025*%0A" style="display: none;"></div>
+                  
+                    <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
+                      <ol>
+                        
+                        
+                          <li class="breadcrumb-item " >
+                            
+                              <span>Documentation</span>
+                            
+                            
+                              <span class="breadcrumb-separator">
+<svg class="lucide-icon icon-chevron-right " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+                            
+                          </li>
+                        
+                          <li class="breadcrumb-item active" aria-current=&quot;page&quot;>
+                            
+                              <span>RecruiterIQ — Product Requirements Document</span>
+                            
+                            
+                          </li>
+                        
+                      </ol>
+                    </nav>
+                  
+
+                  
+                    <div class="docmd-copy-widgets">
+                      
+                        <button class="docmd-copy-btn docmd-copy-raw-btn" data-copied="copiedToClipboard" title="copyMarkdown" aria-label="copyMarkdown">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-copy " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-copy"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+</svg>
+</span>
+                        </button>
+                      
+                      
+                        <button class="docmd-copy-btn docmd-copy-context-btn" data-copied="copiedToClipboard" title="copyContext">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-message-square " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-message-square"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+</svg>
+</span>
+                          <span class="docmd-btn-text">copyContext</span>
+                        </button>
+                      
+                    </div>
+                  
+                </div>
+                
+                <h1 id="recruiteriq-product-requirements-document" class="docmd-heading"><a href="#recruiteriq-product-requirements-document" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>RecruiterIQ — Product Requirements Document</h1>
+<p><strong>AI Candidate Ranking System | India Runs Hackathon (Redrob AI)</strong></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Version</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Challenge</td>
+<td>Intelligent Candidate Discovery &amp; Ranking</td>
+</tr>
+<tr>
+<td>Target Role</td>
+<td>Senior AI Engineer — Founding Team @ Redrob AI</td>
+</tr>
+<tr>
+<td>Dataset</td>
+<td>100,000 candidates (<code>candidates.jsonl</code>)</td>
+</tr>
+<tr>
+<td>Output</td>
+<td>Top 100 ranked candidates (<code>&lt;participant_id&gt;.csv</code>)</td>
+</tr>
+<tr>
+<td>Sandbox Constraint</td>
+<td>CPU-only · 16GB RAM · 5 min runtime · No network calls</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="recruiteriq-product-requirements-document-1-problem-restatement" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-1-problem-restatement" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>1. Problem Restatement</h2>
+<p>Rank top 100 out of 100,000 candidates for a <strong>Senior AI Engineer</strong> role. Dataset contains:</p>
+<ul>
+<li>Keyword stuffers (AI skills on non-technical profiles)</li>
+<li>Honeypots (~80 impossible profiles — disqualify if &gt;10 in top 100)</li>
+<li>Behavioral twins (same skills, wildly different availability)</li>
+<li>Plain-language strong engineers who don’t buzzword-match</li>
+</ul>
+<p><strong>Core trap to avoid:</strong> Ranking by skills keyword density. A candidate whose skills list contains 15 AI terms but has “Marketing Manager” in career history is noise, not signal.</p>
+<hr>
+<h2 id="recruiteriq-product-requirements-document-2-winning-approach" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-2-winning-approach" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>2. Winning Approach</h2>
+<h3 id="recruiteriq-product-requirements-document-2-winning-approach-architecture-decision-offline-hybrid-scoring-no-api-calls-at-inference-time" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-2-winning-approach-architecture-decision-offline-hybrid-scoring-no-api-calls-at-inference-time" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Architecture Decision: Offline Hybrid Scoring (No API calls at inference time)</h3>
+<pre class="hljs"><code>Pre<span class="hljs-punctuation">-</span><span class="hljs-title function_">computation</span> (offline, before submission)<span class="hljs-punctuation">:</span>
+  candidates.<span class="hljs-attr">jsonl</span>
+      → Normalize <span class="hljs-punctuation">+</span> Disqualify
+      → Embed candidate <span class="hljs-title function_">profiles</span> (sentence<span class="hljs-punctuation">-</span>transformers, CPU)
+      → Compute per<span class="hljs-punctuation">-</span>signal sub<span class="hljs-punctuation">-</span>scores
+      → Cache scoring artifacts
+
+Ranking <span class="hljs-title function_">step</span> (must run <span class="hljs-keyword">in</span> <span class="hljs-punctuation">&lt;</span> <span class="hljs-number">5</span> min, CPU, 16GB)<span class="hljs-punctuation">:</span>
+  Load cached artifacts
+      → Weighted composite score per candidate
+      → Sort → Take <span class="hljs-keyword">top</span> <span class="hljs-number">100</span>
+      → Generate reasoning strings
+      → Write CSV
+</code></pre>
+<p><strong>Why this wins:</strong></p>
+<ul>
+<li>No LLM API needed at ranking time (satisfies no-network constraint)</li>
+<li>Pre-computed embeddings = fast inference pass</li>
+<li>Multi-signal scoring defeats keyword stuffers AND honeypots</li>
+<li>Behavioral signals surface available candidates over unavailable ones</li>
+<li>Fully reproducible in Docker sandbox</li>
+</ul>
+<hr>
+<h2 id="recruiteriq-product-requirements-document-3-disqualification-layer-pre-filter-before-scoring" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-3-disqualification-layer-pre-filter-before-scoring" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3. Disqualification Layer (Pre-filter before scoring)</h2>
+<p>Run before any scoring. Hard removes:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Signal</th>
+<th>Threshold</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Consulting-only</td>
+<td>All career roles at TCS/Infosys/Wipro/Capgemini/Accenture</td>
+<td>Drop if zero product company roles</td>
+</tr>
+<tr>
+<td>Pure research</td>
+<td>All roles are “Researcher” with no deployment evidence</td>
+<td>Drop</td>
+</tr>
+<tr>
+<td>No code in 18mo</td>
+<td><code>last_active_date</code> + <code>career_history</code> latest role end</td>
+<td>Flag/down-rank</td>
+</tr>
+<tr>
+<td>Title chaser</td>
+<td>Median tenure &lt; 1.5 yrs across career</td>
+<td>Down-rank</td>
+</tr>
+<tr>
+<td>Honeypot</td>
+<td><code>years_of_experience</code> &gt; (current_year - company_founded_year) on earliest role</td>
+<td>Hard drop</td>
+</tr>
+<tr>
+<td>CV/Speech/Robotics only</td>
+<td>Skills + titles contain zero NLP/IR/retrieval signals</td>
+<td>Down-rank</td>
+</tr>
+<tr>
+<td>LangChain-only AI</td>
+<td>Only AI exp = recent LangChain + OpenAI wrappers, no embeddings/vector DBs</td>
+<td>Down-rank</td>
+</tr>
+</tbody>
+</table>
+</div><blockquote>
+<p>Honeypot check: parse <code>career_history[0].dates</code> start year vs company tenure. If a candidate claims 8 years of experience at a company that has existed for 3 years, ground truth relevance = 0. Drop these.</p>
+</blockquote>
+<hr>
+<h2 id="recruiteriq-product-requirements-document-4-scoring-methodology" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-4-scoring-methodology" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4. Scoring Methodology</h2>
+<h3 id="recruiteriq-product-requirements-document-4-scoring-methodology-41-composite-score-formula" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-4-scoring-methodology-41-composite-score-formula" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4.1 Composite Score Formula</h3>
+<pre class="hljs"><code>S <span class="hljs-punctuation">=</span> w1·Technical_Fit
+  <span class="hljs-punctuation">+</span> w2·Career_Quality
+  <span class="hljs-punctuation">+</span> w3·Availability_Signal
+  <span class="hljs-punctuation">+</span> w4·Seniority_Fit
+  <span class="hljs-punctuation">+</span> w5·Semantic_Similarity
+</code></pre>
+<p>All sub-scores normalized to [0, 1] before weighting.</p>
+<h3 id="recruiteriq-product-requirements-document-4-scoring-methodology-42-weight-allocation" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-4-scoring-methodology-42-weight-allocation" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4.2 Weight Allocation</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Weight</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>Technical_Fit</code></td>
+<td><strong>0.35</strong></td>
+<td>Core JD requirements — embeddings, vector DBs, Python, eval frameworks</td>
+</tr>
+<tr>
+<td><code>Career_Quality</code></td>
+<td><strong>0.25</strong></td>
+<td>Product company history, tenure, progression, shipped systems</td>
+</tr>
+<tr>
+<td><code>Availability_Signal</code></td>
+<td><strong>0.20</strong></td>
+<td>Behavioral signals — availability, responsiveness, recency</td>
+</tr>
+<tr>
+<td><code>Seniority_Fit</code></td>
+<td><strong>0.12</strong></td>
+<td>Years exp, title progression, company stage fit</td>
+</tr>
+<tr>
+<td><code>Semantic_Similarity</code></td>
+<td><strong>0.08</strong></td>
+<td>Embedding cosine similarity — catch plain-language strong candidates</td>
+</tr>
+</tbody>
+</table>
+</div><h3 id="recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4.3 Sub-Score Definitions</h3>
+<h4 id="recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-technicalfit-01" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-technicalfit-01" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a><code>Technical_Fit</code> (0–1)</h4>
+<p>Check against JD must-haves using skill field + career description text:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Embeddings/retrieval in production (sentence-transformers, BGE, E5)</td>
+<td>+0.25</td>
+</tr>
+<tr>
+<td>Vector DB experience (Pinecone, Milvus, Qdrant, Weaviate, FAISS)</td>
+<td>+0.20</td>
+</tr>
+<tr>
+<td>Strong Python (proficiency=expert OR skill_assessment score ≥70)</td>
+<td>+0.15</td>
+</tr>
+<tr>
+<td>Evaluation framework design (NDCG, MRR, MAP, A/B)</td>
+<td>+0.15</td>
+</tr>
+<tr>
+<td>LLM fine-tuning (LoRA, QLoRA, PEFT)</td>
+<td>+0.10 (nice-to-have)</td>
+</tr>
+<tr>
+<td>Learning-to-rank (XGBoost, neural rankers)</td>
+<td>+0.10 (nice-to-have)</td>
+</tr>
+<tr>
+<td>HR-tech / marketplace domain</td>
+<td>+0.05 (bonus)</td>
+</tr>
+</tbody>
+</table>
+</div><p>Cap at 1.0. Normalize raw points.</p>
+<p><strong>Skill proficiency weight:</strong></p>
+<ul>
+<li><code>expert</code> = 1.0 · signal strength</li>
+<li><code>advanced</code> = 0.75</li>
+<li><code>intermediate</code> = 0.4</li>
+<li><code>beginner</code> = 0.1</li>
+</ul>
+<p>Use <code>skill_assessment_scores</code> dict if present — platform-verified trumps self-reported proficiency.</p>
+<h4 id="recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-careerquality-01" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-careerquality-01" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a><code>Career_Quality</code> (0–1)</h4>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>≥1 product company role (non-consulting)</td>
+<td>+0.30</td>
+</tr>
+<tr>
+<td>≥1 role with title: Engineer/ML/Data/Research at company_size ≥ 50</td>
+<td>+0.15</td>
+</tr>
+<tr>
+<td>No solo consulting-only history</td>
+<td>+0.15</td>
+</tr>
+<tr>
+<td>Median tenure ≥ 2.0 yrs</td>
+<td>+0.20</td>
+</tr>
+<tr>
+<td>Career progression (title seniority increases over time)</td>
+<td>+0.20</td>
+</tr>
+</tbody>
+</table>
+</div><p>Consulting company list to penalize: <code>[&quot;TCS&quot;, &quot;Infosys&quot;, &quot;Wipro&quot;, &quot;Capgemini&quot;, &quot;Cognizant&quot;, &quot;Accenture&quot;, &quot;HCL&quot;, &quot;Mphasis&quot;, &quot;Tech Mahindra&quot;, &quot;Hexaware&quot;]</code></p>
+<h4 id="recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-availabilitysignal-01" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-availabilitysignal-01" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a><code>Availability_Signal</code> (0–1)</h4>
+<p>Derived entirely from <code>redrob_signals</code>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Weight</th>
+<th>Direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>open_to_work_flag</code></td>
+<td>0.25</td>
+<td>True = +1</td>
+</tr>
+<tr>
+<td><code>last_active_date</code> recency</td>
+<td>0.20</td>
+<td>&lt; 30d = 1.0, &lt; 90d = 0.6, &lt; 180d = 0.3, older = 0.0</td>
+</tr>
+<tr>
+<td><code>recruiter_response_rate</code></td>
+<td>0.15</td>
+<td>Direct use (0–1)</td>
+</tr>
+<tr>
+<td><code>avg_response_time_hours</code></td>
+<td>0.10</td>
+<td>≤4h = 1.0, ≤24h = 0.7, ≤72h = 0.4, &gt;72h = 0.1</td>
+</tr>
+<tr>
+<td><code>interview_completion_rate</code></td>
+<td>0.15</td>
+<td>Direct use (0–1)</td>
+</tr>
+<tr>
+<td><code>applications_submitted_30d</code></td>
+<td>0.10</td>
+<td>≥3 = 1.0, 1–2 = 0.5, 0 = 0.0</td>
+</tr>
+<tr>
+<td><code>notice_period_days</code></td>
+<td>0.05</td>
+<td>≤30 = 1.0, ≤60 = 0.7, ≤90 = 0.4, &gt;90 = 0.1</td>
+</tr>
+</tbody>
+</table>
+</div><blockquote>
+<p>Key insight from dataset docs: “A perfect-on-paper candidate with low response rate + old last_activity is effectively unavailable.” Availability weight = 0.20 of total ensures this doesn’t bury good candidates, but a zero availability score meaningfully drops rank.</p>
+</blockquote>
+<h4 id="recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-seniorityfit-01" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-seniorityfit-01" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a><code>Seniority_Fit</code> (0–1)</h4>
+<p>JD target: 6–8 years total, 4–5 in applied ML at product companies.</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Criterion</th>
+<th>Score</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>years_of_experience</code> 6–9</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>4–5 or 10–12</td>
+<td>0.7</td>
+</tr>
+<tr>
+<td>3 or 13–15</td>
+<td>0.4</td>
+</tr>
+<tr>
+<td>❤️ or &gt;15</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+</div><p>Apply education tier bonus:</p>
+<ul>
+<li><code>tier</code> 1 (IIT/IISc/NIT/BITS) = +0.05</li>
+<li><code>tier</code> 2 = +0.02</li>
+<li><code>tier</code> 3–5 = 0</li>
+</ul>
+<p>Cap at 1.0.</p>
+<h4 id="recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-semanticsimilarity-01" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-semanticsimilarity-01" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a><code>Semantic_Similarity</code> (0–1)</h4>
+<p><strong>Purpose:</strong> Catch strong candidates who describe skills in plain language rather than buzzwords.</p>
+<p><strong>Method:</strong></p>
+<ol>
+<li>Pre-compute offline: embed all 100k candidates using <code>all-MiniLM-L6-v2</code> (CPU-friendly, 80MB model)</li>
+<li>Embed JD once</li>
+<li>At ranking time: cosine similarity between candidate embedding and JD embedding</li>
+<li>Normalize to [0, 1]</li>
+</ol>
+<p><strong>Profile blob for embedding</strong> (concatenate):</p>
+<pre class="hljs"><code>{headline} {summary} {current_title} {career_history[<span class="hljs-punctuation">*</span>].<span class="hljs-attr">description</span>} {skills[<span class="hljs-punctuation">*</span>].<span class="hljs-attr">name</span>}
+</code></pre>
+<p>Do NOT include skills list alone as proxy for capability — include role descriptions.</p>
+<hr>
+<h2 id="recruiteriq-product-requirements-document-5-honeypot-detection" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-5-honeypot-detection" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>5. Honeypot Detection</h2>
+<p>Hard drop candidates matching any:</p>
+<pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_honeypot</span>(candidate)<span class="hljs-punctuation">:</span>
+    <span class="hljs-keyword">for</span> role <span class="hljs-keyword">in</span> candidate[<span class="hljs-string">&#039;career_history&#039;</span>]<span class="hljs-punctuation">:</span>
+        start_year <span class="hljs-punctuation">=</span> <span class="hljs-title function_">parse_year</span>(role[<span class="hljs-string">&#039;dates&#039;</span>][<span class="hljs-string">&#039;start&#039;</span>])
+        current_year <span class="hljs-punctuation">=</span> <span class="hljs-number">2025</span>
+        <span class="hljs-keyword">if</span> candidate[<span class="hljs-string">&#039;profile&#039;</span>][<span class="hljs-string">&#039;years_of_experience&#039;</span>] <span class="hljs-punctuation">&gt;</span> (current_year <span class="hljs-punctuation">-</span> start_year <span class="hljs-punctuation">+</span> <span class="hljs-number">10</span>)<span class="hljs-punctuation">:</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>  <span class="hljs-comment"># Claimed more exp than career allows</span>
+    
+    <span class="hljs-comment"># Profile completeness 0 + no verified contact = ghost profile</span>
+    signals <span class="hljs-punctuation">=</span> candidate[<span class="hljs-string">&#039;redrob_signals&#039;</span>]
+    <span class="hljs-keyword">if</span> (signals[<span class="hljs-string">&#039;profile_completeness_score&#039;</span>] <span class="hljs-punctuation">&lt;</span> <span class="hljs-number">5</span> and 
+        not signals[<span class="hljs-string">&#039;verified_email&#039;</span>] and 
+        not signals[<span class="hljs-string">&#039;verified_phone&#039;</span>])<span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+</code></pre>
+<p>Target: keep honeypots out of top 100. ≤10 allowed before disqualification.</p>
+<hr>
+<h2 id="recruiteriq-product-requirements-document-6-implementation-plan" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-6-implementation-plan" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>6. Implementation Plan</h2>
+<h3 id="recruiteriq-product-requirements-document-6-implementation-plan-61-file-structure" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-6-implementation-plan-61-file-structure" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>6.1 File Structure</h3>
+<pre class="hljs"><code>recruiteriq<span class="hljs-punctuation">/</span>
+├── precompute.<span class="hljs-attr">py</span>          <span class="hljs-comment"># Run once offline — embeds + caches scores</span>
+├── rank.<span class="hljs-attr">py</span>                <span class="hljs-comment"># Main ranking script (must run &lt; 5 min)</span>
+├── signals.<span class="hljs-attr">py</span>             <span class="hljs-comment"># All sub-score functions</span>
+├── disqualify.<span class="hljs-attr">py</span>          <span class="hljs-comment"># Honeypot + hard disqualifier rules</span>
+├── config.<span class="hljs-attr">py</span>              <span class="hljs-comment"># Weights, thresholds, consulting firm list</span>
+├── requirements.<span class="hljs-attr">txt</span>
+├── Dockerfile
+├── artifacts<span class="hljs-punctuation">/</span>
+│   ├── embeddings.<span class="hljs-attr">npy</span>     <span class="hljs-comment"># Pre-computed candidate embeddings (cached)</span>
+│   ├── jd_embedding.<span class="hljs-attr">npy</span>   <span class="hljs-comment"># JD embedding</span>
+│   └── scores_cache.<span class="hljs-attr">pkl</span>   <span class="hljs-comment"># Pre-computed sub-scores (optional)</span>
+└── output<span class="hljs-punctuation">/</span>
+    └── <span class="hljs-punctuation">&lt;</span>participant_id<span class="hljs-punctuation">&gt;</span>.<span class="hljs-attr">csv</span>
+</code></pre>
+<h3 id="recruiteriq-product-requirements-document-6-implementation-plan-62-precomputepy-run-before-submission" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-6-implementation-plan-62-precomputepy-run-before-submission" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>6.2 <code>precompute.py</code> (run before submission)</h3>
+<pre class="hljs"><code><span class="hljs-comment"># 1. Load all 100k candidates from candidates.jsonl</span>
+<span class="hljs-comment"># 2. Run disqualifier — mark honeypots</span>
+<span class="hljs-comment"># 3. Build profile blob per candidate</span>
+<span class="hljs-comment"># 4. Batch embed using sentence-transformers (all-MiniLM-L6-v2)</span>
+<span class="hljs-comment">#    - Batch size 512 for CPU efficiency</span>
+<span class="hljs-comment">#    - Estimated time: ~20-40 min on CPU for 100k</span>
+<span class="hljs-comment"># 5. Compute Technical_Fit, Career_Quality, Availability, Seniority per candidate</span>
+<span class="hljs-comment"># 6. Save embeddings.npy + scores_cache.pkl</span>
+</code></pre>
+<h3 id="recruiteriq-product-requirements-document-6-implementation-plan-63-rankpy-sandbox-execution-5-min" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-6-implementation-plan-63-rankpy-sandbox-execution-5-min" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>6.3 <code>rank.py</code> (sandbox execution, &lt; 5 min)</h3>
+<pre class="hljs"><code><span class="hljs-comment"># 1. Load cached embeddings + sub-scores (precomputed)</span>
+<span class="hljs-comment"># 2. Load JD embedding</span>
+<span class="hljs-comment"># 3. Compute semantic similarity (fast cosine on cached vectors)</span>
+<span class="hljs-comment"># 4. Compute composite score S for all candidates</span>
+<span class="hljs-comment"># 5. Sort descending, take top 100</span>
+<span class="hljs-comment"># 6. Generate reasoning string per candidate</span>
+<span class="hljs-comment"># 7. Validate: no score inversion, exactly 100 rows, ranks 1–100</span>
+<span class="hljs-comment"># 8. Write CSV</span>
+</code></pre>
+<h3 id="recruiteriq-product-requirements-document-6-implementation-plan-64-reasoning-string-template" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-6-implementation-plan-64-reasoning-string-template" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>6.4 Reasoning String Template</h3>
+<pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate_reasoning</span>(candidate, scores)<span class="hljs-punctuation">:</span>
+    top_skills <span class="hljs-punctuation">=</span> <span class="hljs-title function_">get_top_matching_skills</span>(candidate, JD_SKILLS)
+    career_highlight <span class="hljs-punctuation">=</span> <span class="hljs-title function_">get_strongest_role</span>(candidate)
+    availability <span class="hljs-punctuation">=</span> <span class="hljs-string">&quot;actively looking&quot;</span> <span class="hljs-keyword">if</span> candidate[<span class="hljs-string">&#039;redrob_signals&#039;</span>][<span class="hljs-string">&#039;open_to_work_flag&#039;</span>] <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;passive&quot;</span>
+    
+    <span class="hljs-keyword">return</span> (
+        f<span class="hljs-string">&quot;{candidate[&#039;profile&#039;][&#039;years_of_experience&#039;]}yr ML engineer with production &quot;</span>
+        f<span class="hljs-string">&quot;{top_skills[0]} + {top_skills[1]} experience at {career_highlight[&#039;company&#039;]} &quot;</span>
+        f<span class="hljs-string">&quot;({career_highlight[&#039;company_size&#039;]} co); {availability}, &quot;</span>
+        f<span class="hljs-string">&quot;response rate {candidate[&#039;redrob_signals&#039;][&#039;recruiter_response_rate&#039;]:.0%}.&quot;</span>
+    )
+</code></pre>
+<hr>
+<h2 id="recruiteriq-product-requirements-document-7-tech-stack" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-7-tech-stack" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>7. Tech Stack</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Tool</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Embeddings</td>
+<td><code>sentence-transformers</code> (all-MiniLM-L6-v2)</td>
+<td>CPU-friendly, 80MB, good IR quality</td>
+</tr>
+<tr>
+<td>Vector similarity</td>
+<td><code>numpy</code> cosine (no FAISS needed — single JD query)</td>
+<td>No overhead, pure CPU</td>
+</tr>
+<tr>
+<td>Data parsing</td>
+<td><code>json</code> + <code>pandas</code></td>
+<td>JSONL native</td>
+</tr>
+<tr>
+<td>Scoring</td>
+<td>Pure Python + numpy</td>
+<td>No GPU deps</td>
+</tr>
+<tr>
+<td>Validation</td>
+<td><code>validate_submission.py</code> (provided)</td>
+<td>Run before upload</td>
+</tr>
+<tr>
+<td>Sandbox</td>
+<td>Docker (CPU, 16GB, Python 3.10)</td>
+<td>Matches Stage 3 constraint</td>
+</tr>
+<tr>
+<td>Demo</td>
+<td>HuggingFace Spaces or Streamlit Cloud</td>
+<td>Required by submission rules</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="recruiteriq-product-requirements-document-8-evaluation-metric-alignment" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-8-evaluation-metric-alignment" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>8. Evaluation Metric Alignment</h2>
+<pre class="hljs"><code>Final <span class="hljs-punctuation">=</span> <span class="hljs-number">0.50</span> × NDCG@<span class="hljs-number">10</span> <span class="hljs-punctuation">+</span> <span class="hljs-number">0.30</span> × NDCG@<span class="hljs-number">50</span> <span class="hljs-punctuation">+</span> <span class="hljs-number">0.15</span> × MAP <span class="hljs-punctuation">+</span> <span class="hljs-number">0.05</span> × P@<span class="hljs-number">10</span>
+</code></pre>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>What it penalizes</th>
+<th>How we address it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NDCG@10</td>
+<td>Wrong candidates in top 10</td>
+<td>Strict disqualifier + high Technical_Fit weight</td>
+</tr>
+<tr>
+<td>NDCG@50</td>
+<td>Score inversions in top 50</td>
+<td>Continuous scoring (no hard buckets) + monotonic output</td>
+</tr>
+<tr>
+<td>MAP</td>
+<td>Missing relevant candidates</td>
+<td>Semantic similarity catches plain-language strong engineers</td>
+</tr>
+<tr>
+<td>P@10</td>
+<td>Any irrelevant in top 10</td>
+<td>Honeypot detection + consulting filter</td>
+</tr>
+</tbody>
+</table>
+</div><p>NDCG@10 is 50% of score — <strong>top 10 precision is the win condition.</strong> Technical_Fit (0.35) + Career_Quality (0.25) = 0.60 of composite drives top-10 quality.</p>
+<hr>
+<h2 id="recruiteriq-product-requirements-document-9-traps-counter-measures" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-9-traps-counter-measures" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>9. Traps &amp; Counter-measures</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Trap</th>
+<th>Counter</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Keyword stuffers</td>
+<td>Check role titles + career descriptions, not just skills field</td>
+</tr>
+<tr>
+<td>Honeypots</td>
+<td>Year-of-experience vs earliest company founding date check</td>
+</tr>
+<tr>
+<td>Behavioral twins</td>
+<td>Availability_Signal (0.20) creates meaningful tie-breaking</td>
+</tr>
+<tr>
+<td>Plain-language engineers</td>
+<td>Semantic similarity via embedding catches them</td>
+</tr>
+<tr>
+<td>Consulting careers</td>
+<td>Hard penalize in Career_Quality sub-score</td>
+</tr>
+<tr>
+<td>LangChain-only “AI”</td>
+<td>Check for embeddings/vector DB evidence in career descriptions</td>
+</tr>
+<tr>
+<td>Over-seniored</td>
+<td>Seniority_Fit penalizes 15+ yr candidates (beyond target range)</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="recruiteriq-product-requirements-document-10-clarifying-questions-confirm-before-building" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-10-clarifying-questions-confirm-before-building" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>10. Clarifying Questions (Confirm Before Building)</h2>
+<ol>
+<li>Does <code>candidate_schema.json</code> define all possible company names, or is consulting firm list custom-built?</li>
+<li>Are <code>skill_assessment_scores</code> available for most candidates, or sparse?</li>
+<li>Is <code>career_history[*].description</code> free text (for embedding) or structured fields?</li>
+<li>What’s the <code>education.tier</code> encoding — numeric 1–5 or string labels?</li>
+<li>Does <code>dates</code> in career_history contain structured <code>{start, end}</code> or raw string like “Jan 2019 – Mar 2022”?</li>
+<li>Is the sandbox pre-computation allowed (embeddings cached in Docker image), or must everything run in 5 min from cold start?</li>
+</ol>
+<hr>
+<h2 id="recruiteriq-product-requirements-document-11-submission-checklist" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-11-submission-checklist" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>11. Submission Checklist</h2>
+<ul class="contains-task-list">
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> <code>precompute.py</code> runs clean on full <code>candidates.jsonl</code></li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> <code>rank.py</code> completes in &lt; 5 min on CPU, 16GB</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> <code>validate_submission.py</code> passes with zero errors</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Exactly 100 rows, ranks 1–100 each exactly once</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Scores non-increasing with rank</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Reasoning strings 1–2 sentences, specific (not generic)</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> No score inversions</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> ≤3 submissions total — do not waste on untested builds</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Sandbox link live (HuggingFace Spaces / Streamlit / Colab)</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> <code>submission_metadata_template.yaml</code> filled</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> AI tool usage declared</li>
+</ul>
+<hr>
+<h2 id="recruiteriq-product-requirements-document-12-why-this-wins" class="docmd-heading"><a href="#recruiteriq-product-requirements-document-12-why-this-wins" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>12. Why This Wins</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Judging Criterion</th>
+<th>RecruiterIQ Answer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ranking quality</strong></td>
+<td>Multi-signal composite defeats keyword systems; behavioral signals surface available candidates; honeypot detection prevents disqualification</td>
+</tr>
+<tr>
+<td><strong>Methodology clarity</strong></td>
+<td>Explicit weights, documented sub-scores, reproducible in Docker</td>
+</tr>
+<tr>
+<td><strong>Explainability</strong></td>
+<td>Per-candidate reasoning string, score breakdown by signal category, interpretable weights</td>
+</tr>
+<tr>
+<td><strong>Code reproduction</strong></td>
+<td>Pure Python + numpy + sentence-transformers, no GPU, runs in sandbox</td>
+</tr>
+<tr>
+<td><strong>Interview defense</strong></td>
+<td>Every weight choice is JD-grounded and documented here</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<p><em>RecruiterIQ — Built for India Runs Hackathon · Redrob AI Challenge · 2025</em></p>
+
+                
+              </div>
+              <div class="toc-sidebar">
+                
+
+
+  <div class="toc-container">
+    <h2 class="toc-title">onThisPage<span class="mobile-view toc-menu-button float-right">
+<svg class="lucide-icon icon-chevron-down " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-down"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</span></h2>
+    <ul class="toc-list">
+      
+        <li class="toc-item toc-level-1">
+          <a href="#recruiteriq-product-requirements-document" class="toc-link">RecruiterIQ — Product Requirements Document</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-1-problem-restatement" class="toc-link">1. Problem Restatement</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-2-winning-approach" class="toc-link">2. Winning Approach</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#recruiteriq-product-requirements-document-2-winning-approach-architecture-decision-offline-hybrid-scoring-no-api-calls-at-inference-time" class="toc-link">Architecture Decision: Offline Hybrid Scoring (No API calls at inference time)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-3-disqualification-layer-pre-filter-before-scoring" class="toc-link">3. Disqualification Layer (Pre-filter before scoring)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-4-scoring-methodology" class="toc-link">4. Scoring Methodology</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#recruiteriq-product-requirements-document-4-scoring-methodology-41-composite-score-formula" class="toc-link">4.1 Composite Score Formula</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#recruiteriq-product-requirements-document-4-scoring-methodology-42-weight-allocation" class="toc-link">4.2 Weight Allocation</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions" class="toc-link">4.3 Sub-Score Definitions</a>
+        </li>
+      
+        <li class="toc-item toc-level-4">
+          <a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-technicalfit-01" class="toc-link">Technical_Fit (0–1)</a>
+        </li>
+      
+        <li class="toc-item toc-level-4">
+          <a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-careerquality-01" class="toc-link">Career_Quality (0–1)</a>
+        </li>
+      
+        <li class="toc-item toc-level-4">
+          <a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-availabilitysignal-01" class="toc-link">Availability_Signal (0–1)</a>
+        </li>
+      
+        <li class="toc-item toc-level-4">
+          <a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-seniorityfit-01" class="toc-link">Seniority_Fit (0–1)</a>
+        </li>
+      
+        <li class="toc-item toc-level-4">
+          <a href="#recruiteriq-product-requirements-document-4-scoring-methodology-43-sub-score-definitions-semanticsimilarity-01" class="toc-link">Semantic_Similarity (0–1)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-5-honeypot-detection" class="toc-link">5. Honeypot Detection</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-6-implementation-plan" class="toc-link">6. Implementation Plan</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#recruiteriq-product-requirements-document-6-implementation-plan-61-file-structure" class="toc-link">6.1 File Structure</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#recruiteriq-product-requirements-document-6-implementation-plan-62-precomputepy-run-before-submission" class="toc-link">6.2 precompute.py (run before submission)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#recruiteriq-product-requirements-document-6-implementation-plan-63-rankpy-sandbox-execution-5-min" class="toc-link">6.3 rank.py (sandbox execution, </a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#recruiteriq-product-requirements-document-6-implementation-plan-64-reasoning-string-template" class="toc-link">6.4 Reasoning String Template</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-7-tech-stack" class="toc-link">7. Tech Stack</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-8-evaluation-metric-alignment" class="toc-link">8. Evaluation Metric Alignment</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-9-traps-counter-measures" class="toc-link">9. Traps &amp; Counter-measures</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-10-clarifying-questions-confirm-before-building" class="toc-link">10. Clarifying Questions (Confirm Before Building)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-11-submission-checklist" class="toc-link">11. Submission Checklist</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#recruiteriq-product-requirements-document-12-why-this-wins" class="toc-link">12. Why This Wins</a>
+        </li>
+      
+    </ul>
+  </div>
+
+              </div>
+            </div>
+            <div class="page-footer-actions">
+              
+              
+                <span class="git-last-updated" data-timestamp="1781074771000">
+                  <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span class="git-label">Last updated:</span>
+                  <span class="git-time" data-timestamp="1781074771000"></span>
+                  
+                  <div class="git-commit-tooltip" role="tooltip">
+                    <div class="git-tooltip-title">Recent commits</div>
+                    <ul class="git-commit-list">
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="DevanshSrajput">
+                            
+                              <img src="https://www.gravatar.com/avatar/7f22948119fdb4e2d70c1be1a1f39659?d=mp&amp;s=64" alt="DevanshSrajput">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="Initialize the Project: (Add Initial Project Documentation)">Initialize the Project: (Add Initial ...</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">DevanshSrajput</span>
+                              <span class="git-commit-date" data-timestamp="1781074771000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                    </ul>
+                  </div>
+                  
+                </span>
+              
+              <span class="git-spacer"></span>
+              
+            </div>
+          </main>
+          
+
+
+<footer class="page-footer">
+  <div class="footer-content">
+    <div class="user-footer"></div>
+    
+      <div class="branding-footer">
+        builtWith <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
+      </div>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+      
+      <script src="../../assets/js/docmd-main.js?v=mqcpwj52"></script>
+      
+      <script src="../../assets/js/docmd-git.js?v=mqcpwj52"></script>
+      <script src="../../assets/js/docmd-image-lightbox.js?v=mqcpwj52" ></script>
+<script src="https://cdn.jsdelivr.net/npm/minisearch@7.2.0/dist/umd/index.min.js" ></script>
+<script src="../../assets/js/docmd-search.js?v=mqcpwj52" ></script>
+<script src="../../assets/js/init-mermaid.js?v=mqcpwj52" type="module"></script>
+<script src="../../assets/js/docmd-git.js?v=mqcpwj52" type="module"></script>
+
+  <!-- Search Modal (Injected by @docmd/plugin-search) -->
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-show-confidence="false" data-show-filters="true"
+       data-search-placeholder="Search documentation..."
+       data-search-no-results="No results found."
+       data-search-error="Failed to load search index."
+       data-search-initial="Type to start searching..."
+       data-search-navigate="to navigate"
+       data-search-escape="to close">
+      <div class="docmd-search-box">
+          <div class="docmd-search-header">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-search"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input type="text" id="docmd-search-input" placeholder="Search documentation..." autocomplete="off" spellcheck="false">
+              <button onclick="window.closeDocmdSearch()" class="docmd-search-close" aria-label="Close search">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+          </div>
+          <div id="docmd-search-results" class="docmd-search-results"></div>
+          <div class="docmd-search-footer">
+              <span><kbd class="docmd-kbd">↑</kbd> <kbd class="docmd-kbd">↓</kbd> to navigate</span>
+              <span><kbd class="docmd-kbd">ESC</kbd> to close</span>
+          </div>
+      </div>
+  </div>
+
+    <script>
+      (function() {
+        var searchDebounceTimer;
+
+        document.addEventListener('click', function(e) {
+          var link = e.target.closest('a');
+          if (!link || !window.gtag) return;
+          
+          var url = link.href;
+          var hostname = window.location.hostname;
+          var isExternal = link.hostname && link.hostname !== hostname;
+          var isDownload = link.hasAttribute('download') || url.match(/\.(pdf|zip|tar|gz|exe|pkg)$/i);
+          
+          if (isExternal) {
+            gtag('event', 'click_external', { 'url': url, 'link_text': link.innerText.trim() });
+          } else if (isDownload) {
+            gtag('event', 'download', { 'file_name': url.split('/').pop(), 'url': url });
+          }
+
+          // TOC tracking
+          if (link.classList.contains('toc-link')) {
+            gtag('event', 'toc_click', { 'target_id': link.getAttribute('href'), 'title': link.innerText.trim() });
+          }
+
+          // Permalink tracking
+          if (link.classList.contains('heading-anchor')) {
+            gtag('event', 'permalink_click', { 'url': url });
+          }
+        });
+
+        
+        // Search Keyword Tracking
+        document.addEventListener('input', function(e) {
+          if (e.target.id === 'docmd-search-input' && window.gtag) {
+            var query = e.target.value.trim();
+            if (query.length < 3) return;
+            
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(function() {
+              gtag('event', 'search', { 'search_term': query });
+            }, 1000);
+          }
+        });
+        
+      })();
+    </script>
+
+<script>window.__git_config={"repo":null,"branch":"main","editLink":false,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+      
+  </body>
+</html>

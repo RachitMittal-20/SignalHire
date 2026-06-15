@@ -1,0 +1,1060 @@
+<!--
+  ---------------------------------------------------------------
+  docmd : the zero-config documentation engine.
+  @website https://docmd.io
+  [docmd-source] - Please do not remove this header.
+  ---------------------------------------------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="generator" content="docmd v0.5.x">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+    <style>
+      html {
+        visibility: hidden;
+      }
+    </style>
+    
+    <script>
+      var root = "../../";
+      if (root && !root.endsWith('/')) root += '/';
+      if (root === '') root = './';
+      window.DOCMD_ROOT = root;
+
+      var siteRoot = "../../";
+      if (siteRoot && !siteRoot.endsWith('/')) siteRoot += '/';
+      if (siteRoot === '') siteRoot = './';
+      window.DOCMD_SITE_ROOT = siteRoot;
+
+      window.DOCMD_APPEARANCE = "system";
+      window.DOCMD_VERSION_ROOT = "/";
+      window.DOCMD_BASE = "/";
+      window.DOCMD_LOCALE = "";
+      window.DOCMD_DEFAULT_LOCALE = "";
+    </script>
+    <title>
+      App Flow Document : SignalHire
+    </title>
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mqcpwj52">
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mqcpwj52" id="hljs-light" >
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mqcpwj52" id="hljs-dark" disabled>
+    
+    
+<meta name="description" content="">
+<link rel="canonical" href="/Documentation/APP_FLOW/">
+<meta property="og:title" content="App Flow Document - SignalHire">
+<meta property="og:description" content="">
+<meta property="og:url" content="/Documentation/APP_FLOW/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="App Flow Document - SignalHire">
+<meta name="twitter:description" content="">
+
+
+
+<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mqcpwj52" >
+<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mqcpwj52" >
+
+    
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+  </head>
+  <body
+    class="sidebar-collapsible"
+    data-default-collapsed="false"
+    data-copy-code-enabled="false" data-spa-enabled="true" data-source-file="Documentation/APP_FLOW.md">
+
+    <a href="#main-content" class="skip-link">skipToContent</a>
+
+    
+    
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          
+            <h1><a href="../../">
+                SignalHire
+              </a></h1>
+          
+          <span class="mobile-view sidebar-menu-button float-right">
+            
+<svg class="lucide-icon icon-menu " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-menu"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+
+          </span>
+        </div>
+        <div class="sidebar-top-group">
+          
+          
+          
+          
+        </div>
+        
+
+<nav class="sidebar-nav" aria-label="mainNavigation">
+  <ul>
+    
+      <li class="" >
+      
+        <a href="../../" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 SignalHire — AI-Powered Candidate Ranking
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../GOOD_FIRST_ISSUES/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 Good First Issues
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active-parent collapsible expanded nav-group"  aria-expanded="true" >
+      
+        <span class="nav-label nav-group">
+          
+          <span class="nav-item-title">
+            Documentation
+          </span>
+          
+            <span class="collapse-icon-wrapper">
+<svg class="lucide-icon icon-chevron-right collapse-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+          
+        </span>
+        
+
+        
+          <ul class="submenu">
+            
+      <li class="active" >
+      
+        <a href="../../Documentation/APP_FLOW/" class="active "
+          >
+          
+          <span class="nav-item-title">
+            App Flow Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/BACKEND_SCHEMA/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Backend Schema Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/IMPLEMENTATION_PLAN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Implementation Plan
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/RecruiterIQ_PRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            RecruiterIQ — Product Requirements Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/TRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Technical Requirements Document (TRD)
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/UIUX_DESIGN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            UI/UX Design Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+          </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+        <div class="sidebar-bottom-group mt-auto">
+          
+          
+          
+          
+        </div>
+      </aside>
+      
+      <div class="main-content-wrapper">
+        
+        
+          <header class="page-header">
+            <div class="header-left">
+              
+                <button id="sidebar-toggle-button" class="sidebar-toggle-button"
+                  aria-label="toggleSidebar">
+                  
+<svg class="lucide-icon icon-chevron-left " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+
+                </button>
+              
+              <div class="header-titles-wrapper">
+                <span class="header-title">
+                  App Flow Document
+                </span>
+              </div>
+            </div>
+            <div class="header-right">
+              
+                
+
+
+<div class="docmd-options-menu">
+    
+    <button class="docmd-search-trigger" aria-label="search">
+        
+<svg class="lucide-icon icon-search " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-search"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" />
+</svg>
+
+        <span class="search-label">search</span>
+        <span class="search-keys"><kbd class="docmd-kbd">⌘</kbd><kbd class="docmd-kbd">K</kbd></span>
+    </button>
+    
+
+    
+
+    
+
+    
+    <button class="theme-toggle-button" aria-label="toggleTheme">
+        
+<svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-sun"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg>
+ 
+<svg class="lucide-icon icon-moon icon-moon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-moon"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+</svg>
+
+    </button>
+    
+
+    
+</div>
+
+              
+            </div>
+          </header>
+        
+        <div class="content-theme-cover">
+          <main class="content-area" id="main-content">
+            <div class="content-layout">
+              <div class="main-content">
+                <div class="docmd-breadcrumbs-row">
+                  <div id="docmd-raw-markdown" data-content="%23%20App%20Flow%20Document%0A**RecruiterIQ%20%E2%80%94%20System%20%26%20User%20Flows**%0A%0A---%0A%0A%23%23%201.%20High-Level%20System%20Flow%0A%0A%60%60%60%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20PHASE%20A%3A%20PRECOMPUTATION%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20(offline%2C%20one-time%20run)%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%0Acandidates.jsonl%20%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%96%BA%20%5B1.%20Stream%20%26%20Parse%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B2.%20Validate%20Schema%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%B4%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20honeypot%3F%20%20%E2%94%82%E2%94%80%E2%94%80YES%E2%94%80%E2%94%80%E2%96%BA%20disqualified.json%20(audit)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20NO%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B3.%20Build%20Profile%20Blob%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B4.%20Batch%20Embed%5D%20%20%E2%97%84%E2%94%80%E2%94%80%20all-MiniLM-L6-v2%20(loaded%20once)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(batch%3D512%2C%20CPU)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B5.%20Compute%20Sub-Scores%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20technical_fit%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20career_quality%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20availability_signal%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20seniority_fit%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20ARTIFACTS%20SAVED%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20embeddings.npy%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20candidate_ids.npy%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20subscores.pkl%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20jd_embedding.npy%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20disqualified.json%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20PHASE%20B%3A%20RANKING%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20(sandbox%3A%20CPU%2C%2016GB%2C%205min%20max)%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20LOAD%20ARTIFACTS%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B6.%20Cosine%20Similarity%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20embeddings%20%C3%97%20jd_embedding%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%86%92%20semantic_sim%5B100k%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B7.%20Composite%20Score%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20S%20%3D%20weighted_sum(%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20tech%2C%20career%2C%20avail%2C%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20seniority%2C%20semantic_sim%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20)%20for%20all%20100k%20candidates%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B8.%20Sort%20Descending%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Take%20top%20100%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B9.%20Generate%20Reasoning%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Per%20candidate%3A%201%E2%80%932%20sentence%20string%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%5B10.%20Validate%20%26%20Write%20CSV%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20validate_submission.py%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%B4%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20PASS%3F%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20YES%20%20%E2%94%82%20%20NO%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%96%BA%20Fix%20%2B%20re-run%20(max%203%20submissions)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cparticipant_id%3E.csv%20%20%E2%94%80%E2%94%80%E2%96%BA%20SUBMIT%0A%60%60%60%0A%0A---%0A%0A%23%23%202.%20Precomputation%20Flow%20(precompute.py)%0A%0A%60%60%60%0ASTART%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Load%20JD%20from%20job_description.txt%0A%20%20%E2%94%82%20%20%20%20%20%20%20%E2%94%82%0A%20%20%E2%94%82%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%96%BA%20embed_jd()%20%E2%86%92%20save%20jd_embedding.npy%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Open%20candidates.jsonl%20(streaming%2C%201k%20chunks)%0A%20%20%E2%94%82%20%20%20%20%20%20%20%E2%94%82%0A%20%20%E2%94%82%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%96%BA%20FOR%20EACH%20CHUNK%3A%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%9C%E2%94%80%E2%96%BA%20validate_schema(record)%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%96%BA%20on%20failure%3A%20log%20%2B%20skip%20(don&#039;t%20crash)%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%9C%E2%94%80%E2%96%BA%20is_honeypot(record)%3F%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%96%BA%20YES%3A%20append%20to%20disqualified%5B%5D%2C%20skip%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%9C%E2%94%80%E2%96%BA%20build_profile_blob(record)%20%E2%86%92%20blob_str%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%9C%E2%94%80%E2%96%BA%20BATCH%20ACCUMULATE%20blobs%5B%5D%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%96%BA%20when%20len(blobs)%20%3D%3D%20512%3A%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20embed_batch(blobs)%20%E2%86%92%20vectors%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20append%20to%20embeddings_list%5B%5D%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20flush%20blobs%5B%5D%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%96%BA%20compute_subscores(record)%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%86%92%20append%20to%20subscores_dict%7B%7D%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Flush%20remaining%20blobs%20(last%20partial%20batch)%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Stack%20embeddings_list%20%E2%86%92%20np.array%20(N%2C%20384)%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Save%3A%0A%20%20%E2%94%82%20%20%20%20%20artifacts%2Fembeddings.npy%0A%20%20%E2%94%82%20%20%20%20%20artifacts%2Fcandidate_ids.npy%0A%20%20%E2%94%82%20%20%20%20%20artifacts%2Fsubscores.pkl%0A%20%20%E2%94%82%20%20%20%20%20artifacts%2Fdisqualified.json%0A%20%20%E2%94%82%0A%20%20%E2%94%94%E2%94%80%E2%96%BA%20DONE.%20Print%20summary%20stats.%0A%60%60%60%0A%0A---%0A%0A%23%23%203.%20Ranking%20Flow%20(rank.py)%0A%0A%60%60%60%0ASTART%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Load%20artifacts%20(all%20%E2%89%A4%20200MB%20total)%0A%20%20%E2%94%82%20%20%20%20%20embeddings.npy%20%20%E2%86%92%20E%20%20(N%2C%20384)%0A%20%20%E2%94%82%20%20%20%20%20candidate_ids.npy%20%E2%86%92%20IDs%20%20(N%2C)%0A%20%20%E2%94%82%20%20%20%20%20subscores.pkl%20%20%20%E2%86%92%20S_dict%20%20%7Bid%3A%20%7Btech%2C%20career%2C%20avail%2C%20senior%7D%7D%0A%20%20%E2%94%82%20%20%20%20%20jd_embedding.npy%20%E2%86%92%20jd_vec%20%20(384%2C)%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Compute%20semantic_sim%0A%20%20%E2%94%82%20%20%20%20%20sim%20%3D%20E%20%40%20jd_vec%20%2F%20(%7C%7CE%7C%7C%20%C3%97%20%7C%7Cjd_vec%7C%7C)%0A%20%20%E2%94%82%20%20%20%20%20%E2%86%92%20(N%2C)%20float32%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Compute%20composite%20score%20for%20all%20N%20candidates%0A%20%20%E2%94%82%20%20%20%20%20FOR%20i%20in%20range(N)%3A%0A%20%20%E2%94%82%20%20%20%20%20%20%20s%20%3D%20S_dict%5BIDs%5Bi%5D%5D%0A%20%20%E2%94%82%20%20%20%20%20%20%20score%5Bi%5D%20%3D%20(%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%200.35%20*%20s%5B&#039;tech&#039;%5D%20%2B%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%200.25%20*%20s%5B&#039;career&#039;%5D%20%2B%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%200.20%20*%20s%5B&#039;avail&#039;%5D%20%2B%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%200.12%20*%20s%5B&#039;seniority&#039;%5D%20%2B%0A%20%20%E2%94%82%20%20%20%20%20%20%20%20%200.08%20*%20sim%5Bi%5D%0A%20%20%E2%94%82%20%20%20%20%20%20%20)%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Sort%20indices%20by%20score%20descending%0A%20%20%E2%94%82%20%20%20%20%20top100_idx%20%3D%20argsort(score)%5B%3A%3A-1%5D%5B%3A100%5D%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20For%20each%20of%20top%20100%3A%0A%20%20%E2%94%82%20%20%20%20%20load%20candidate%20record%20(from%20jsonl%20by%20id)%0A%20%20%E2%94%82%20%20%20%20%20generate_reasoning(candidate%2C%20scores)%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Enforce%20monotonic%20scores%0A%20%20%E2%94%82%20%20%20%20%20for%20i%20in%201..99%3A%0A%20%20%E2%94%82%20%20%20%20%20%20%20if%20score%5Bi%5D%20%3E%20score%5Bi-1%5D%3A%20score%5Bi%5D%20%3D%20score%5Bi-1%5D%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Write%20CSV%0A%20%20%E2%94%82%20%20%20%20%20candidate_id%2C%20rank%2C%20score%20(3dp)%2C%20reasoning%0A%20%20%E2%94%82%0A%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Run%20validate_submission.py%0A%20%20%E2%94%82%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%96%BA%20FAIL%3A%20print%20errors%2C%20exit(1)%0A%20%20%E2%94%82%0A%20%20%E2%94%94%E2%94%80%E2%96%BA%20DONE.%20Print%3A%20%22Top%20100%20written.%20Validation%20passed.%22%0A%60%60%60%0A%0A---%0A%0A%23%23%204.%20Demo%20App%20Flow%20(Streamlit)%0A%0A%60%60%60%0AUSER%20OPENS%20APP%0A%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%E2%96%BC%0A%20%20Sidebar%20loads%0A%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%E2%94%9C%E2%94%80%E2%96%BA%20Check%20artifacts%20exist%3F%0A%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20NO%20%E2%86%92%20Show%20warning%20banner%0A%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20YES%20%E2%86%92%20Show%20%22%E2%9C%93%20Artifacts%20ready%22%0A%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%E2%94%9C%E2%94%80%E2%96%BA%20User%20selects%20Mode%3A%0A%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%E2%97%8F%20Full%20Pipeline%20(100k)%20%E2%86%92%20requires%20full%20artifacts%0A%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%E2%97%8F%20Demo%20Mode%20(sample_candidates.json)%20%E2%86%92%20always%20available%0A%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%96%BA%20User%20loads%20JD%20(upload%20or%20paste)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%5B%E2%96%B6%20Run%20Ranking%5D%20clicked%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20Show%20progress%20bar%0A%20%20%20%20%20%20%20%20%20%22Scoring%20candidates%E2%80%A6%22%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20rank.py%20logic%20runs%20(in-process)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%E2%94%82%20%20Results%20ready%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%E2%94%82%20%20Switch%20to%20Tab%201%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%BC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%E2%96%BC%20%20%20%20%20%20%20%20%20%E2%96%BC%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20Tab%201%3A%20%20%20%20%20Tab%202%3A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Tab%203%3A%0A%20%20Ranked%20%20%20%20%20Score%20Explorer%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Methodology%0A%20%20Shortlist%20%20(charts%2C%20weight%20sliders)%20%20%20%20%20(static%20doc)%0A%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%E2%96%BC%0A%20%20User%20clicks%20candidate%20card%0A%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%96%BA%20Expand%3A%20full%20career%2C%20skills%2C%20behavioral%20signals%2C%20score%20breakdown%0A%0A%20%20User%20clicks%20%5B%E2%AC%87%20Export%20CSV%5D%0A%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%96%BA%20Download%20%3Cparticipant_id%3E.csv%20(pre-validated)%0A%60%60%60%0A%0A---%0A%0A%23%23%205.%20State%20Machine%3A%20Candidate%20Lifecycle%0A%0A%60%60%60%0A%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20INGESTED%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%B4%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%E2%94%82%20%20HONEYPOT%3F%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20YES%20%20%20%20%E2%94%82%20%20%20%20NO%0A%20%20%20%20%20%20%20%20%20%20%E2%96%BC%20%20%20%20%20%E2%94%82%20%20%20%20%20%E2%96%BC%0A%20%20%20%20DISQUALIFIED%20%20ELIGIBLE%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%B4%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20SUB-SCORES%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20COMPUTED%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%B4%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20COMPOSITE%20SCORED%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%B4%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20IN%20TOP%20100%3F%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20YES%20%20%20%20%20%E2%94%82%20%20%20%20%20NO%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20SHORTLISTED%20%20%20%20%20%20%20SCORED_OUT%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20REASONING%20GENERATED%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20IN%20OUTPUT%20CSV%0A%60%60%60%0A%0A---%0A%0A%23%23%206.%20Error%20Flow%0A%0A%60%60%60%0AERROR%20TYPE%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20HANDLING%0A%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%0AJSONL%20parse%20error%20%20%20%20%20%20%20%20%20%20%20%20Log%20candidate_id%2C%20skip%2C%20continue%0AMissing%20field%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Use%20default%20value%20(not%20crash)%0AHoneypot%20detected%20%20%20%20%20%20%20%20%20%20%20%20Add%20to%20disqualified.json%2C%20skip%20scoring%0AEmbedding%20batch%20failure%20%20%20%20%20%20Retry%20once%2C%20then%20skip%20batch%20%2B%20log%0AScore%20NaN%20%2F%20Inf%20%20%20%20%20%20%20%20%20%20%20%20%20%20Set%20to%200.0%2C%20log%20warning%0AScore%20inversion%20in%20top%20100%20%20%20Clamp%20to%20previous%20score%20(monotonic%20enforce)%0AValidator%20FAIL%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Print%20exact%20error%20lines%2C%20exit(1)%2C%20do%20not%20submit%0A%3E10%20honeypots%20in%20top%20100%20%20%20%20%20Print%20DISQUALIFICATION%20WARNING%2C%20do%20not%20submit%0ARAM%20%3E%2014GB%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Reduce%20batch%20size%20to%20256%2C%20clear%20intermediate%20lists%0A%60%60%60%0A%0A---%0A%0A*RecruiterIQ%20App%20Flow%20v1.0%20%C2%B7%202025*%0A" style="display: none;"></div>
+                  
+                    <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
+                      <ol>
+                        
+                        
+                          <li class="breadcrumb-item " >
+                            
+                              <span>Documentation</span>
+                            
+                            
+                              <span class="breadcrumb-separator">
+<svg class="lucide-icon icon-chevron-right " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+                            
+                          </li>
+                        
+                          <li class="breadcrumb-item active" aria-current=&quot;page&quot;>
+                            
+                              <span>App Flow Document</span>
+                            
+                            
+                          </li>
+                        
+                      </ol>
+                    </nav>
+                  
+
+                  
+                    <div class="docmd-copy-widgets">
+                      
+                        <button class="docmd-copy-btn docmd-copy-raw-btn" data-copied="copiedToClipboard" title="copyMarkdown" aria-label="copyMarkdown">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-copy " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-copy"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+</svg>
+</span>
+                        </button>
+                      
+                      
+                        <button class="docmd-copy-btn docmd-copy-context-btn" data-copied="copiedToClipboard" title="copyContext">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-message-square " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-message-square"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+</svg>
+</span>
+                          <span class="docmd-btn-text">copyContext</span>
+                        </button>
+                      
+                    </div>
+                  
+                </div>
+                
+                <h1 id="app-flow-document" class="docmd-heading"><a href="#app-flow-document" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>App Flow Document</h1>
+<p><strong>RecruiterIQ — System &amp; User Flows</strong></p>
+<hr>
+<h2 id="app-flow-document-1-high-level-system-flow" class="docmd-heading"><a href="#app-flow-document-1-high-level-system-flow" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>1. High-Level System Flow</h2>
+<pre class="hljs"><code>                        ┌─────────────────────────────────────┐
+                        │         PHASE A<span class="hljs-punctuation">:</span> PRECOMPUTATION     │
+                        │         (offline, one<span class="hljs-punctuation">-</span>time run)     │
+                        └─────────────────────────────────────┘
+
+candidates.<span class="hljs-attr">jsonl</span> ──────► [<span class="hljs-number">1</span>. Stream <span class="hljs-punctuation">&amp;</span> Parse]
+                              │
+                              ▼
+                         [<span class="hljs-number">2</span>. Validate Schema]
+                              │
+                         ┌────┴────────┐
+                         │  honeypot<span class="hljs-punctuation">?</span>  │──YES──► disqualified.<span class="hljs-title function_">json</span> (audit)
+                         └────┬────────┘
+                              │ NO
+                              ▼
+                         [<span class="hljs-number">3</span>. Build Profile Blob]
+                              │
+                              ▼
+                         [<span class="hljs-number">4</span>. Batch Embed]  ◄── all<span class="hljs-punctuation">-</span>MiniLM<span class="hljs-punctuation">-</span>L6<span class="hljs-punctuation">-</span><span class="hljs-title function_">v2</span> (loaded once)
+                         (batch<span class="hljs-punctuation">=</span><span class="hljs-number">512</span>, CPU)
+                              │
+                              ▼
+                         [<span class="hljs-number">5</span>. Compute Sub<span class="hljs-punctuation">-</span>Scores]
+                         technical_fit
+                         career_quality
+                         availability_signal
+                         seniority_fit
+                              │
+                              ▼
+                    ┌─────────────────────┐
+                    │   ARTIFACTS SAVED   │
+                    │  embeddings.<span class="hljs-attr">npy</span>     │
+                    │  candidate_ids.<span class="hljs-attr">npy</span>  │
+                    │  subscores.<span class="hljs-attr">pkl</span>      │
+                    │  jd_embedding.<span class="hljs-attr">npy</span>   │
+                    │  disqualified.<span class="hljs-attr">json</span>  │
+                    └─────────────────────┘
+
+
+                        ┌─────────────────────────────────────┐
+                        │         PHASE B<span class="hljs-punctuation">:</span> RANKING            │
+                        │  (sandbox<span class="hljs-punctuation">:</span> CPU, 16GB, 5min max)     │
+                        └─────────────────────────────────────┘
+
+                    ┌─────────────────────┐
+                    │   LOAD ARTIFACTS    │
+                    └────────┬────────────┘
+                             │
+                             ▼
+                    [<span class="hljs-number">6</span>. Cosine Similarity]
+                    embeddings × jd_embedding
+                    → semantic_sim[100k]
+                             │
+                             ▼
+                    [<span class="hljs-number">7</span>. Composite Score]
+                    S <span class="hljs-punctuation">=</span> <span class="hljs-title function_">weighted_sum</span>(
+                      tech, career, avail,
+                      seniority, semantic_sim
+                    ) <span class="hljs-keyword">for</span> all 100k candidates
+                             │
+                             ▼
+                    [<span class="hljs-number">8</span>. Sort Descending]
+                    Take <span class="hljs-keyword">top</span> <span class="hljs-number">100</span>
+                             │
+                             ▼
+                    [<span class="hljs-number">9</span>. Generate Reasoning]
+                    Per candidate<span class="hljs-punctuation">:</span> <span class="hljs-number">1</span>–<span class="hljs-number">2</span> sentence string
+                             │
+                             ▼
+                    [<span class="hljs-number">10</span>. Validate <span class="hljs-punctuation">&amp;</span> Write CSV]
+                    validate_submission.<span class="hljs-attr">py</span>
+                             │
+                        ┌────┴────┐
+                        │ PASS<span class="hljs-punctuation">?</span>   │
+                        └────┬────┘
+                        YES  │  NO
+                             │   └──► Fix <span class="hljs-punctuation">+</span> re<span class="hljs-punctuation">-</span><span class="hljs-title function_">run</span> (max <span class="hljs-number">3</span> submissions)
+                             ▼
+                    <span class="hljs-punctuation">&lt;</span>participant_id<span class="hljs-punctuation">&gt;</span>.<span class="hljs-attr">csv</span>  ──► SUBMIT
+</code></pre>
+<hr>
+<h2 id="app-flow-document-2-precomputation-flow-precomputepy" class="docmd-heading"><a href="#app-flow-document-2-precomputation-flow-precomputepy" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>2. Precomputation Flow (<a href="http://precompute.py">precompute.py</a>)</h2>
+<pre class="hljs"><code>START
+  │
+  ├─► Load JD <span class="hljs-keyword">from</span> job_description.<span class="hljs-attr">txt</span>
+  │       │
+  │       └─► <span class="hljs-title function_">embed_jd</span>() → save jd_embedding.<span class="hljs-attr">npy</span>
+  │
+  ├─► Open candidates.<span class="hljs-title function_">jsonl</span> (streaming, 1k chunks)
+  │       │
+  │       └─► FOR EACH CHUNK<span class="hljs-punctuation">:</span>
+  │               │
+  │               ├─► <span class="hljs-title function_">validate_schema</span>(record)
+  │               │       └─► on failure<span class="hljs-punctuation">:</span> log <span class="hljs-punctuation">+</span> <span class="hljs-title function_">skip</span> (don&#039;t crash)
+  │               │
+  │               ├─► <span class="hljs-title function_">is_honeypot</span>(record)<span class="hljs-punctuation">?</span>
+  │               │       └─► YES<span class="hljs-punctuation">:</span> append to disqualified[], skip
+  │               │
+  │               ├─► <span class="hljs-title function_">build_profile_blob</span>(record) → blob_str
+  │               │
+  │               ├─► BATCH ACCUMULATE blobs[]
+  │               │       └─► when <span class="hljs-title function_">len</span>(blobs) <span class="hljs-punctuation">==</span> <span class="hljs-number">512</span><span class="hljs-punctuation">:</span>
+  │               │               <span class="hljs-title function_">embed_batch</span>(blobs) → vectors
+  │               │               append to embeddings_list[]
+  │               │               flush blobs[]
+  │               │
+  │               └─► <span class="hljs-title function_">compute_subscores</span>(record)
+  │                       → append to subscores_dict{}
+  │
+  ├─► Flush remaining <span class="hljs-title function_">blobs</span> (last partial batch)
+  │
+  ├─► Stack embeddings_list → np.<span class="hljs-title function_">array</span> (N, <span class="hljs-number">384</span>)
+  │
+  ├─► Save<span class="hljs-punctuation">:</span>
+  │     artifacts<span class="hljs-punctuation">/</span>embeddings.<span class="hljs-attr">npy</span>
+  │     artifacts<span class="hljs-punctuation">/</span>candidate_ids.<span class="hljs-attr">npy</span>
+  │     artifacts<span class="hljs-punctuation">/</span>subscores.<span class="hljs-attr">pkl</span>
+  │     artifacts<span class="hljs-punctuation">/</span>disqualified.<span class="hljs-attr">json</span>
+  │
+  └─► DONE. Print summary stats.
+</code></pre>
+<hr>
+<h2 id="app-flow-document-3-ranking-flow-rankpy" class="docmd-heading"><a href="#app-flow-document-3-ranking-flow-rankpy" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3. Ranking Flow (<a href="http://rank.py">rank.py</a>)</h2>
+<pre class="hljs"><code>START
+  │
+  ├─► Load <span class="hljs-title function_">artifacts</span> (all ≤ 200MB total)
+  │     embeddings.<span class="hljs-attr">npy</span>  → <span class="hljs-title function_">E</span>  (N, <span class="hljs-number">384</span>)
+  │     candidate_ids.<span class="hljs-attr">npy</span> → <span class="hljs-title function_">IDs</span>  (N,)
+  │     subscores.<span class="hljs-attr">pkl</span>   → S_dict  {<span class="hljs-keyword">id</span><span class="hljs-punctuation">:</span> {tech, career, avail, senior}}
+  │     jd_embedding.<span class="hljs-attr">npy</span> → <span class="hljs-title function_">jd_vec</span>  (<span class="hljs-number">384</span>,)
+  │
+  ├─► Compute semantic_sim
+  │     sim <span class="hljs-punctuation">=</span> E @ jd_vec <span class="hljs-punctuation">/</span> (<span class="hljs-punctuation">||</span>E<span class="hljs-punctuation">||</span> × <span class="hljs-punctuation">||</span>jd_vec<span class="hljs-punctuation">||</span>)
+  │     → (N,) float32
+  │
+  ├─► Compute composite score <span class="hljs-keyword">for</span> all N candidates
+  │     FOR i <span class="hljs-keyword">in</span> <span class="hljs-title function_">range</span>(N)<span class="hljs-punctuation">:</span>
+  │       s <span class="hljs-punctuation">=</span> S_dict[IDs[i]]
+  │       score[i] <span class="hljs-punctuation">=</span> (
+  │         <span class="hljs-number">0.35</span> <span class="hljs-punctuation">*</span> s[<span class="hljs-string">&#039;tech&#039;</span>] <span class="hljs-punctuation">+</span>
+  │         <span class="hljs-number">0.25</span> <span class="hljs-punctuation">*</span> s[<span class="hljs-string">&#039;career&#039;</span>] <span class="hljs-punctuation">+</span>
+  │         <span class="hljs-number">0.20</span> <span class="hljs-punctuation">*</span> s[<span class="hljs-string">&#039;avail&#039;</span>] <span class="hljs-punctuation">+</span>
+  │         <span class="hljs-number">0.12</span> <span class="hljs-punctuation">*</span> s[<span class="hljs-string">&#039;seniority&#039;</span>] <span class="hljs-punctuation">+</span>
+  │         <span class="hljs-number">0.08</span> <span class="hljs-punctuation">*</span> sim[i]
+  │       )
+  │
+  ├─► Sort indices by score descending
+  │     top100_idx <span class="hljs-punctuation">=</span> <span class="hljs-title function_">argsort</span>(score)[<span class="hljs-punctuation">::-</span><span class="hljs-number">1</span>][<span class="hljs-punctuation">:</span><span class="hljs-number">100</span>]
+  │
+  ├─► For each <span class="hljs-keyword">of</span> <span class="hljs-keyword">top</span> <span class="hljs-number">100</span><span class="hljs-punctuation">:</span>
+  │     load candidate <span class="hljs-title function_">record</span> (<span class="hljs-keyword">from</span> jsonl by <span class="hljs-keyword">id</span>)
+  │     <span class="hljs-title function_">generate_reasoning</span>(candidate, scores)
+  │
+  ├─► Enforce monotonic scores
+  │     <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-number">1</span>..<span class="hljs-number">99</span><span class="hljs-punctuation">:</span>
+  │       <span class="hljs-keyword">if</span> score[i] <span class="hljs-punctuation">&gt;</span> score[i<span class="hljs-punctuation">-</span><span class="hljs-number">1</span>]<span class="hljs-punctuation">:</span> score[i] <span class="hljs-punctuation">=</span> score[i<span class="hljs-punctuation">-</span><span class="hljs-number">1</span>]
+  │
+  ├─► Write CSV
+  │     candidate_id, rank, <span class="hljs-title function_">score</span> (3dp), reasoning
+  │
+  ├─► Run validate_submission.<span class="hljs-attr">py</span>
+  │       └─► FAIL<span class="hljs-punctuation">:</span> print errors, <span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>)
+  │
+  └─► DONE. Print<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Top 100 written. Validation passed.&quot;</span>
+</code></pre>
+<hr>
+<h2 id="app-flow-document-4-demo-app-flow-streamlit" class="docmd-heading"><a href="#app-flow-document-4-demo-app-flow-streamlit" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4. Demo App Flow (Streamlit)</h2>
+<pre class="hljs"><code>USER OPENS APP
+      │
+      ▼
+  Sidebar loads
+      │
+      ├─► Check artifacts exist<span class="hljs-punctuation">?</span>
+      │       NO → Show warning banner
+      │       YES → Show <span class="hljs-string">&quot;✓ Artifacts ready&quot;</span>
+      │
+      ├─► User selects Mode<span class="hljs-punctuation">:</span>
+      │       ● Full <span class="hljs-title function_">Pipeline</span> (100k) → requires full artifacts
+      │       ● Demo <span class="hljs-title function_">Mode</span> (sample_candidates.<span class="hljs-attr">json</span>) → always available
+      │
+      └─► User loads <span class="hljs-title function_">JD</span> (upload or paste)
+                │
+                ▼
+         [▶ Run Ranking] clicked
+                │
+                ▼
+         Show progress bar
+         <span class="hljs-string">&quot;Scoring candidates…&quot;</span>
+                │
+                ▼
+         rank.<span class="hljs-attr">py</span> logic <span class="hljs-title function_">runs</span> (<span class="hljs-keyword">in</span><span class="hljs-punctuation">-</span>process)
+                │
+                ▼
+         ┌──────────────────────────┐
+         │  Results ready           │
+         │  Switch to Tab <span class="hljs-number">1</span>         │
+         └──────────────────────────┘
+                │
+      ┌─────────┼──────────────────────────────┐
+      │         │                              │
+      ▼         ▼                              ▼
+  Tab <span class="hljs-number">1</span><span class="hljs-punctuation">:</span>     Tab <span class="hljs-number">2</span><span class="hljs-punctuation">:</span>                        Tab <span class="hljs-number">3</span><span class="hljs-punctuation">:</span>
+  Ranked     Score Explorer               Methodology
+  <span class="hljs-title function_">Shortlist</span>  (charts, weight sliders)     (<span class="hljs-keyword">static</span> doc)
+      │
+      ▼
+  User clicks candidate card
+      │
+      └─► Expand<span class="hljs-punctuation">:</span> full career, skills, behavioral signals, score breakdown
+
+  User clicks [⬇ Export CSV]
+      │
+      └─► Download <span class="hljs-punctuation">&lt;</span>participant_id<span class="hljs-punctuation">&gt;</span>.<span class="hljs-title function_">csv</span> (pre<span class="hljs-punctuation">-</span>validated)
+</code></pre>
+<hr>
+<h2 id="app-flow-document-5-state-machine-candidate-lifecycle" class="docmd-heading"><a href="#app-flow-document-5-state-machine-candidate-lifecycle" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>5. State Machine: Candidate Lifecycle</h2>
+<pre class="hljs"><code>          ┌──────────┐
+          │  INGESTED │
+          └─────┬─────┘
+                │
+        ┌───────┴────────┐
+        │  HONEYPOT<span class="hljs-punctuation">?</span>     │
+        └───────┬────────┘
+         YES    │    NO
+          ▼     │     ▼
+    DISQUALIFIED  ELIGIBLE
+                       │
+               ┌───────┴───────┐
+               │  SUB<span class="hljs-punctuation">-</span>SCORES   │
+               │  COMPUTED     │
+               └───────┬───────┘
+                       │
+               ┌───────┴──────────────┐
+               │  COMPOSITE SCORED    │
+               └───────┬──────────────┘
+                       │
+              ┌────────┴──────────┐
+              │  IN TOP <span class="hljs-number">100</span><span class="hljs-punctuation">?</span>      │
+              └────────┬──────────┘
+               YES     │     NO
+                ▼      │      ▼
+           SHORTLISTED       SCORED_OUT
+                │
+                ▼
+         REASONING GENERATED
+                │
+                ▼
+           IN OUTPUT CSV
+</code></pre>
+<hr>
+<h2 id="app-flow-document-6-error-flow" class="docmd-heading"><a href="#app-flow-document-6-error-flow" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>6. Error Flow</h2>
+<pre class="hljs"><code>ERROR TYPE                   HANDLING
+─────────────────────────────────────────────────────
+JSONL parse error            Log candidate_id, skip, <span class="hljs-keyword">continue</span>
+Missing field                Use <span class="hljs-keyword">default</span> <span class="hljs-title function_">value</span> (not crash)
+Honeypot detected            Add to disqualified.<span class="hljs-attr">json</span>, skip scoring
+Embedding batch failure      Retry once, then skip batch <span class="hljs-punctuation">+</span> log
+Score NaN <span class="hljs-punctuation">/</span> Inf              Set to <span class="hljs-number">0.0</span>, log warning
+Score inversion <span class="hljs-keyword">in</span> <span class="hljs-keyword">top</span> <span class="hljs-number">100</span>   Clamp to previous <span class="hljs-title function_">score</span> (monotonic enforce)
+Validator FAIL               Print exact error lines, <span class="hljs-title function_">exit</span>(<span class="hljs-number">1</span>), <span class="hljs-keyword">do</span> not submit
+<span class="hljs-punctuation">&gt;</span><span class="hljs-number">10</span> honeypots <span class="hljs-keyword">in</span> <span class="hljs-keyword">top</span> <span class="hljs-number">100</span>     Print DISQUALIFICATION WARNING, <span class="hljs-keyword">do</span> not submit
+RAM <span class="hljs-punctuation">&gt;</span> 14GB                   Reduce batch size to <span class="hljs-number">256</span>, clear intermediate lists
+</code></pre>
+<hr>
+<p><em>RecruiterIQ App Flow v1.0 · 2025</em></p>
+
+                
+              </div>
+              <div class="toc-sidebar">
+                
+
+
+  <div class="toc-container">
+    <h2 class="toc-title">onThisPage<span class="mobile-view toc-menu-button float-right">
+<svg class="lucide-icon icon-chevron-down " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-down"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</span></h2>
+    <ul class="toc-list">
+      
+        <li class="toc-item toc-level-1">
+          <a href="#app-flow-document" class="toc-link">App Flow Document</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#app-flow-document-1-high-level-system-flow" class="toc-link">1. High-Level System Flow</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#app-flow-document-2-precomputation-flow-precomputepy" class="toc-link">2. Precomputation Flow (precompute.py)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#app-flow-document-3-ranking-flow-rankpy" class="toc-link">3. Ranking Flow (rank.py)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#app-flow-document-4-demo-app-flow-streamlit" class="toc-link">4. Demo App Flow (Streamlit)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#app-flow-document-5-state-machine-candidate-lifecycle" class="toc-link">5. State Machine: Candidate Lifecycle</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#app-flow-document-6-error-flow" class="toc-link">6. Error Flow</a>
+        </li>
+      
+    </ul>
+  </div>
+
+              </div>
+            </div>
+            <div class="page-footer-actions">
+              
+              
+                <span class="git-last-updated" data-timestamp="1781074771000">
+                  <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span class="git-label">Last updated:</span>
+                  <span class="git-time" data-timestamp="1781074771000"></span>
+                  
+                  <div class="git-commit-tooltip" role="tooltip">
+                    <div class="git-tooltip-title">Recent commits</div>
+                    <ul class="git-commit-list">
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="DevanshSrajput">
+                            
+                              <img src="https://www.gravatar.com/avatar/7f22948119fdb4e2d70c1be1a1f39659?d=mp&amp;s=64" alt="DevanshSrajput">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="Initialize the Project: (Add Initial Project Documentation)">Initialize the Project: (Add Initial ...</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">DevanshSrajput</span>
+                              <span class="git-commit-date" data-timestamp="1781074771000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                    </ul>
+                  </div>
+                  
+                </span>
+              
+              <span class="git-spacer"></span>
+              
+            </div>
+          </main>
+          
+
+
+<footer class="page-footer">
+  <div class="footer-content">
+    <div class="user-footer"></div>
+    
+      <div class="branding-footer">
+        builtWith <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
+      </div>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+      
+      <script src="../../assets/js/docmd-main.js?v=mqcpwj52"></script>
+      
+      <script src="../../assets/js/docmd-git.js?v=mqcpwj52"></script>
+      <script src="../../assets/js/docmd-image-lightbox.js?v=mqcpwj52" ></script>
+<script src="https://cdn.jsdelivr.net/npm/minisearch@7.2.0/dist/umd/index.min.js" ></script>
+<script src="../../assets/js/docmd-search.js?v=mqcpwj52" ></script>
+<script src="../../assets/js/init-mermaid.js?v=mqcpwj52" type="module"></script>
+<script src="../../assets/js/docmd-git.js?v=mqcpwj52" type="module"></script>
+
+  <!-- Search Modal (Injected by @docmd/plugin-search) -->
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-show-confidence="false" data-show-filters="true"
+       data-search-placeholder="Search documentation..."
+       data-search-no-results="No results found."
+       data-search-error="Failed to load search index."
+       data-search-initial="Type to start searching..."
+       data-search-navigate="to navigate"
+       data-search-escape="to close">
+      <div class="docmd-search-box">
+          <div class="docmd-search-header">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-search"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input type="text" id="docmd-search-input" placeholder="Search documentation..." autocomplete="off" spellcheck="false">
+              <button onclick="window.closeDocmdSearch()" class="docmd-search-close" aria-label="Close search">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+          </div>
+          <div id="docmd-search-results" class="docmd-search-results"></div>
+          <div class="docmd-search-footer">
+              <span><kbd class="docmd-kbd">↑</kbd> <kbd class="docmd-kbd">↓</kbd> to navigate</span>
+              <span><kbd class="docmd-kbd">ESC</kbd> to close</span>
+          </div>
+      </div>
+  </div>
+
+    <script>
+      (function() {
+        var searchDebounceTimer;
+
+        document.addEventListener('click', function(e) {
+          var link = e.target.closest('a');
+          if (!link || !window.gtag) return;
+          
+          var url = link.href;
+          var hostname = window.location.hostname;
+          var isExternal = link.hostname && link.hostname !== hostname;
+          var isDownload = link.hasAttribute('download') || url.match(/\.(pdf|zip|tar|gz|exe|pkg)$/i);
+          
+          if (isExternal) {
+            gtag('event', 'click_external', { 'url': url, 'link_text': link.innerText.trim() });
+          } else if (isDownload) {
+            gtag('event', 'download', { 'file_name': url.split('/').pop(), 'url': url });
+          }
+
+          // TOC tracking
+          if (link.classList.contains('toc-link')) {
+            gtag('event', 'toc_click', { 'target_id': link.getAttribute('href'), 'title': link.innerText.trim() });
+          }
+
+          // Permalink tracking
+          if (link.classList.contains('heading-anchor')) {
+            gtag('event', 'permalink_click', { 'url': url });
+          }
+        });
+
+        
+        // Search Keyword Tracking
+        document.addEventListener('input', function(e) {
+          if (e.target.id === 'docmd-search-input' && window.gtag) {
+            var query = e.target.value.trim();
+            if (query.length < 3) return;
+            
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(function() {
+              gtag('event', 'search', { 'search_term': query });
+            }, 1000);
+          }
+        });
+        
+      })();
+    </script>
+
+<script>window.__git_config={"repo":null,"branch":"main","editLink":false,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+      
+  </body>
+</html>

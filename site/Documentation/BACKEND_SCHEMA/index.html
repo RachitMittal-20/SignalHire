@@ -1,0 +1,1144 @@
+<!--
+  ---------------------------------------------------------------
+  docmd : the zero-config documentation engine.
+  @website https://docmd.io
+  [docmd-source] - Please do not remove this header.
+  ---------------------------------------------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="generator" content="docmd v0.5.x">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+    <style>
+      html {
+        visibility: hidden;
+      }
+    </style>
+    
+    <script>
+      var root = "../../";
+      if (root && !root.endsWith('/')) root += '/';
+      if (root === '') root = './';
+      window.DOCMD_ROOT = root;
+
+      var siteRoot = "../../";
+      if (siteRoot && !siteRoot.endsWith('/')) siteRoot += '/';
+      if (siteRoot === '') siteRoot = './';
+      window.DOCMD_SITE_ROOT = siteRoot;
+
+      window.DOCMD_APPEARANCE = "system";
+      window.DOCMD_VERSION_ROOT = "/";
+      window.DOCMD_BASE = "/";
+      window.DOCMD_LOCALE = "";
+      window.DOCMD_DEFAULT_LOCALE = "";
+    </script>
+    <title>
+      Backend Schema Document : SignalHire
+    </title>
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mqcpwj52">
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mqcpwj52" id="hljs-light" >
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mqcpwj52" id="hljs-dark" disabled>
+    
+    
+<meta name="description" content="">
+<link rel="canonical" href="/Documentation/BACKEND_SCHEMA/">
+<meta property="og:title" content="Backend Schema Document - SignalHire">
+<meta property="og:description" content="">
+<meta property="og:url" content="/Documentation/BACKEND_SCHEMA/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Backend Schema Document - SignalHire">
+<meta name="twitter:description" content="">
+
+
+
+<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mqcpwj52" >
+<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mqcpwj52" >
+
+    
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+  </head>
+  <body
+    class="sidebar-collapsible"
+    data-default-collapsed="false"
+    data-copy-code-enabled="false" data-spa-enabled="true" data-source-file="Documentation/BACKEND_SCHEMA.md">
+
+    <a href="#main-content" class="skip-link">skipToContent</a>
+
+    
+    
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          
+            <h1><a href="../../">
+                SignalHire
+              </a></h1>
+          
+          <span class="mobile-view sidebar-menu-button float-right">
+            
+<svg class="lucide-icon icon-menu " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-menu"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+
+          </span>
+        </div>
+        <div class="sidebar-top-group">
+          
+          
+          
+          
+        </div>
+        
+
+<nav class="sidebar-nav" aria-label="mainNavigation">
+  <ul>
+    
+      <li class="" >
+      
+        <a href="../../" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 SignalHire — AI-Powered Candidate Ranking
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../GOOD_FIRST_ISSUES/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 Good First Issues
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active-parent collapsible expanded nav-group"  aria-expanded="true" >
+      
+        <span class="nav-label nav-group">
+          
+          <span class="nav-item-title">
+            Documentation
+          </span>
+          
+            <span class="collapse-icon-wrapper">
+<svg class="lucide-icon icon-chevron-right collapse-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+          
+        </span>
+        
+
+        
+          <ul class="submenu">
+            
+      <li class="" >
+      
+        <a href="../../Documentation/APP_FLOW/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            App Flow Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active" >
+      
+        <a href="../../Documentation/BACKEND_SCHEMA/" class="active "
+          >
+          
+          <span class="nav-item-title">
+            Backend Schema Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/IMPLEMENTATION_PLAN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Implementation Plan
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/RecruiterIQ_PRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            RecruiterIQ — Product Requirements Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/TRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Technical Requirements Document (TRD)
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/UIUX_DESIGN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            UI/UX Design Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+          </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+        <div class="sidebar-bottom-group mt-auto">
+          
+          
+          
+          
+        </div>
+      </aside>
+      
+      <div class="main-content-wrapper">
+        
+        
+          <header class="page-header">
+            <div class="header-left">
+              
+                <button id="sidebar-toggle-button" class="sidebar-toggle-button"
+                  aria-label="toggleSidebar">
+                  
+<svg class="lucide-icon icon-chevron-left " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+
+                </button>
+              
+              <div class="header-titles-wrapper">
+                <span class="header-title">
+                  Backend Schema Document
+                </span>
+              </div>
+            </div>
+            <div class="header-right">
+              
+                
+
+
+<div class="docmd-options-menu">
+    
+    <button class="docmd-search-trigger" aria-label="search">
+        
+<svg class="lucide-icon icon-search " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-search"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" />
+</svg>
+
+        <span class="search-label">search</span>
+        <span class="search-keys"><kbd class="docmd-kbd">⌘</kbd><kbd class="docmd-kbd">K</kbd></span>
+    </button>
+    
+
+    
+
+    
+
+    
+    <button class="theme-toggle-button" aria-label="toggleTheme">
+        
+<svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-sun"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg>
+ 
+<svg class="lucide-icon icon-moon icon-moon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-moon"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+</svg>
+
+    </button>
+    
+
+    
+</div>
+
+              
+            </div>
+          </header>
+        
+        <div class="content-theme-cover">
+          <main class="content-area" id="main-content">
+            <div class="content-layout">
+              <div class="main-content">
+                <div class="docmd-breadcrumbs-row">
+                  <div id="docmd-raw-markdown" data-content="%23%20Backend%20Schema%20Document%0A**RecruiterIQ%20%E2%80%94%20Data%20Models%2C%20Artifacts%20%26%20Interfaces**%0A%0A---%0A%0A%23%23%201.%20Input%20Schema%0A%0A%23%23%23%201.1%20Candidate%20Record%20(from%20%60candidates.jsonl%60)%0A%0AOne%20JSON%20object%20per%20line.%20Full%20schema%20per%20%60candidate_schema.json%60%3A%0A%0A%60%60%60python%0Aclass%20CandidateRecord%3A%0A%20%20%20%20candidate_id%3A%20str%20%20%20%20%20%20%20%20%20%20%23%20%22CAND_0042871%22%20%20(7-digit%2C%20unique)%0A%0A%20%20%20%20profile%3A%20Profile%0A%20%20%20%20career_history%3A%20List%5BRole%5D%20%20%20%23%201%E2%80%9310%20items%0A%20%20%20%20education%3A%20List%5BEducation%5D%20%20%20%23%200%E2%80%935%20items%0A%20%20%20%20skills%3A%20List%5BSkill%5D%20%20%20%20%20%20%20%20%20%20%23%20variable%0A%20%20%20%20certifications%3A%20List%5BCert%5D%20%20%20%23%20variable%0A%20%20%20%20languages%3A%20List%5BLanguage%5D%20%20%20%20%23%20variable%0A%20%20%20%20redrob_signals%3A%20RedrobSignals%0A%60%60%60%0A%0A%60%60%60python%0Aclass%20Profile%3A%0A%20%20%20%20name%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20anonymized%0A%20%20%20%20headline%3A%20str%0A%20%20%20%20summary%3A%20str%0A%20%20%20%20location%3A%20str%0A%20%20%20%20country%3A%20str%0A%20%20%20%20years_of_experience%3A%20int%20%20%20%20%20%23%20self-reported%0A%20%20%20%20current_title%3A%20str%0A%20%20%20%20current_company%3A%20str%0A%20%20%20%20company_size%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%23%20%221-10%22%20%7C%20%2211-50%22%20%7C%20%2251-200%22%20%7C%20%22201-500%22%20%7C%20%22501-1000%22%20%7C%20%221000%2B%22%0A%20%20%20%20industry%3A%20str%0A%60%60%60%0A%0A%60%60%60python%0Aclass%20Role%3A%0A%20%20%20%20company%3A%20str%0A%20%20%20%20title%3A%20str%0A%20%20%20%20dates%3A%20DateRange%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20%7Bstart%3A%20str%2C%20end%3A%20str%20%7C%20%22Present%22%7D%0A%20%20%20%20duration%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20human%20string%20e.g.%20%222%20years%203%20months%22%0A%20%20%20%20is_current%3A%20bool%0A%20%20%20%20industry%3A%20str%0A%20%20%20%20company_size%3A%20str%0A%20%20%20%20description%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20free%20text%20%E2%80%94%20KEY%20for%20production%20evidence%0A%60%60%60%0A%0A%60%60%60python%0Aclass%20DateRange%3A%0A%20%20%20%20start%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20%22Jan%202019%22%20or%20%222019%22%20or%20ISO%0A%20%20%20%20end%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20%22Mar%202022%22%20%7C%20%22Present%22%0A%60%60%60%0A%0A%60%60%60python%0Aclass%20Education%3A%0A%20%20%20%20institution%3A%20str%0A%20%20%20%20degree%3A%20str%0A%20%20%20%20field%3A%20str%0A%20%20%20%20years%3A%20DateRange%0A%20%20%20%20grade%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20%229.1%20CGPA%22%20%7C%20%22First%20Class%22%20%7C%20etc.%0A%20%20%20%20tier%3A%20int%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%201%E2%80%935%20(1%3DIIT%2FIISc%2C%205%3Dunknown)%0A%60%60%60%0A%0A%60%60%60python%0Aclass%20Skill%3A%0A%20%20%20%20name%3A%20str%0A%20%20%20%20proficiency%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20%22beginner%22%20%7C%20%22intermediate%22%20%7C%20%22advanced%22%20%7C%20%22expert%22%0A%20%20%20%20endorsements%3A%20int%0A%20%20%20%20duration_months%3A%20int%0A%60%60%60%0A%0A%60%60%60python%0Aclass%20RedrobSignals%3A%0A%20%20%20%20profile_completeness_score%3A%20int%20%20%20%20%20%20%20%20%20%20%23%200%E2%80%93100%0A%20%20%20%20signup_date%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20ISO%20date%0A%20%20%20%20last_active_date%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20ISO%20date%0A%20%20%20%20open_to_work_flag%3A%20bool%0A%20%20%20%20profile_views_received_30d%3A%20int%0A%20%20%20%20applications_submitted_30d%3A%20int%0A%20%20%20%20recruiter_response_rate%3A%20float%20%20%20%20%20%20%20%20%20%20%20%23%200.0%E2%80%931.0%0A%20%20%20%20avg_response_time_hours%3A%20float%0A%20%20%20%20skill_assessment_scores%3A%20Dict%5Bstr%2C%20int%5D%20%20%23%20%7B%22Python%22%3A%2088%2C%20%22ML%22%3A%2074%7D%0A%20%20%20%20connection_count%3A%20int%0A%20%20%20%20endorsements_received%3A%20int%0A%20%20%20%20notice_period_days%3A%20int%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%200%E2%80%93180%0A%20%20%20%20expected_salary_range_inr_lpa%3A%20SalaryRange%0A%20%20%20%20preferred_work_mode%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20%22remote%22%7C%22hybrid%22%7C%22onsite%22%7C%22flexible%22%0A%20%20%20%20willing_to_relocate%3A%20bool%0A%20%20%20%20github_activity_score%3A%20int%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20-1%20(not%20linked)%20or%200%E2%80%93100%0A%20%20%20%20search_appearance_30d%3A%20int%0A%20%20%20%20saved_by_recruiters_30d%3A%20int%0A%20%20%20%20interview_completion_rate%3A%20float%20%20%20%20%20%20%20%20%20%23%200.0%E2%80%931.0%0A%20%20%20%20offer_acceptance_rate%3A%20float%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20-1.0%20(no%20history)%20or%200.0%E2%80%931.0%0A%20%20%20%20verified_email%3A%20bool%0A%20%20%20%20verified_phone%3A%20bool%0A%20%20%20%20linkedin_connected%3A%20bool%0A%60%60%60%0A%0A%60%60%60python%0Aclass%20SalaryRange%3A%0A%20%20%20%20min%3A%20float%20%20%20%20%23%20INR%20LPA%0A%20%20%20%20max%3A%20float%20%20%20%20%23%20INR%20LPA%0A%60%60%60%0A%0A---%0A%0A%23%23%202.%20Internal%20Data%20Models%0A%0A%23%23%23%202.1%20CandidateScores%20(computed%2C%20stored%20in%20%60subscores.pkl%60)%0A%0A%60%60%60python%0Aclass%20CandidateScores%3A%0A%20%20%20%20candidate_id%3A%20str%0A%0A%20%20%20%20%23%20Sub-scores%20(all%20float%2C%20%5B0.0%2C%201.0%5D)%0A%20%20%20%20technical_fit%3A%20float%0A%20%20%20%20career_quality%3A%20float%0A%20%20%20%20availability_signal%3A%20float%0A%20%20%20%20seniority_fit%3A%20float%0A%0A%20%20%20%20%23%20Derived%20metadata%20(for%20reasoning%20generation)%0A%20%20%20%20top_skills%3A%20List%5Bstr%5D%20%20%20%20%20%20%20%20%20%20%20%23%20top%203%20matching%20JD%20skills%0A%20%20%20%20strongest_company%3A%20str%20%20%20%20%20%20%20%20%20%20%23%20highest-signal%20company%20in%20career%0A%20%20%20%20strongest_role_title%3A%20str%0A%20%20%20%20is_open_to_work%3A%20bool%0A%20%20%20%20response_rate%3A%20float%0A%20%20%20%20years_of_experience%3A%20int%0A%20%20%20%20penalty_multiplier%3A%20float%20%20%20%20%20%20%20%23%201.0%20%3D%20no%20penalty%2C%200.15%20%3D%20consulting-only%0A%0A%20%20%20%20%23%20Flags%0A%20%20%20%20disqualified%3A%20bool%0A%20%20%20%20disqualify_reason%3A%20Optional%5Bstr%5D%0A%20%20%20%20is_honeypot%3A%20bool%0A%60%60%60%0A%0A%23%23%23%202.2%20RankedCandidate%20(runtime%2C%20top%20100%20output)%0A%0A%60%60%60python%0Aclass%20RankedCandidate%3A%0A%20%20%20%20rank%3A%20int%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%201%E2%80%93100%0A%20%20%20%20candidate_id%3A%20str%0A%20%20%20%20composite_score%3A%20float%20%20%20%20%20%20%20%20%20%20%23%20%5B0.0%2C%201.0%5D%2C%203%20decimal%20places%0A%20%20%20%20semantic_similarity%3A%20float%20%20%20%20%20%20%23%20cosine%20vs%20JD%20embedding%0A%20%20%20%20scores%3A%20CandidateScores%0A%20%20%20%20reasoning%3A%20str%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%201%E2%80%932%20sentences%2C%20120%E2%80%93300%20chars%0A%60%60%60%0A%0A%23%23%23%202.3%20DisqualifiedRecord%20(audit%20log)%0A%0A%60%60%60python%0Aclass%20DisqualifiedRecord%3A%0A%20%20%20%20candidate_id%3A%20str%0A%20%20%20%20disqualify_type%3A%20str%20%20%20%20%23%20%22HONEYPOT%22%20%7C%20%22HARD_PENALTY%22%20%7C%20%22GHOST_PROFILE%22%0A%20%20%20%20reason%3A%20str%0A%20%20%20%20years_of_experience%3A%20int%0A%20%20%20%20earliest_role_year%3A%20Optional%5Bint%5D%0A%20%20%20%20profile_completeness%3A%20int%0A%60%60%60%0A%0A---%0A%0A%23%23%203.%20Artifact%20Schemas%0A%0A%23%23%23%203.1%20%60artifacts%2Fembeddings.npy%60%0A%60%60%60%0Adtype%3A%20%20float32%0Ashape%3A%20%20(N%2C%20384)%20%20%20%20%20%20%20%20%20%20%23%20N%20%3D%20candidates%20passing%20disqualification%0Anotes%3A%20%20Row%20i%20corresponds%20to%20candidate_ids%5Bi%5D%0A%20%20%20%20%20%20%20%20Normalized%20to%20unit%20vectors%20(for%20fast%20cosine%20via%20dot%20product)%0A%60%60%60%0A%0A%23%23%23%203.2%20%60artifacts%2Fcandidate_ids.npy%60%0A%60%60%60%0Adtype%3A%20%20str%20(Unicode)%0Ashape%3A%20%20(N%2C)%0Anotes%3A%20%20Aligned%20index%20with%20embeddings.npy%0A%20%20%20%20%20%20%20%20candidate_ids%5Bi%5D%20%E2%86%92%20embeddings%5Bi%5D%0A%60%60%60%0A%0A%23%23%23%203.3%20%60artifacts%2Fjd_embedding.npy%60%0A%60%60%60%0Adtype%3A%20%20float32%0Ashape%3A%20%20(384%2C)%0Anotes%3A%20%20Unit-normalized%0A%20%20%20%20%20%20%20%20Embedded%20from%3A%20full%20JD%20text%20(title%20%2B%20requirements%20%2B%20description)%0A%60%60%60%0A%0A%23%23%23%203.4%20%60artifacts%2Fsubscores.pkl%60%0A%60%60%60%0Atype%3A%20%20%20Python%20dict%2C%20pickled%0Aschema%3A%20%7B%0A%20%20%20%20%22CAND_0042871%22%3A%20%7B%0A%20%20%20%20%20%20%20%20%22technical_fit%22%3A%200.91%2C%0A%20%20%20%20%20%20%20%20%22career_quality%22%3A%200.88%2C%0A%20%20%20%20%20%20%20%20%22availability_signal%22%3A%200.96%2C%0A%20%20%20%20%20%20%20%20%22seniority_fit%22%3A%200.82%2C%0A%20%20%20%20%20%20%20%20%22penalty_multiplier%22%3A%201.0%2C%0A%20%20%20%20%20%20%20%20%22top_skills%22%3A%20%5B%22FAISS%22%2C%20%22Sentence-Transformers%22%2C%20%22Python%22%5D%2C%0A%20%20%20%20%20%20%20%20%22strongest_company%22%3A%20%22Swiggy%22%2C%0A%20%20%20%20%20%20%20%20%22strongest_role_title%22%3A%20%22Senior%20ML%20Engineer%22%2C%0A%20%20%20%20%20%20%20%20%22is_open_to_work%22%3A%20true%2C%0A%20%20%20%20%20%20%20%20%22response_rate%22%3A%200.94%2C%0A%20%20%20%20%20%20%20%20%22years_of_experience%22%3A%207%2C%0A%20%20%20%20%20%20%20%20%22disqualified%22%3A%20false%2C%0A%20%20%20%20%20%20%20%20%22disqualify_reason%22%3A%20null%2C%0A%20%20%20%20%20%20%20%20%22is_honeypot%22%3A%20false%0A%20%20%20%20%7D%2C%0A%20%20%20%20...%0A%7D%0A%60%60%60%0A%0A%23%23%23%203.5%20%60artifacts%2Fdisqualified.json%60%0A%60%60%60json%0A%5B%0A%20%20%20%20%7B%0A%20%20%20%20%20%20%20%20%22candidate_id%22%3A%20%22CAND_0000041%22%2C%0A%20%20%20%20%20%20%20%20%22disqualify_type%22%3A%20%22HONEYPOT%22%2C%0A%20%20%20%20%20%20%20%20%22reason%22%3A%20%22Claims%208yr%20YoE%20but%20earliest%20role%20starts%202022%20(3yr%20ago)%22%2C%0A%20%20%20%20%20%20%20%20%22years_of_experience%22%3A%208%2C%0A%20%20%20%20%20%20%20%20%22earliest_role_year%22%3A%202022%2C%0A%20%20%20%20%20%20%20%20%22profile_completeness%22%3A%2034%0A%20%20%20%20%7D%2C%0A%20%20%20%20...%0A%5D%0A%60%60%60%0A%0A---%0A%0A%23%23%204.%20Output%20Schema%0A%0A%23%23%23%204.1%20Submission%20CSV%0A%0A%60%60%60%0AColumns%3A%20%20%20%20candidate_id%2C%20rank%2C%20score%2C%20reasoning%0ATypes%3A%20%20%20%20%20%20str%2C%20%20%20%20%20%20%20%20%20%20int%2C%20%20float%2C%20str%0AConstraints%3A%0A%20%20-%20Exactly%20100%20data%20rows%0A%20%20-%20rank%3A%20integers%201%E2%80%93100%2C%20each%20exactly%20once%0A%20%20-%20score%3A%20float%2C%203%20decimal%20places%2C%20non-increasing%20with%20rank%0A%20%20-%20reasoning%3A%201%E2%80%932%20sentences%2C%20no%20newlines%2C%20UTF-8%0A%20%20-%20candidate_id%3A%20format%20%22CAND_XXXXXXX%22%20(7%20digits)%0A%60%60%60%0A%0AExample%20rows%3A%0A%60%60%60csv%0Acandidate_id%2Crank%2Cscore%2Creasoning%0ACAND_0042871%2C1%2C0.899%2C%227yr%20ML%20engineer%20with%20production%20FAISS%20%2B%20Qdrant%20at%20Swiggy%3B%20actively%20looking%2C%2094%25%20response%20rate%2C%2030-day%20notice.%22%0ACAND_0019234%2C2%2C0.887%2C%226yr%20applied%20ML%20at%20Meesho%20and%20Zomato%2C%20strong%20embedding%20retrieval%20%2B%20eval%20frameworks%3B%20open%20to%20work%2C%20last%20active%202%20days%20ago.%22%0A%60%60%60%0A%0A%23%23%23%204.2%20Submission%20Metadata%20YAML%0A%0A%60%60%60yaml%0Aparticipant_id%3A%20%22PART_XXXX%22%0Asubmission_number%3A%201%20%20%20%20%20%20%20%20%20%20%23%201%2C%202%2C%20or%203%20(max%203)%0Amodel_type%3A%20%22hybrid%22%20%20%20%20%20%20%20%20%20%20%23%20keyword%20%7C%20embedding%20%7C%20hybrid%20%7C%20llm%0Aai_tools_used%3A%0A%20%20-%20%22sentence-transformers%20(all-MiniLM-L6-v2)%22%0A%20%20-%20%22numpy%22%0A%20%20-%20%22Claude%20(architecture%20design%20%2B%20code%20review)%22%0Aprecomputed_artifacts%3A%20true%0Aartifact_files%3A%0A%20%20-%20%22artifacts%2Fembeddings.npy%22%0A%20%20-%20%22artifacts%2Fsubscores.pkl%22%0A%20%20-%20%22artifacts%2Fjd_embedding.npy%22%0Asandbox_url%3A%20%22https%3A%2F%2Fhuggingface.co%2Fspaces%2F%3Cusername%3E%2Frecruiteriq%22%0Anotes%3A%20%22Hybrid%20offline%20scoring.%20Precomputed%20embeddings%20%2B%20sub-scores.%20Ranking%20step%20runs%20in%20%3C5%20min%20CPU.%22%0A%60%60%60%0A%0A---%0A%0A%23%23%205.%20Config%20Schema%20(%60config.py%60)%0A%0A%60%60%60python%0A%23%20Score%20weights%20(must%20sum%20to%201.0)%0AWEIGHTS%20%3D%20%7B%0A%20%20%20%20%22technical_fit%22%3A%20%20%20%20%20%200.35%2C%0A%20%20%20%20%22career_quality%22%3A%20%20%20%20%200.25%2C%0A%20%20%20%20%22availability_signal%22%3A0.20%2C%0A%20%20%20%20%22seniority_fit%22%3A%20%20%20%20%20%200.12%2C%0A%20%20%20%20%22semantic_similarity%22%3A0.08%2C%0A%7D%0A%0A%23%20Technical%20fit%3A%20JD%20skill%20mapping%0AJD_MUST_HAVES%20%3D%20%7B%0A%20%20%20%20%22embeddings%22%3A%20%20%20%7B%22keywords%22%3A%20%5B%22sentence-transformers%22%2C%20%22BGE%22%2C%20%22E5%22%2C%20%22embeddings%22%2C%20%22dense%20retrieval%22%5D%2C%20%22weight%22%3A%200.25%7D%2C%0A%20%20%20%20%22vector_db%22%3A%20%20%20%20%7B%22keywords%22%3A%20%5B%22FAISS%22%2C%20%22Pinecone%22%2C%20%22Milvus%22%2C%20%22Qdrant%22%2C%20%22Weaviate%22%2C%20%22OpenSearch%22%5D%2C%20%22weight%22%3A%200.20%7D%2C%0A%20%20%20%20%22python%22%3A%20%20%20%20%20%20%20%7B%22keywords%22%3A%20%5B%22Python%22%5D%2C%20%22weight%22%3A%200.15%7D%2C%0A%20%20%20%20%22eval_frameworks%22%3A%20%7B%22keywords%22%3A%20%5B%22NDCG%22%2C%20%22MRR%22%2C%20%22MAP%22%2C%20%22A%2FB%20test%22%2C%20%22evaluation%22%2C%20%22ranking%22%5D%2C%20%22weight%22%3A%200.15%7D%2C%0A%7D%0AJD_NICE_TO_HAVES%20%3D%20%7B%0A%20%20%20%20%22llm_finetuning%22%3A%20%7B%22keywords%22%3A%20%5B%22LoRA%22%2C%20%22QLoRA%22%2C%20%22PEFT%22%2C%20%22fine-tuning%22%2C%20%22fine%20tuning%22%5D%2C%20%22weight%22%3A%200.10%7D%2C%0A%20%20%20%20%22ltr%22%3A%20%20%20%20%20%20%20%20%20%20%20%20%7B%22keywords%22%3A%20%5B%22learning-to-rank%22%2C%20%22LTR%22%2C%20%22XGBoost%22%2C%20%22LambdaMART%22%5D%2C%20%22weight%22%3A%200.10%7D%2C%0A%20%20%20%20%22hrtech%22%3A%20%20%20%20%20%20%20%20%20%7B%22keywords%22%3A%20%5B%22HR%20tech%22%2C%20%22talent%22%2C%20%22ATS%22%2C%20%22recruitment%22%2C%20%22marketplace%22%5D%2C%20%22weight%22%3A%200.05%7D%2C%0A%7D%0A%0A%23%20Consulting%20firm%20hard-penalty%20list%0ACONSULTING_FIRMS%20%3D%20%5B%0A%20%20%20%20%22TCS%22%2C%20%22Infosys%22%2C%20%22Wipro%22%2C%20%22Capgemini%22%2C%20%22Cognizant%22%2C%0A%20%20%20%20%22Accenture%22%2C%20%22HCL%22%2C%20%22Mphasis%22%2C%20%22Tech%20Mahindra%22%2C%20%22Hexaware%22%2C%0A%20%20%20%20%22IBM%20GBS%22%2C%20%22Deloitte%22%2C%20%22EY%22%2C%20%22KPMG%22%2C%20%22Mindtree%22%2C%20%22Persistent%22%0A%5D%0ACONSULTING_PENALTY%20%3D%200.15%20%20%20%20%23%20multiplier%20if%20all-consulting%20career%0A%0A%23%20Seniority%20fit%3A%20ideal%20range%0AIDEAL_YOE_MIN%20%3D%206%0AIDEAL_YOE_MAX%20%3D%209%0A%0A%23%20Availability%20signal%20weights%0AAVAILABILITY_WEIGHTS%20%3D%20%7B%0A%20%20%20%20%22open_to_work%22%3A%20%20%20%20%20%20%20%20%20%20%200.25%2C%0A%20%20%20%20%22last_active_recency%22%3A%20%20%20%200.20%2C%0A%20%20%20%20%22recruiter_response_rate%22%3A0.15%2C%0A%20%20%20%20%22response_speed%22%3A%20%20%20%20%20%20%20%20%200.10%2C%0A%20%20%20%20%22interview_completion%22%3A%20%20%200.15%2C%0A%20%20%20%20%22applications_30d%22%3A%20%20%20%20%20%20%200.10%2C%0A%20%20%20%20%22notice_period%22%3A%20%20%20%20%20%20%20%20%20%200.05%2C%0A%7D%0A%0A%23%20Embedding%0AEMBEDDING_MODEL%20%3D%20%22sentence-transformers%2Fall-MiniLM-L6-v2%22%0AEMBEDDING_BATCH_SIZE%20%3D%20512%0AEMBEDDING_DIM%20%3D%20384%0AMAX_PROFILE_BLOB_CHARS%20%3D%201024%0A%0A%23%20Honeypot%20detection%0AHONEYPOT_YOE_TOLERANCE%20%3D%202%20%20%20%20%20%20%23%20years%0AHONEYPOT_COMPLETENESS_MAX%20%3D%205%20%20%20%23%20%25%20completeness%20threshold%0A%0A%23%20Output%0ATOP_K%20%3D%20100%0ASEED%20%3D%2042%0ASCORE_DECIMAL_PLACES%20%3D%203%0A%60%60%60%0A%0A---%0A%0A%23%23%206.%20Function%20Signatures%0A%0A%60%60%60python%0A%23%20disqualify.py%0Adef%20is_honeypot(candidate%3A%20dict)%20-%3E%20bool%0Adef%20should_hard_penalize(candidate%3A%20dict)%20-%3E%20float%20%20%20%23%20returns%20penalty%20multiplier%0A%0A%23%20signals.py%0Adef%20compute_technical_fit(candidate%3A%20dict)%20-%3E%20float%0Adef%20compute_career_quality(candidate%3A%20dict)%20-%3E%20float%0Adef%20compute_availability_signal(candidate%3A%20dict)%20-%3E%20float%0Adef%20compute_seniority_fit(candidate%3A%20dict)%20-%3E%20float%0Adef%20compute_subscores(candidate%3A%20dict)%20-%3E%20CandidateScores%0A%0A%23%20precompute.py%0Adef%20build_profile_blob(candidate%3A%20dict)%20-%3E%20str%0Adef%20embed_batch(blobs%3A%20List%5Bstr%5D%2C%20model)%20-%3E%20np.ndarray%20%20%20%20%23%20(N%2C%20384)%0Adef%20run_precomputation(jsonl_path%3A%20str%2C%20jd_text%3A%20str)%20-%3E%20None%0A%0A%23%20rank.py%0Adef%20compute_composite(scores%3A%20CandidateScores%2C%20sim%3A%20float)%20-%3E%20float%0Adef%20generate_reasoning(candidate%3A%20dict%2C%20scores%3A%20CandidateScores)%20-%3E%20str%0Adef%20enforce_monotonic(scores%3A%20np.ndarray)%20-%3E%20np.ndarray%0Adef%20run_ranking(artifacts_dir%3A%20str%2C%20output_path%3A%20str)%20-%3E%20None%0A%0A%23%20validate.py%20(wrapper%20around%20provided%20script)%0Adef%20validate_csv(csv_path%3A%20str)%20-%3E%20bool%0A%60%60%60%0A%0A---%0A%0A*RecruiterIQ%20Backend%20Schema%20v1.0%20%C2%B7%202025*%0A" style="display: none;"></div>
+                  
+                    <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
+                      <ol>
+                        
+                        
+                          <li class="breadcrumb-item " >
+                            
+                              <span>Documentation</span>
+                            
+                            
+                              <span class="breadcrumb-separator">
+<svg class="lucide-icon icon-chevron-right " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+                            
+                          </li>
+                        
+                          <li class="breadcrumb-item active" aria-current=&quot;page&quot;>
+                            
+                              <span>Backend Schema Document</span>
+                            
+                            
+                          </li>
+                        
+                      </ol>
+                    </nav>
+                  
+
+                  
+                    <div class="docmd-copy-widgets">
+                      
+                        <button class="docmd-copy-btn docmd-copy-raw-btn" data-copied="copiedToClipboard" title="copyMarkdown" aria-label="copyMarkdown">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-copy " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-copy"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+</svg>
+</span>
+                        </button>
+                      
+                      
+                        <button class="docmd-copy-btn docmd-copy-context-btn" data-copied="copiedToClipboard" title="copyContext">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-message-square " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-message-square"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+</svg>
+</span>
+                          <span class="docmd-btn-text">copyContext</span>
+                        </button>
+                      
+                    </div>
+                  
+                </div>
+                
+                <h1 id="backend-schema-document" class="docmd-heading"><a href="#backend-schema-document" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Backend Schema Document</h1>
+<p><strong>RecruiterIQ — Data Models, Artifacts &amp; Interfaces</strong></p>
+<hr>
+<h2 id="backend-schema-document-1-input-schema" class="docmd-heading"><a href="#backend-schema-document-1-input-schema" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>1. Input Schema</h2>
+<h3 id="backend-schema-document-1-input-schema-11-candidate-record-from-candidatesjsonl" class="docmd-heading"><a href="#backend-schema-document-1-input-schema-11-candidate-record-from-candidatesjsonl" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>1.1 Candidate Record (from <code>candidates.jsonl</code>)</h3>
+<p>One JSON object per line. Full schema per <code>candidate_schema.json</code>:</p>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> CandidateRecord<span class="hljs-punctuation">:</span>
+    candidate_id<span class="hljs-punctuation">:</span> str          <span class="hljs-comment"># &quot;CAND_0042871&quot;  (7-digit, unique)</span>
+
+    profile<span class="hljs-punctuation">:</span> Profile
+    career_history<span class="hljs-punctuation">:</span> List[Role]   <span class="hljs-comment"># 1–10 items</span>
+    education<span class="hljs-punctuation">:</span> List[Education]   <span class="hljs-comment"># 0–5 items</span>
+    skills<span class="hljs-punctuation">:</span> List[Skill]          <span class="hljs-comment"># variable</span>
+    certifications<span class="hljs-punctuation">:</span> List[Cert]   <span class="hljs-comment"># variable</span>
+    languages<span class="hljs-punctuation">:</span> List[Language]    <span class="hljs-comment"># variable</span>
+    redrob_signals<span class="hljs-punctuation">:</span> RedrobSignals
+</code></pre>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> Profile<span class="hljs-punctuation">:</span>
+    name<span class="hljs-punctuation">:</span> str                    <span class="hljs-comment"># anonymized</span>
+    headline<span class="hljs-punctuation">:</span> str
+    summary<span class="hljs-punctuation">:</span> str
+    location<span class="hljs-punctuation">:</span> str
+    country<span class="hljs-punctuation">:</span> str
+    years_of_experience<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>     <span class="hljs-comment"># self-reported</span>
+    current_title<span class="hljs-punctuation">:</span> str
+    current_company<span class="hljs-punctuation">:</span> str
+    company_size<span class="hljs-punctuation">:</span> str            <span class="hljs-comment"># &quot;1-10&quot; | &quot;11-50&quot; | &quot;51-200&quot; | &quot;201-500&quot; | &quot;501-1000&quot; | &quot;1000+&quot;</span>
+    industry<span class="hljs-punctuation">:</span> str
+</code></pre>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> Role<span class="hljs-punctuation">:</span>
+    company<span class="hljs-punctuation">:</span> str
+    title<span class="hljs-punctuation">:</span> str
+    dates<span class="hljs-punctuation">:</span> DateRange             <span class="hljs-comment"># {start: str, end: str | &quot;Present&quot;}</span>
+    duration<span class="hljs-punctuation">:</span> str                <span class="hljs-comment"># human string e.g. &quot;2 years 3 months&quot;</span>
+    is_current<span class="hljs-punctuation">:</span> <span class="hljs-keyword">bool</span>
+    industry<span class="hljs-punctuation">:</span> str
+    company_size<span class="hljs-punctuation">:</span> str
+    description<span class="hljs-punctuation">:</span> str             <span class="hljs-comment"># free text — KEY for production evidence</span>
+</code></pre>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> DateRange<span class="hljs-punctuation">:</span>
+    start<span class="hljs-punctuation">:</span> str                   <span class="hljs-comment"># &quot;Jan 2019&quot; or &quot;2019&quot; or ISO</span>
+    end<span class="hljs-punctuation">:</span> str                     <span class="hljs-comment"># &quot;Mar 2022&quot; | &quot;Present&quot;</span>
+</code></pre>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> Education<span class="hljs-punctuation">:</span>
+    institution<span class="hljs-punctuation">:</span> str
+    degree<span class="hljs-punctuation">:</span> str
+    field<span class="hljs-punctuation">:</span> str
+    years<span class="hljs-punctuation">:</span> DateRange
+    grade<span class="hljs-punctuation">:</span> str                   <span class="hljs-comment"># &quot;9.1 CGPA&quot; | &quot;First Class&quot; | etc.</span>
+    tier<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>                    <span class="hljs-comment"># 1–5 (1=IIT/IISc, 5=unknown)</span>
+</code></pre>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> Skill<span class="hljs-punctuation">:</span>
+    name<span class="hljs-punctuation">:</span> str
+    proficiency<span class="hljs-punctuation">:</span> str             <span class="hljs-comment"># &quot;beginner&quot; | &quot;intermediate&quot; | &quot;advanced&quot; | &quot;expert&quot;</span>
+    endorsements<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+    duration_months<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+</code></pre>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> RedrobSignals<span class="hljs-punctuation">:</span>
+    profile_completeness_score<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>          <span class="hljs-comment"># 0–100</span>
+    signup_date<span class="hljs-punctuation">:</span> str                         <span class="hljs-comment"># ISO date</span>
+    last_active_date<span class="hljs-punctuation">:</span> str                    <span class="hljs-comment"># ISO date</span>
+    open_to_work_flag<span class="hljs-punctuation">:</span> <span class="hljs-keyword">bool</span>
+    profile_views_received_30d<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+    applications_submitted_30d<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+    recruiter_response_rate<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>           <span class="hljs-comment"># 0.0–1.0</span>
+    avg_response_time_hours<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>
+    skill_assessment_scores<span class="hljs-punctuation">:</span> Dict[str, <span class="hljs-keyword">int</span>]  <span class="hljs-comment"># {&quot;Python&quot;: 88, &quot;ML&quot;: 74}</span>
+    connection_count<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+    endorsements_received<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+    notice_period_days<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>                  <span class="hljs-comment"># 0–180</span>
+    expected_salary_range_inr_lpa<span class="hljs-punctuation">:</span> SalaryRange
+    preferred_work_mode<span class="hljs-punctuation">:</span> str                 <span class="hljs-comment"># &quot;remote&quot;|&quot;hybrid&quot;|&quot;onsite&quot;|&quot;flexible&quot;</span>
+    willing_to_relocate<span class="hljs-punctuation">:</span> <span class="hljs-keyword">bool</span>
+    github_activity_score<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>               <span class="hljs-comment"># -1 (not linked) or 0–100</span>
+    search_appearance_30d<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+    saved_by_recruiters_30d<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+    interview_completion_rate<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>         <span class="hljs-comment"># 0.0–1.0</span>
+    offer_acceptance_rate<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>             <span class="hljs-comment"># -1.0 (no history) or 0.0–1.0</span>
+    verified_email<span class="hljs-punctuation">:</span> <span class="hljs-keyword">bool</span>
+    verified_phone<span class="hljs-punctuation">:</span> <span class="hljs-keyword">bool</span>
+    linkedin_connected<span class="hljs-punctuation">:</span> <span class="hljs-keyword">bool</span>
+</code></pre>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> SalaryRange<span class="hljs-punctuation">:</span>
+    min<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>    <span class="hljs-comment"># INR LPA</span>
+    max<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>    <span class="hljs-comment"># INR LPA</span>
+</code></pre>
+<hr>
+<h2 id="backend-schema-document-2-internal-data-models" class="docmd-heading"><a href="#backend-schema-document-2-internal-data-models" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>2. Internal Data Models</h2>
+<h3 id="backend-schema-document-2-internal-data-models-21-candidatescores-computed-stored-in-subscorespkl" class="docmd-heading"><a href="#backend-schema-document-2-internal-data-models-21-candidatescores-computed-stored-in-subscorespkl" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>2.1 CandidateScores (computed, stored in <code>subscores.pkl</code>)</h3>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> CandidateScores<span class="hljs-punctuation">:</span>
+    candidate_id<span class="hljs-punctuation">:</span> str
+
+    <span class="hljs-comment"># Sub-scores (all float, [0.0, 1.0])</span>
+    technical_fit<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>
+    career_quality<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>
+    availability_signal<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>
+    seniority_fit<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>
+
+    <span class="hljs-comment"># Derived metadata (for reasoning generation)</span>
+    top_skills<span class="hljs-punctuation">:</span> List[str]           <span class="hljs-comment"># top 3 matching JD skills</span>
+    strongest_company<span class="hljs-punctuation">:</span> str          <span class="hljs-comment"># highest-signal company in career</span>
+    strongest_role_title<span class="hljs-punctuation">:</span> str
+    is_open_to_work<span class="hljs-punctuation">:</span> <span class="hljs-keyword">bool</span>
+    response_rate<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>
+    years_of_experience<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+    penalty_multiplier<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>       <span class="hljs-comment"># 1.0 = no penalty, 0.15 = consulting-only</span>
+
+    <span class="hljs-comment"># Flags</span>
+    disqualified<span class="hljs-punctuation">:</span> <span class="hljs-keyword">bool</span>
+    disqualify_reason<span class="hljs-punctuation">:</span> Optional[str]
+    is_honeypot<span class="hljs-punctuation">:</span> <span class="hljs-keyword">bool</span>
+</code></pre>
+<h3 id="backend-schema-document-2-internal-data-models-22-rankedcandidate-runtime-top-100-output" class="docmd-heading"><a href="#backend-schema-document-2-internal-data-models-22-rankedcandidate-runtime-top-100-output" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>2.2 RankedCandidate (runtime, top 100 output)</h3>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> RankedCandidate<span class="hljs-punctuation">:</span>
+    rank<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>                       <span class="hljs-comment"># 1–100</span>
+    candidate_id<span class="hljs-punctuation">:</span> str
+    composite_score<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>          <span class="hljs-comment"># [0.0, 1.0], 3 decimal places</span>
+    semantic_similarity<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>      <span class="hljs-comment"># cosine vs JD embedding</span>
+    scores<span class="hljs-punctuation">:</span> CandidateScores
+    reasoning<span class="hljs-punctuation">:</span> str                  <span class="hljs-comment"># 1–2 sentences, 120–300 chars</span>
+</code></pre>
+<h3 id="backend-schema-document-2-internal-data-models-23-disqualifiedrecord-audit-log" class="docmd-heading"><a href="#backend-schema-document-2-internal-data-models-23-disqualifiedrecord-audit-log" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>2.3 DisqualifiedRecord (audit log)</h3>
+<pre class="hljs"><code><span class="hljs-keyword">class</span> DisqualifiedRecord<span class="hljs-punctuation">:</span>
+    candidate_id<span class="hljs-punctuation">:</span> str
+    disqualify_type<span class="hljs-punctuation">:</span> str    <span class="hljs-comment"># &quot;HONEYPOT&quot; | &quot;HARD_PENALTY&quot; | &quot;GHOST_PROFILE&quot;</span>
+    reason<span class="hljs-punctuation">:</span> str
+    years_of_experience<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+    earliest_role_year<span class="hljs-punctuation">:</span> Optional[<span class="hljs-keyword">int</span>]
+    profile_completeness<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span>
+</code></pre>
+<hr>
+<h2 id="backend-schema-document-3-artifact-schemas" class="docmd-heading"><a href="#backend-schema-document-3-artifact-schemas" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3. Artifact Schemas</h2>
+<h3 id="backend-schema-document-3-artifact-schemas-31-artifactsembeddingsnpy" class="docmd-heading"><a href="#backend-schema-document-3-artifact-schemas-31-artifactsembeddingsnpy" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3.1 <code>artifacts/embeddings.npy</code></h3>
+<pre class="hljs"><code>dtype<span class="hljs-punctuation">:</span>  float32
+shape<span class="hljs-punctuation">:</span>  (N, <span class="hljs-number">384</span>)          <span class="hljs-comment"># N = candidates passing disqualification</span>
+notes<span class="hljs-punctuation">:</span>  Row i corresponds to candidate_ids[i]
+        Normalized to unit <span class="hljs-title function_">vectors</span> (<span class="hljs-keyword">for</span> fast cosine via dot product)
+</code></pre>
+<h3 id="backend-schema-document-3-artifact-schemas-32-artifactscandidateidsnpy" class="docmd-heading"><a href="#backend-schema-document-3-artifact-schemas-32-artifactscandidateidsnpy" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3.2 <code>artifacts/candidate_ids.npy</code></h3>
+<pre class="hljs"><code>dtype<span class="hljs-punctuation">:</span>  <span class="hljs-title function_">str</span> (Unicode)
+shape<span class="hljs-punctuation">:</span>  (N,)
+notes<span class="hljs-punctuation">:</span>  Aligned index <span class="hljs-keyword">with</span> embeddings.<span class="hljs-attr">npy</span>
+        candidate_ids[i] → embeddings[i]
+</code></pre>
+<h3 id="backend-schema-document-3-artifact-schemas-33-artifactsjdembeddingnpy" class="docmd-heading"><a href="#backend-schema-document-3-artifact-schemas-33-artifactsjdembeddingnpy" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3.3 <code>artifacts/jd_embedding.npy</code></h3>
+<pre class="hljs"><code>dtype<span class="hljs-punctuation">:</span>  float32
+shape<span class="hljs-punctuation">:</span>  (<span class="hljs-number">384</span>,)
+notes<span class="hljs-punctuation">:</span>  Unit<span class="hljs-punctuation">-</span>normalized
+        Embedded <span class="hljs-keyword">from</span><span class="hljs-punctuation">:</span> full JD <span class="hljs-title function_">text</span> (title <span class="hljs-punctuation">+</span> requirements <span class="hljs-punctuation">+</span> description)
+</code></pre>
+<h3 id="backend-schema-document-3-artifact-schemas-34-artifactssubscorespkl" class="docmd-heading"><a href="#backend-schema-document-3-artifact-schemas-34-artifactssubscorespkl" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3.4 <code>artifacts/subscores.pkl</code></h3>
+<pre class="hljs"><code><span class="hljs-keyword">type</span><span class="hljs-punctuation">:</span>   Python dict, pickled
+schema<span class="hljs-punctuation">:</span> {
+    <span class="hljs-string">&quot;CAND_0042871&quot;</span><span class="hljs-punctuation">:</span> {
+        <span class="hljs-string">&quot;technical_fit&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.91</span>,
+        <span class="hljs-string">&quot;career_quality&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.88</span>,
+        <span class="hljs-string">&quot;availability_signal&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.96</span>,
+        <span class="hljs-string">&quot;seniority_fit&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.82</span>,
+        <span class="hljs-string">&quot;penalty_multiplier&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1.0</span>,
+        <span class="hljs-string">&quot;top_skills&quot;</span><span class="hljs-punctuation">:</span> [<span class="hljs-string">&quot;FAISS&quot;</span>, <span class="hljs-string">&quot;Sentence-Transformers&quot;</span>, <span class="hljs-string">&quot;Python&quot;</span>],
+        <span class="hljs-string">&quot;strongest_company&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Swiggy&quot;</span>,
+        <span class="hljs-string">&quot;strongest_role_title&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Senior ML Engineer&quot;</span>,
+        <span class="hljs-string">&quot;is_open_to_work&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span>,
+        <span class="hljs-string">&quot;response_rate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.94</span>,
+        <span class="hljs-string">&quot;years_of_experience&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">7</span>,
+        <span class="hljs-string">&quot;disqualified&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span>,
+        <span class="hljs-string">&quot;disqualify_reason&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">null</span>,
+        <span class="hljs-string">&quot;is_honeypot&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-keyword">false</span>
+    },
+    ...
+}
+</code></pre>
+<h3 id="backend-schema-document-3-artifact-schemas-35-artifactsdisqualifiedjson" class="docmd-heading"><a href="#backend-schema-document-3-artifact-schemas-35-artifactsdisqualifiedjson" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3.5 <code>artifacts/disqualified.json</code></h3>
+<pre class="hljs"><code>[
+    {
+        <span class="hljs-string">&quot;candidate_id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;CAND_0000041&quot;</span>,
+        <span class="hljs-string">&quot;disqualify_type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;HONEYPOT&quot;</span>,
+        <span class="hljs-string">&quot;reason&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Claims 8yr YoE but earliest role starts 2022 (3yr ago)&quot;</span>,
+        <span class="hljs-string">&quot;years_of_experience&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">8</span>,
+        <span class="hljs-string">&quot;earliest_role_year&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">2022</span>,
+        <span class="hljs-string">&quot;profile_completeness&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">34</span>
+    },
+    ...
+]
+</code></pre>
+<hr>
+<h2 id="backend-schema-document-4-output-schema" class="docmd-heading"><a href="#backend-schema-document-4-output-schema" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4. Output Schema</h2>
+<h3 id="backend-schema-document-4-output-schema-41-submission-csv" class="docmd-heading"><a href="#backend-schema-document-4-output-schema-41-submission-csv" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4.1 Submission CSV</h3>
+<pre class="hljs"><code>Columns<span class="hljs-punctuation">:</span>    candidate_id, rank, score, reasoning
+Types<span class="hljs-punctuation">:</span>      str,          <span class="hljs-keyword">int</span>,  <span class="hljs-keyword">float</span>, str
+Constraints<span class="hljs-punctuation">:</span>
+  <span class="hljs-punctuation">-</span> Exactly <span class="hljs-number">100</span> data rows
+  <span class="hljs-punctuation">-</span> rank<span class="hljs-punctuation">:</span> integers <span class="hljs-number">1</span>–<span class="hljs-number">100</span>, each exactly once
+  <span class="hljs-punctuation">-</span> score<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>, <span class="hljs-number">3</span> decimal places, non<span class="hljs-punctuation">-</span>increasing <span class="hljs-keyword">with</span> rank
+  <span class="hljs-punctuation">-</span> reasoning<span class="hljs-punctuation">:</span> <span class="hljs-number">1</span>–<span class="hljs-number">2</span> sentences, no newlines, UTF<span class="hljs-punctuation">-</span><span class="hljs-number">8</span>
+  <span class="hljs-punctuation">-</span> candidate_id<span class="hljs-punctuation">:</span> format <span class="hljs-string">&quot;CAND_XXXXXXX&quot;</span> (<span class="hljs-number">7</span> digits)
+</code></pre>
+<p>Example rows:</p>
+<pre class="hljs"><code>candidate_id,rank,score,reasoning
+CAND_0042871,<span class="hljs-number">1</span>,<span class="hljs-number">0.899</span>,<span class="hljs-string">&quot;7yr ML engineer with production FAISS + Qdrant at Swiggy; actively looking, 94% response rate, 30-day notice.&quot;</span>
+CAND_0019234,<span class="hljs-number">2</span>,<span class="hljs-number">0.887</span>,<span class="hljs-string">&quot;6yr applied ML at Meesho and Zomato, strong embedding retrieval + eval frameworks; open to work, last active 2 days ago.&quot;</span>
+</code></pre>
+<h3 id="backend-schema-document-4-output-schema-42-submission-metadata-yaml" class="docmd-heading"><a href="#backend-schema-document-4-output-schema-42-submission-metadata-yaml" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4.2 Submission Metadata YAML</h3>
+<pre class="hljs"><code>participant_id<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;PART_XXXX&quot;</span>
+submission_number<span class="hljs-punctuation">:</span> <span class="hljs-number">1</span>          <span class="hljs-comment"># 1, 2, or 3 (max 3)</span>
+model_type<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;hybrid&quot;</span>          <span class="hljs-comment"># keyword | embedding | hybrid | llm</span>
+ai_tools_used<span class="hljs-punctuation">:</span>
+  <span class="hljs-punctuation">-</span> <span class="hljs-string">&quot;sentence-transformers (all-MiniLM-L6-v2)&quot;</span>
+  <span class="hljs-punctuation">-</span> <span class="hljs-string">&quot;numpy&quot;</span>
+  <span class="hljs-punctuation">-</span> <span class="hljs-string">&quot;Claude (architecture design + code review)&quot;</span>
+precomputed_artifacts<span class="hljs-punctuation">:</span> <span class="hljs-keyword">true</span>
+artifact_files<span class="hljs-punctuation">:</span>
+  <span class="hljs-punctuation">-</span> <span class="hljs-string">&quot;artifacts/embeddings.npy&quot;</span>
+  <span class="hljs-punctuation">-</span> <span class="hljs-string">&quot;artifacts/subscores.pkl&quot;</span>
+  <span class="hljs-punctuation">-</span> <span class="hljs-string">&quot;artifacts/jd_embedding.npy&quot;</span>
+sandbox_url<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://huggingface.co/spaces/&lt;username&gt;/recruiteriq&quot;</span>
+notes<span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Hybrid offline scoring. Precomputed embeddings + sub-scores. Ranking step runs in &lt;5 min CPU.&quot;</span>
+</code></pre>
+<hr>
+<h2 id="backend-schema-document-5-config-schema-configpy" class="docmd-heading"><a href="#backend-schema-document-5-config-schema-configpy" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>5. Config Schema (<code>config.py</code>)</h2>
+<pre class="hljs"><code><span class="hljs-comment"># Score weights (must sum to 1.0)</span>
+WEIGHTS <span class="hljs-punctuation">=</span> {
+    <span class="hljs-string">&quot;technical_fit&quot;</span><span class="hljs-punctuation">:</span>      <span class="hljs-number">0.35</span>,
+    <span class="hljs-string">&quot;career_quality&quot;</span><span class="hljs-punctuation">:</span>     <span class="hljs-number">0.25</span>,
+    <span class="hljs-string">&quot;availability_signal&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0.20</span>,
+    <span class="hljs-string">&quot;seniority_fit&quot;</span><span class="hljs-punctuation">:</span>      <span class="hljs-number">0.12</span>,
+    <span class="hljs-string">&quot;semantic_similarity&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0.08</span>,
+}
+
+<span class="hljs-comment"># Technical fit: JD skill mapping</span>
+JD_MUST_HAVES <span class="hljs-punctuation">=</span> {
+    <span class="hljs-string">&quot;embeddings&quot;</span><span class="hljs-punctuation">:</span>   {<span class="hljs-string">&quot;keywords&quot;</span><span class="hljs-punctuation">:</span> [<span class="hljs-string">&quot;sentence-transformers&quot;</span>, <span class="hljs-string">&quot;BGE&quot;</span>, <span class="hljs-string">&quot;E5&quot;</span>, <span class="hljs-string">&quot;embeddings&quot;</span>, <span class="hljs-string">&quot;dense retrieval&quot;</span>], <span class="hljs-string">&quot;weight&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.25</span>},
+    <span class="hljs-string">&quot;vector_db&quot;</span><span class="hljs-punctuation">:</span>    {<span class="hljs-string">&quot;keywords&quot;</span><span class="hljs-punctuation">:</span> [<span class="hljs-string">&quot;FAISS&quot;</span>, <span class="hljs-string">&quot;Pinecone&quot;</span>, <span class="hljs-string">&quot;Milvus&quot;</span>, <span class="hljs-string">&quot;Qdrant&quot;</span>, <span class="hljs-string">&quot;Weaviate&quot;</span>, <span class="hljs-string">&quot;OpenSearch&quot;</span>], <span class="hljs-string">&quot;weight&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.20</span>},
+    <span class="hljs-string">&quot;python&quot;</span><span class="hljs-punctuation">:</span>       {<span class="hljs-string">&quot;keywords&quot;</span><span class="hljs-punctuation">:</span> [<span class="hljs-string">&quot;Python&quot;</span>], <span class="hljs-string">&quot;weight&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.15</span>},
+    <span class="hljs-string">&quot;eval_frameworks&quot;</span><span class="hljs-punctuation">:</span> {<span class="hljs-string">&quot;keywords&quot;</span><span class="hljs-punctuation">:</span> [<span class="hljs-string">&quot;NDCG&quot;</span>, <span class="hljs-string">&quot;MRR&quot;</span>, <span class="hljs-string">&quot;MAP&quot;</span>, <span class="hljs-string">&quot;A/B test&quot;</span>, <span class="hljs-string">&quot;evaluation&quot;</span>, <span class="hljs-string">&quot;ranking&quot;</span>], <span class="hljs-string">&quot;weight&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.15</span>},
+}
+JD_NICE_TO_HAVES <span class="hljs-punctuation">=</span> {
+    <span class="hljs-string">&quot;llm_finetuning&quot;</span><span class="hljs-punctuation">:</span> {<span class="hljs-string">&quot;keywords&quot;</span><span class="hljs-punctuation">:</span> [<span class="hljs-string">&quot;LoRA&quot;</span>, <span class="hljs-string">&quot;QLoRA&quot;</span>, <span class="hljs-string">&quot;PEFT&quot;</span>, <span class="hljs-string">&quot;fine-tuning&quot;</span>, <span class="hljs-string">&quot;fine tuning&quot;</span>], <span class="hljs-string">&quot;weight&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.10</span>},
+    <span class="hljs-string">&quot;ltr&quot;</span><span class="hljs-punctuation">:</span>            {<span class="hljs-string">&quot;keywords&quot;</span><span class="hljs-punctuation">:</span> [<span class="hljs-string">&quot;learning-to-rank&quot;</span>, <span class="hljs-string">&quot;LTR&quot;</span>, <span class="hljs-string">&quot;XGBoost&quot;</span>, <span class="hljs-string">&quot;LambdaMART&quot;</span>], <span class="hljs-string">&quot;weight&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.10</span>},
+    <span class="hljs-string">&quot;hrtech&quot;</span><span class="hljs-punctuation">:</span>         {<span class="hljs-string">&quot;keywords&quot;</span><span class="hljs-punctuation">:</span> [<span class="hljs-string">&quot;HR tech&quot;</span>, <span class="hljs-string">&quot;talent&quot;</span>, <span class="hljs-string">&quot;ATS&quot;</span>, <span class="hljs-string">&quot;recruitment&quot;</span>, <span class="hljs-string">&quot;marketplace&quot;</span>], <span class="hljs-string">&quot;weight&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.05</span>},
+}
+
+<span class="hljs-comment"># Consulting firm hard-penalty list</span>
+CONSULTING_FIRMS <span class="hljs-punctuation">=</span> [
+    <span class="hljs-string">&quot;TCS&quot;</span>, <span class="hljs-string">&quot;Infosys&quot;</span>, <span class="hljs-string">&quot;Wipro&quot;</span>, <span class="hljs-string">&quot;Capgemini&quot;</span>, <span class="hljs-string">&quot;Cognizant&quot;</span>,
+    <span class="hljs-string">&quot;Accenture&quot;</span>, <span class="hljs-string">&quot;HCL&quot;</span>, <span class="hljs-string">&quot;Mphasis&quot;</span>, <span class="hljs-string">&quot;Tech Mahindra&quot;</span>, <span class="hljs-string">&quot;Hexaware&quot;</span>,
+    <span class="hljs-string">&quot;IBM GBS&quot;</span>, <span class="hljs-string">&quot;Deloitte&quot;</span>, <span class="hljs-string">&quot;EY&quot;</span>, <span class="hljs-string">&quot;KPMG&quot;</span>, <span class="hljs-string">&quot;Mindtree&quot;</span>, <span class="hljs-string">&quot;Persistent&quot;</span>
+]
+CONSULTING_PENALTY <span class="hljs-punctuation">=</span> <span class="hljs-number">0.15</span>    <span class="hljs-comment"># multiplier if all-consulting career</span>
+
+<span class="hljs-comment"># Seniority fit: ideal range</span>
+IDEAL_YOE_MIN <span class="hljs-punctuation">=</span> <span class="hljs-number">6</span>
+IDEAL_YOE_MAX <span class="hljs-punctuation">=</span> <span class="hljs-number">9</span>
+
+<span class="hljs-comment"># Availability signal weights</span>
+AVAILABILITY_WEIGHTS <span class="hljs-punctuation">=</span> {
+    <span class="hljs-string">&quot;open_to_work&quot;</span><span class="hljs-punctuation">:</span>           <span class="hljs-number">0.25</span>,
+    <span class="hljs-string">&quot;last_active_recency&quot;</span><span class="hljs-punctuation">:</span>    <span class="hljs-number">0.20</span>,
+    <span class="hljs-string">&quot;recruiter_response_rate&quot;</span><span class="hljs-punctuation">:</span><span class="hljs-number">0.15</span>,
+    <span class="hljs-string">&quot;response_speed&quot;</span><span class="hljs-punctuation">:</span>         <span class="hljs-number">0.10</span>,
+    <span class="hljs-string">&quot;interview_completion&quot;</span><span class="hljs-punctuation">:</span>   <span class="hljs-number">0.15</span>,
+    <span class="hljs-string">&quot;applications_30d&quot;</span><span class="hljs-punctuation">:</span>       <span class="hljs-number">0.10</span>,
+    <span class="hljs-string">&quot;notice_period&quot;</span><span class="hljs-punctuation">:</span>          <span class="hljs-number">0.05</span>,
+}
+
+<span class="hljs-comment"># Embedding</span>
+EMBEDDING_MODEL <span class="hljs-punctuation">=</span> <span class="hljs-string">&quot;sentence-transformers/all-MiniLM-L6-v2&quot;</span>
+EMBEDDING_BATCH_SIZE <span class="hljs-punctuation">=</span> <span class="hljs-number">512</span>
+EMBEDDING_DIM <span class="hljs-punctuation">=</span> <span class="hljs-number">384</span>
+MAX_PROFILE_BLOB_CHARS <span class="hljs-punctuation">=</span> <span class="hljs-number">1024</span>
+
+<span class="hljs-comment"># Honeypot detection</span>
+HONEYPOT_YOE_TOLERANCE <span class="hljs-punctuation">=</span> <span class="hljs-number">2</span>      <span class="hljs-comment"># years</span>
+HONEYPOT_COMPLETENESS_MAX <span class="hljs-punctuation">=</span> <span class="hljs-number">5</span>   <span class="hljs-comment"># % completeness threshold</span>
+
+<span class="hljs-comment"># Output</span>
+TOP_K <span class="hljs-punctuation">=</span> <span class="hljs-number">100</span>
+SEED <span class="hljs-punctuation">=</span> <span class="hljs-number">42</span>
+SCORE_DECIMAL_PLACES <span class="hljs-punctuation">=</span> <span class="hljs-number">3</span>
+</code></pre>
+<hr>
+<h2 id="backend-schema-document-6-function-signatures" class="docmd-heading"><a href="#backend-schema-document-6-function-signatures" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>6. Function Signatures</h2>
+<pre class="hljs"><code><span class="hljs-comment"># disqualify.py</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">is_honeypot</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">bool</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">should_hard_penalize</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span>   <span class="hljs-comment"># returns penalty multiplier</span>
+
+<span class="hljs-comment"># signals.py</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_technical_fit</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_career_quality</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_availability_signal</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_seniority_fit</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_subscores</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> CandidateScores
+
+<span class="hljs-comment"># precompute.py</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">build_profile_blob</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> str
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">embed_batch</span>(blobs<span class="hljs-punctuation">:</span> List[str], model) <span class="hljs-punctuation">-&gt;</span> np.<span class="hljs-attr">ndarray</span>    <span class="hljs-comment"># (N, 384)</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">run_precomputation</span>(jsonl_path<span class="hljs-punctuation">:</span> str, jd_text<span class="hljs-punctuation">:</span> str) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">None</span>
+
+<span class="hljs-comment"># rank.py</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_composite</span>(scores<span class="hljs-punctuation">:</span> CandidateScores, sim<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">generate_reasoning</span>(candidate<span class="hljs-punctuation">:</span> dict, scores<span class="hljs-punctuation">:</span> CandidateScores) <span class="hljs-punctuation">-&gt;</span> str
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">enforce_monotonic</span>(scores<span class="hljs-punctuation">:</span> np.<span class="hljs-attr">ndarray</span>) <span class="hljs-punctuation">-&gt;</span> np.<span class="hljs-attr">ndarray</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">run_ranking</span>(artifacts_dir<span class="hljs-punctuation">:</span> str, output_path<span class="hljs-punctuation">:</span> str) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">None</span>
+
+<span class="hljs-comment"># validate.py (wrapper around provided script)</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">validate_csv</span>(csv_path<span class="hljs-punctuation">:</span> str) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">bool</span>
+</code></pre>
+<hr>
+<p><em>RecruiterIQ Backend Schema v1.0 · 2025</em></p>
+
+                
+              </div>
+              <div class="toc-sidebar">
+                
+
+
+  <div class="toc-container">
+    <h2 class="toc-title">onThisPage<span class="mobile-view toc-menu-button float-right">
+<svg class="lucide-icon icon-chevron-down " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-down"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</span></h2>
+    <ul class="toc-list">
+      
+        <li class="toc-item toc-level-1">
+          <a href="#backend-schema-document" class="toc-link">Backend Schema Document</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#backend-schema-document-1-input-schema" class="toc-link">1. Input Schema</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-1-input-schema-11-candidate-record-from-candidatesjsonl" class="toc-link">1.1 Candidate Record (from candidates.jsonl)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#backend-schema-document-2-internal-data-models" class="toc-link">2. Internal Data Models</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-2-internal-data-models-21-candidatescores-computed-stored-in-subscorespkl" class="toc-link">2.1 CandidateScores (computed, stored in subscores.pkl)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-2-internal-data-models-22-rankedcandidate-runtime-top-100-output" class="toc-link">2.2 RankedCandidate (runtime, top 100 output)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-2-internal-data-models-23-disqualifiedrecord-audit-log" class="toc-link">2.3 DisqualifiedRecord (audit log)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#backend-schema-document-3-artifact-schemas" class="toc-link">3. Artifact Schemas</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-3-artifact-schemas-31-artifactsembeddingsnpy" class="toc-link">3.1 artifacts/embeddings.npy</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-3-artifact-schemas-32-artifactscandidateidsnpy" class="toc-link">3.2 artifacts/candidate_ids.npy</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-3-artifact-schemas-33-artifactsjdembeddingnpy" class="toc-link">3.3 artifacts/jd_embedding.npy</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-3-artifact-schemas-34-artifactssubscorespkl" class="toc-link">3.4 artifacts/subscores.pkl</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-3-artifact-schemas-35-artifactsdisqualifiedjson" class="toc-link">3.5 artifacts/disqualified.json</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#backend-schema-document-4-output-schema" class="toc-link">4. Output Schema</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-4-output-schema-41-submission-csv" class="toc-link">4.1 Submission CSV</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#backend-schema-document-4-output-schema-42-submission-metadata-yaml" class="toc-link">4.2 Submission Metadata YAML</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#backend-schema-document-5-config-schema-configpy" class="toc-link">5. Config Schema (config.py)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#backend-schema-document-6-function-signatures" class="toc-link">6. Function Signatures</a>
+        </li>
+      
+    </ul>
+  </div>
+
+              </div>
+            </div>
+            <div class="page-footer-actions">
+              
+              
+                <span class="git-last-updated" data-timestamp="1781074771000">
+                  <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span class="git-label">Last updated:</span>
+                  <span class="git-time" data-timestamp="1781074771000"></span>
+                  
+                  <div class="git-commit-tooltip" role="tooltip">
+                    <div class="git-tooltip-title">Recent commits</div>
+                    <ul class="git-commit-list">
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="DevanshSrajput">
+                            
+                              <img src="https://www.gravatar.com/avatar/7f22948119fdb4e2d70c1be1a1f39659?d=mp&amp;s=64" alt="DevanshSrajput">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="Initialize the Project: (Add Initial Project Documentation)">Initialize the Project: (Add Initial ...</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">DevanshSrajput</span>
+                              <span class="git-commit-date" data-timestamp="1781074771000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                    </ul>
+                  </div>
+                  
+                </span>
+              
+              <span class="git-spacer"></span>
+              
+            </div>
+          </main>
+          
+
+
+<footer class="page-footer">
+  <div class="footer-content">
+    <div class="user-footer"></div>
+    
+      <div class="branding-footer">
+        builtWith <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
+      </div>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+      
+      <script src="../../assets/js/docmd-main.js?v=mqcpwj52"></script>
+      
+      <script src="../../assets/js/docmd-git.js?v=mqcpwj52"></script>
+      <script src="../../assets/js/docmd-image-lightbox.js?v=mqcpwj52" ></script>
+<script src="https://cdn.jsdelivr.net/npm/minisearch@7.2.0/dist/umd/index.min.js" ></script>
+<script src="../../assets/js/docmd-search.js?v=mqcpwj52" ></script>
+<script src="../../assets/js/init-mermaid.js?v=mqcpwj52" type="module"></script>
+<script src="../../assets/js/docmd-git.js?v=mqcpwj52" type="module"></script>
+
+  <!-- Search Modal (Injected by @docmd/plugin-search) -->
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-show-confidence="false" data-show-filters="true"
+       data-search-placeholder="Search documentation..."
+       data-search-no-results="No results found."
+       data-search-error="Failed to load search index."
+       data-search-initial="Type to start searching..."
+       data-search-navigate="to navigate"
+       data-search-escape="to close">
+      <div class="docmd-search-box">
+          <div class="docmd-search-header">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-search"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input type="text" id="docmd-search-input" placeholder="Search documentation..." autocomplete="off" spellcheck="false">
+              <button onclick="window.closeDocmdSearch()" class="docmd-search-close" aria-label="Close search">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+          </div>
+          <div id="docmd-search-results" class="docmd-search-results"></div>
+          <div class="docmd-search-footer">
+              <span><kbd class="docmd-kbd">↑</kbd> <kbd class="docmd-kbd">↓</kbd> to navigate</span>
+              <span><kbd class="docmd-kbd">ESC</kbd> to close</span>
+          </div>
+      </div>
+  </div>
+
+    <script>
+      (function() {
+        var searchDebounceTimer;
+
+        document.addEventListener('click', function(e) {
+          var link = e.target.closest('a');
+          if (!link || !window.gtag) return;
+          
+          var url = link.href;
+          var hostname = window.location.hostname;
+          var isExternal = link.hostname && link.hostname !== hostname;
+          var isDownload = link.hasAttribute('download') || url.match(/\.(pdf|zip|tar|gz|exe|pkg)$/i);
+          
+          if (isExternal) {
+            gtag('event', 'click_external', { 'url': url, 'link_text': link.innerText.trim() });
+          } else if (isDownload) {
+            gtag('event', 'download', { 'file_name': url.split('/').pop(), 'url': url });
+          }
+
+          // TOC tracking
+          if (link.classList.contains('toc-link')) {
+            gtag('event', 'toc_click', { 'target_id': link.getAttribute('href'), 'title': link.innerText.trim() });
+          }
+
+          // Permalink tracking
+          if (link.classList.contains('heading-anchor')) {
+            gtag('event', 'permalink_click', { 'url': url });
+          }
+        });
+
+        
+        // Search Keyword Tracking
+        document.addEventListener('input', function(e) {
+          if (e.target.id === 'docmd-search-input' && window.gtag) {
+            var query = e.target.value.trim();
+            if (query.length < 3) return;
+            
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(function() {
+              gtag('event', 'search', { 'search_term': query });
+            }, 1000);
+          }
+        });
+        
+      })();
+    </script>
+
+<script>window.__git_config={"repo":null,"branch":"main","editLink":false,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+      
+  </body>
+</html>

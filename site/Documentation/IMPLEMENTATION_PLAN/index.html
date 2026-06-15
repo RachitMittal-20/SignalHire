@@ -1,0 +1,1538 @@
+<!--
+  ---------------------------------------------------------------
+  docmd : the zero-config documentation engine.
+  @website https://docmd.io
+  [docmd-source] - Please do not remove this header.
+  ---------------------------------------------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="generator" content="docmd v0.5.x">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+    <style>
+      html {
+        visibility: hidden;
+      }
+    </style>
+    
+    <script>
+      var root = "../../";
+      if (root && !root.endsWith('/')) root += '/';
+      if (root === '') root = './';
+      window.DOCMD_ROOT = root;
+
+      var siteRoot = "../../";
+      if (siteRoot && !siteRoot.endsWith('/')) siteRoot += '/';
+      if (siteRoot === '') siteRoot = './';
+      window.DOCMD_SITE_ROOT = siteRoot;
+
+      window.DOCMD_APPEARANCE = "system";
+      window.DOCMD_VERSION_ROOT = "/";
+      window.DOCMD_BASE = "/";
+      window.DOCMD_LOCALE = "";
+      window.DOCMD_DEFAULT_LOCALE = "";
+    </script>
+    <title>
+      Implementation Plan : SignalHire
+    </title>
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mqcpwj52">
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mqcpwj52" id="hljs-light" >
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mqcpwj52" id="hljs-dark" disabled>
+    
+    
+<meta name="description" content="">
+<link rel="canonical" href="/Documentation/IMPLEMENTATION_PLAN/">
+<meta property="og:title" content="Implementation Plan - SignalHire">
+<meta property="og:description" content="">
+<meta property="og:url" content="/Documentation/IMPLEMENTATION_PLAN/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Implementation Plan - SignalHire">
+<meta name="twitter:description" content="">
+
+
+
+<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mqcpwj52" >
+<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mqcpwj52" >
+
+    
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+  </head>
+  <body
+    class="sidebar-collapsible"
+    data-default-collapsed="false"
+    data-copy-code-enabled="false" data-spa-enabled="true" data-source-file="Documentation/IMPLEMENTATION_PLAN.md">
+
+    <a href="#main-content" class="skip-link">skipToContent</a>
+
+    
+    
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          
+            <h1><a href="../../">
+                SignalHire
+              </a></h1>
+          
+          <span class="mobile-view sidebar-menu-button float-right">
+            
+<svg class="lucide-icon icon-menu " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-menu"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+
+          </span>
+        </div>
+        <div class="sidebar-top-group">
+          
+          
+          
+          
+        </div>
+        
+
+<nav class="sidebar-nav" aria-label="mainNavigation">
+  <ul>
+    
+      <li class="" >
+      
+        <a href="../../" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 SignalHire — AI-Powered Candidate Ranking
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../GOOD_FIRST_ISSUES/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 Good First Issues
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active-parent collapsible expanded nav-group"  aria-expanded="true" >
+      
+        <span class="nav-label nav-group">
+          
+          <span class="nav-item-title">
+            Documentation
+          </span>
+          
+            <span class="collapse-icon-wrapper">
+<svg class="lucide-icon icon-chevron-right collapse-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+          
+        </span>
+        
+
+        
+          <ul class="submenu">
+            
+      <li class="" >
+      
+        <a href="../../Documentation/APP_FLOW/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            App Flow Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/BACKEND_SCHEMA/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Backend Schema Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active" >
+      
+        <a href="../../Documentation/IMPLEMENTATION_PLAN/" class="active "
+          >
+          
+          <span class="nav-item-title">
+            Implementation Plan
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/RecruiterIQ_PRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            RecruiterIQ — Product Requirements Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/TRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Technical Requirements Document (TRD)
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/UIUX_DESIGN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            UI/UX Design Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+          </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+        <div class="sidebar-bottom-group mt-auto">
+          
+          
+          
+          
+        </div>
+      </aside>
+      
+      <div class="main-content-wrapper">
+        
+        
+          <header class="page-header">
+            <div class="header-left">
+              
+                <button id="sidebar-toggle-button" class="sidebar-toggle-button"
+                  aria-label="toggleSidebar">
+                  
+<svg class="lucide-icon icon-chevron-left " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+
+                </button>
+              
+              <div class="header-titles-wrapper">
+                <span class="header-title">
+                  Implementation Plan
+                </span>
+              </div>
+            </div>
+            <div class="header-right">
+              
+                
+
+
+<div class="docmd-options-menu">
+    
+    <button class="docmd-search-trigger" aria-label="search">
+        
+<svg class="lucide-icon icon-search " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-search"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" />
+</svg>
+
+        <span class="search-label">search</span>
+        <span class="search-keys"><kbd class="docmd-kbd">⌘</kbd><kbd class="docmd-kbd">K</kbd></span>
+    </button>
+    
+
+    
+
+    
+
+    
+    <button class="theme-toggle-button" aria-label="toggleTheme">
+        
+<svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-sun"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg>
+ 
+<svg class="lucide-icon icon-moon icon-moon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-moon"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+</svg>
+
+    </button>
+    
+
+    
+</div>
+
+              
+            </div>
+          </header>
+        
+        <div class="content-theme-cover">
+          <main class="content-area" id="main-content">
+            <div class="content-layout">
+              <div class="main-content">
+                <div class="docmd-breadcrumbs-row">
+                  <div id="docmd-raw-markdown" data-content="%23%20Implementation%20Plan%0A**RecruiterIQ%20%E2%80%94%20Build%20Execution%20Roadmap**%0A%0A%7C%20Field%20%7C%20Value%20%7C%0A%7C---%7C---%7C%0A%7C%20Total%20estimated%20time%20%7C%2012%E2%80%9316%20hours%20%7C%0A%7C%20Language%20%7C%20Python%203.10%20%7C%0A%7C%20Submission%20limit%20%7C%203%20max%20%E2%80%94%20plan%20for%202%20real%20submissions%20%7C%0A%7C%20Critical%20path%20%7C%20precompute.py%20%E2%86%92%20rank.py%20%E2%86%92%20validate%20%E2%86%92%20submit%20%7C%0A%0A---%0A%0A%23%23%200.%20Pre-Build%20Checklist%20(Before%20writing%20code)%0A%0A-%20%5B%20%5D%20Extract%20%60job_description.docx%60%20%E2%86%92%20%60job_description.txt%60%20(python-docx%20or%20LibreOffice)%0A-%20%5B%20%5D%20Extract%20%60redrob_signals_doc.docx%60%20%E2%86%92%20read%20signal%20definitions%0A-%20%5B%20%5D%20Extract%20%60submission_spec.docx%60%20%E2%86%92%20re-read%20all%20constraints%0A-%20%5B%20%5D%20Run%20%60validate_submission.py%20--help%60%20to%20understand%20its%20checks%0A-%20%5B%20%5D%20Open%20%60sample_candidates.json%60%20%E2%80%94%20inspect%20actual%20field%20shapes%0A-%20%5B%20%5D%20Open%20%60candidate_schema.json%60%20%E2%80%94%20check%20nullability%2C%20enum%20values%2C%20date%20formats%0A-%20%5B%20%5D%20Check%20%60sample_submission.csv%60%20%E2%80%94%20verify%20exact%20CSV%20column%20names%20%2B%20format%0A%0A---%0A%0A%23%23%20Phase%201%20%E2%80%94%20Environment%20Setup%20(1%E2%80%932%20hours)%0A%0A%23%23%23%20Step%201.1%3A%20Project%20Init%0A%0A%60%60%60bash%0Amkdir%20recruiteriq%20%26%26%20cd%20recruiteriq%0Apython%20-m%20venv%20venv%20%26%26%20source%20venv%2Fbin%2Factivate%0A%0Apip%20install%20sentence-transformers%20numpy%20pandas%20scikit-learn%20tqdm%20%5C%0A%20%20%20%20%20%20%20%20%20%20%20%20pyyaml%20python-docx%20streamlit%0A%0Amkdir%20-p%20artifacts%20output%20docs%0A%60%60%60%0A%0A%23%23%23%20Step%201.2%3A%20Scaffold%20Files%0A%0A%60%60%60%0Arecruiteriq%2F%0A%E2%94%9C%E2%94%80%E2%94%80%20config.py%0A%E2%94%9C%E2%94%80%E2%94%80%20disqualify.py%0A%E2%94%9C%E2%94%80%E2%94%80%20signals.py%0A%E2%94%9C%E2%94%80%E2%94%80%20precompute.py%0A%E2%94%9C%E2%94%80%E2%94%80%20rank.py%0A%E2%94%9C%E2%94%80%E2%94%80%20app.py%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Streamlit%20demo%0A%E2%94%9C%E2%94%80%E2%94%80%20requirements.txt%0A%E2%94%9C%E2%94%80%E2%94%80%20Dockerfile%0A%E2%94%9C%E2%94%80%E2%94%80%20validate_submission.py%20%20%20%23%20copy%20from%20workspace%0A%E2%94%94%E2%94%80%E2%94%80%20data%2F%0A%20%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20candidates.jsonl%0A%20%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20candidate_schema.json%0A%20%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20sample_candidates.json%0A%20%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20job_description.txt%20%20%23%20extracted%0A%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%20sample_submission.csv%0A%60%60%60%0A%0A%23%23%23%20Step%201.3%3A%20config.py%0A%0AWrite%20all%20constants%20first.%20Nothing%20else%20imports%20correctly%20without%20config.%0A%0A**Verify%20immediately%3A**%20Print%20weights%20%E2%80%94%20must%20sum%20to%201.0.%0A%0A%60%60%60python%0Aassert%20abs(sum(WEIGHTS.values())%20-%201.0)%20%3C%201e-6%2C%20%22Weights%20must%20sum%20to%201.0%22%0Aassert%20abs(sum(AVAILABILITY_WEIGHTS.values())%20-%201.0)%20%3C%201e-6%0A%60%60%60%0A%0A---%0A%0A%23%23%20Phase%202%20%E2%80%94%20Data%20Layer%20(2%E2%80%933%20hours)%0A%0A%23%23%23%20Step%202.1%3A%20Schema%20Validator%0A%0A%60%60%60python%0A%23%20Check%20actual%20field%20presence%20in%20sample_candidates.json%20first%0Aimport%20json%0Awith%20open(&#039;data%2Fsample_candidates.json&#039;)%20as%20f%3A%0A%20%20%20%20samples%20%3D%20json.load(f)%0A%20%20%20%20%0A%23%20Print%20all%20keys%20to%20verify%20schema%20matches%20assumption%0Afor%20s%20in%20samples%3A%0A%20%20%20%20print(s.keys())%0A%20%20%20%20print(s%5B&#039;redrob_signals&#039;%5D.keys())%0A%20%20%20%20break%0A%60%60%60%0A%0AFix%20any%20field%20name%20discrepancies%20in%20%60config.py%60%20BEFORE%20writing%20scoring%20code.%0A%0A%23%23%23%20Step%202.2%3A%20JSONL%20Streaming%20Parser%0A%0A%60%60%60python%0A%23%20precompute.py%20%E2%80%94%20streaming%20(never%20load%20all%20100k%20at%20once)%0Adef%20stream_candidates(jsonl_path%3A%20str%2C%20chunk_size%3A%20int%20%3D%201000)%3A%0A%20%20%20%20buffer%20%3D%20%5B%5D%0A%20%20%20%20with%20open(jsonl_path%2C%20&#039;r&#039;)%20as%20f%3A%0A%20%20%20%20%20%20%20%20for%20line%20in%20f%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20try%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20candidate%20%3D%20json.loads(line.strip())%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20buffer.append(candidate)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20len(buffer)%20%3E%3D%20chunk_size%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20yield%20buffer%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20buffer%20%3D%20%5B%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20except%20json.JSONDecodeError%20as%20e%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20log.warning(f%22Parse%20error%3A%20%7Be%7D%22)%0A%20%20%20%20if%20buffer%3A%0A%20%20%20%20%20%20%20%20yield%20buffer%0A%60%60%60%0A%0A%23%23%23%20Step%202.3%3A%20Date%20Parser%20(critical%20for%20honeypot%20detection)%0A%0ADate%20strings%20in%20career_history%20are%20NOT%20guaranteed%20ISO%20format.%20Write%20defensive%20parser%3A%0A%0A%60%60%60python%0Adef%20parse_year(date_str%3A%20str)%20-%3E%20Optional%5Bint%5D%3A%0A%20%20%20%20%22%22%22Extract%20year%20from%20various%20date%20formats%3A%0A%20%20%20%20&#039;Jan%202019&#039;%2C%20&#039;2019&#039;%2C%20&#039;2019-01&#039;%2C%20&#039;January%202019&#039;%2C%20&#039;Present&#039;%0A%20%20%20%20%22%22%22%0A%20%20%20%20if%20not%20date_str%20or%20date_str%20%3D%3D%20%22Present%22%3A%0A%20%20%20%20%20%20%20%20return%20None%0A%20%20%20%20%23%20Try%20regex%3A%20find%204-digit%20year%0A%20%20%20%20import%20re%0A%20%20%20%20match%20%3D%20re.search(r&#039;%5Cb(19%7C20)%5Cd%7B2%7D%5Cb&#039;%2C%20str(date_str))%0A%20%20%20%20return%20int(match.group())%20if%20match%20else%20None%0A%60%60%60%0A%0A**Test%20on%20all%2010%20sample%20candidates%20before%20proceeding.**%0A%0A---%0A%0A%23%23%20Phase%203%20%E2%80%94%20Disqualification%20Engine%20(1%E2%80%932%20hours)%0A%0A%23%23%23%20Step%203.1%3A%20Honeypot%20Detector%0A%0A%60%60%60python%0A%23%20disqualify.py%0Adef%20is_honeypot(candidate%3A%20dict)%20-%3E%20tuple%5Bbool%2C%20str%5D%3A%0A%20%20%20%20yoe%20%3D%20candidate%5B&#039;profile&#039;%5D.get(&#039;years_of_experience&#039;%2C%200)%0A%20%20%20%20career%20%3D%20candidate.get(&#039;career_history&#039;%2C%20%5B%5D)%0A%20%20%20%20%0A%20%20%20%20if%20career%3A%0A%20%20%20%20%20%20%20%20start_years%20%3D%20%5Bparse_year(r%5B&#039;dates&#039;%5D%5B&#039;start&#039;%5D)%20for%20r%20in%20career%5D%0A%20%20%20%20%20%20%20%20start_years%20%3D%20%5By%20for%20y%20in%20start_years%20if%20y%20is%20not%20None%5D%0A%20%20%20%20%20%20%20%20if%20start_years%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20earliest%20%3D%20min(start_years)%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20yoe%20%3E%20(2025%20-%20earliest%20%2B%20HONEYPOT_YOE_TOLERANCE)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20return%20True%2C%20f%22Claims%20%7Byoe%7Dyr%20YoE%20but%20career%20starts%20%7Bearliest%7D%20(%7B2025-earliest%7Dyr%20ago)%22%0A%20%20%20%20%0A%20%20%20%20%23%20Ghost%20profile%20check%0A%20%20%20%20s%20%3D%20candidate.get(&#039;redrob_signals&#039;%2C%20%7B%7D)%0A%20%20%20%20if%20(s.get(&#039;profile_completeness_score&#039;%2C%20100)%20%3C%20HONEYPOT_COMPLETENESS_MAX%20and%0A%20%20%20%20%20%20%20%20not%20s.get(&#039;verified_email&#039;%2C%20True)%20and%0A%20%20%20%20%20%20%20%20not%20s.get(&#039;verified_phone&#039;%2C%20True))%3A%0A%20%20%20%20%20%20%20%20return%20True%2C%20%22Ghost%20profile%3A%20%3C5%25%20complete%2C%20no%20verified%20contacts%22%0A%20%20%20%20%0A%20%20%20%20return%20False%2C%20%22%22%0A%60%60%60%0A%0A%23%23%23%20Step%203.2%3A%20Consulting%20Penalty%0A%0A%60%60%60python%0Adef%20should_hard_penalize(candidate%3A%20dict)%20-%3E%20tuple%5Bfloat%2C%20str%5D%3A%0A%20%20%20%20companies%20%3D%20%5Br.get(&#039;company&#039;%2C%20&#039;&#039;)%20for%20r%20in%20candidate.get(&#039;career_history&#039;%2C%20%5B%5D)%5D%0A%20%20%20%20consulting_count%20%3D%20sum(%0A%20%20%20%20%20%20%20%201%20for%20c%20in%20companies%0A%20%20%20%20%20%20%20%20if%20any(firm.lower()%20in%20c.lower()%20for%20firm%20in%20CONSULTING_FIRMS)%0A%20%20%20%20)%0A%20%20%20%20if%20consulting_count%20%3D%3D%20len(companies)%20and%20len(companies)%20%3E%200%3A%0A%20%20%20%20%20%20%20%20return%20CONSULTING_PENALTY%2C%20%22All-consulting%20career%2C%20no%20product%20company%22%0A%20%20%20%20return%201.0%2C%20%22%22%0A%60%60%60%0A%0A**Unit%20test%3A**%20Create%20fake%20candidates%20matching%20each%20rule.%20Verify%20detection%20rate.%0A%0A---%0A%0A%23%23%20Phase%204%20%E2%80%94%20Scoring%20Engine%20(3%E2%80%934%20hours)%0A%0A%23%23%23%20Step%204.1%3A%20Technical%20Fit%0A%0AThis%20is%20the%20highest-weight%20signal%20(0.35).%20Get%20it%20right.%0A%0A%60%60%60python%0A%23%20signals.py%0Adef%20compute_technical_fit(candidate%3A%20dict)%20-%3E%20float%3A%0A%20%20%20%20score%20%3D%200.0%0A%20%20%20%20%0A%20%20%20%20%23%20Build%20skill%20lookup%3A%20%7Bnormalized_name%3A%20proficiency_weight%7D%0A%20%20%20%20skill_weights%20%3D%20%7B%22beginner%22%3A%200.1%2C%20%22intermediate%22%3A%200.4%2C%20%22advanced%22%3A%200.75%2C%20%22expert%22%3A%201.0%7D%0A%20%20%20%20skills%20%3D%20%7B%7D%0A%20%20%20%20for%20skill%20in%20candidate.get(&#039;skills&#039;%2C%20%5B%5D)%3A%0A%20%20%20%20%20%20%20%20name%20%3D%20skill.get(&#039;name&#039;%2C%20&#039;&#039;).lower()%0A%20%20%20%20%20%20%20%20prof%20%3D%20skill_weights.get(skill.get(&#039;proficiency&#039;%2C%20&#039;beginner&#039;)%2C%200.1)%0A%20%20%20%20%20%20%20%20skills%5Bname%5D%20%3D%20prof%0A%20%20%20%20%0A%20%20%20%20%23%20Override%20with%20platform%20assessment%20scores%20if%20available%0A%20%20%20%20assessments%20%3D%20candidate.get(&#039;redrob_signals&#039;%2C%20%7B%7D).get(&#039;skill_assessment_scores&#039;%2C%20%7B%7D)%0A%20%20%20%20for%20skill_name%2C%20assessed_score%20in%20assessments.items()%3A%0A%20%20%20%20%20%20%20%20normalized%20%3D%20skill_name.lower()%0A%20%20%20%20%20%20%20%20if%20normalized%20in%20skills%20or%20any(kw%20in%20normalized%20for%20kw%20in%20%5B&#039;python&#039;%2C%20&#039;ml&#039;%2C%20&#039;nlp&#039;%5D)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20skills%5Bnormalized%5D%20%3D%20assessed_score%20%2F%20100.0%0A%20%20%20%20%0A%20%20%20%20%23%20Score%20against%20JD%20must-haves%0A%20%20%20%20for%20criterion%2C%20cfg%20in%20JD_MUST_HAVES.items()%3A%0A%20%20%20%20%20%20%20%20best_match%20%3D%200.0%0A%20%20%20%20%20%20%20%20for%20kw%20in%20cfg%5B&#039;keywords&#039;%5D%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20for%20skill_name%2C%20skill_strength%20in%20skills.items()%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%20kw.lower()%20in%20skill_name%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20best_match%20%3D%20max(best_match%2C%20skill_strength)%0A%20%20%20%20%20%20%20%20score%20%2B%3D%20best_match%20*%20cfg%5B&#039;weight&#039;%5D%0A%20%20%20%20%0A%20%20%20%20%23%20Score%20against%20career%20descriptions%20(production%20evidence)%0A%20%20%20%20career_text%20%3D%20&#039;%20&#039;.join(%0A%20%20%20%20%20%20%20%20r.get(&#039;description&#039;%2C%20&#039;&#039;)%20for%20r%20in%20candidate.get(&#039;career_history&#039;%2C%20%5B%5D)%0A%20%20%20%20).lower()%0A%20%20%20%20%0A%20%20%20%20production_bonus%20%3D%20sum(1%20for%20kw%20in%20PRODUCTION_SIGNALS%20if%20kw.lower()%20in%20career_text)%0A%20%20%20%20retrieval_bonus%20%3D%20sum(1%20for%20kw%20in%20RETRIEVAL_SIGNALS%20if%20kw.lower()%20in%20career_text)%0A%20%20%20%20%0A%20%20%20%20score%20%2B%3D%20min(production_bonus%20*%200.02%2C%200.10)%20%20%20%23%20max%20%2B0.10%20bonus%0A%20%20%20%20score%20%2B%3D%20min(retrieval_bonus%20*%200.02%2C%200.10)%20%20%20%20%23%20max%20%2B0.10%20bonus%0A%20%20%20%20%0A%20%20%20%20%23%20Nice-to-haves%20(smaller%20contribution)%0A%20%20%20%20for%20criterion%2C%20cfg%20in%20JD_NICE_TO_HAVES.items()%3A%0A%20%20%20%20%20%20%20%20for%20kw%20in%20cfg%5B&#039;keywords&#039;%5D%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20any(kw.lower()%20in%20s%20for%20s%20in%20skills.keys())%20or%20kw.lower()%20in%20career_text%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20score%20%2B%3D%20cfg%5B&#039;weight&#039;%5D%20*%200.5%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20break%0A%20%20%20%20%0A%20%20%20%20return%20min(score%2C%201.0)%0A%60%60%60%0A%0A%23%23%23%20Step%204.2%3A%20Career%20Quality%0A%0A%60%60%60python%0Adef%20compute_career_quality(candidate%3A%20dict)%20-%3E%20float%3A%0A%20%20%20%20score%20%3D%200.0%0A%20%20%20%20career%20%3D%20candidate.get(&#039;career_history&#039;%2C%20%5B%5D)%0A%20%20%20%20%0A%20%20%20%20if%20not%20career%3A%0A%20%20%20%20%20%20%20%20return%200.0%0A%20%20%20%20%0A%20%20%20%20companies%20%3D%20%5Br.get(&#039;company&#039;%2C%20&#039;&#039;)%20for%20r%20in%20career%5D%0A%20%20%20%20%0A%20%20%20%20%23%20Product%20company%20presence%0A%20%20%20%20non_consulting%20%3D%20%5Bc%20for%20c%20in%20companies%20if%20not%20any(f.lower()%20in%20c.lower()%20for%20f%20in%20CONSULTING_FIRMS)%5D%0A%20%20%20%20if%20non_consulting%3A%0A%20%20%20%20%20%20%20%20score%20%2B%3D%200.30%0A%20%20%20%20%0A%20%20%20%20%23%20Meaningful%20seniority%20in%20history%0A%20%20%20%20senior_titles%20%3D%20%5B&#039;senior&#039;%2C%20&#039;lead&#039;%2C%20&#039;principal&#039;%2C%20&#039;staff&#039;%2C%20&#039;head&#039;%2C%20&#039;director&#039;%5D%0A%20%20%20%20ml_titles%20%3D%20%5B&#039;ml&#039;%2C%20&#039;machine%20learning&#039;%2C%20&#039;ai&#039;%2C%20&#039;data%20scientist&#039;%2C%20&#039;nlp&#039;%2C%20&#039;research&#039;%5D%0A%20%20%20%20for%20role%20in%20career%3A%0A%20%20%20%20%20%20%20%20title_lower%20%3D%20role.get(&#039;title&#039;%2C%20&#039;&#039;).lower()%0A%20%20%20%20%20%20%20%20if%20any(t%20in%20title_lower%20for%20t%20in%20ml_titles)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20score%20%2B%3D%200.15%0A%20%20%20%20%20%20%20%20%20%20%20%20break%0A%20%20%20%20%0A%20%20%20%20%23%20Tenure%20quality%20(median%20tenure%20across%20roles)%0A%20%20%20%20durations%20%3D%20%5B%5D%0A%20%20%20%20for%20role%20in%20career%3A%0A%20%20%20%20%20%20%20%20start_yr%20%3D%20parse_year(role%5B&#039;dates&#039;%5D%5B&#039;start&#039;%5D)%0A%20%20%20%20%20%20%20%20end_str%20%3D%20role%5B&#039;dates&#039;%5D.get(&#039;end&#039;%2C%20&#039;Present&#039;)%0A%20%20%20%20%20%20%20%20end_yr%20%3D%202025%20if%20end_str%20%3D%3D%20&#039;Present&#039;%20else%20parse_year(end_str)%0A%20%20%20%20%20%20%20%20if%20start_yr%20and%20end_yr%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20durations.append(end_yr%20-%20start_yr)%0A%20%20%20%20%0A%20%20%20%20if%20durations%3A%0A%20%20%20%20%20%20%20%20median_tenure%20%3D%20sorted(durations)%5Blen(durations)%2F%2F2%5D%0A%20%20%20%20%20%20%20%20if%20median_tenure%20%3E%3D%203%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20score%20%2B%3D%200.20%0A%20%20%20%20%20%20%20%20elif%20median_tenure%20%3E%3D%202%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20score%20%2B%3D%200.12%0A%20%20%20%20%20%20%20%20elif%20median_tenure%20%3E%3D%201.5%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20score%20%2B%3D%200.05%0A%20%20%20%20%0A%20%20%20%20%23%20Career%20progression%20(last%20title%20%3E%20first%20title%20seniority)%0A%20%20%20%20score%20%2B%3D%200.20%20if%20_has_upward_progression(career)%20else%200.0%0A%20%20%20%20%0A%20%20%20%20%23%20No%20consulting%20penalty%20already%20handled%20via%20penalty_multiplier%0A%20%20%20%20if%20not%20non_consulting%3A%0A%20%20%20%20%20%20%20%20score%20%3D%200.0%20%20%23%20redundant%20safety%20(penalty_multiplier%20handles%20it)%0A%20%20%20%20%0A%20%20%20%20return%20min(score%2C%201.0)%0A%60%60%60%0A%0A%23%23%23%20Step%204.3%3A%20Availability%20Signal%0A%0A%60%60%60python%0Adef%20compute_availability_signal(candidate%3A%20dict)%20-%3E%20float%3A%0A%20%20%20%20s%20%3D%20candidate.get(&#039;redrob_signals&#039;%2C%20%7B%7D)%0A%20%20%20%20score%20%3D%200.0%0A%20%20%20%20%0A%20%20%20%20%23%20open_to_work%20(0.25)%0A%20%20%20%20score%20%2B%3D%200.25%20if%20s.get(&#039;open_to_work_flag&#039;%2C%20False)%20else%200.0%0A%20%20%20%20%0A%20%20%20%20%23%20last_active_recency%20(0.20)%0A%20%20%20%20from%20datetime%20import%20date%0A%20%20%20%20last_active%20%3D%20s.get(&#039;last_active_date&#039;)%0A%20%20%20%20if%20last_active%3A%0A%20%20%20%20%20%20%20%20try%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20delta%20%3D%20(date.today()%20-%20date.fromisoformat(last_active%5B%3A10%5D)).days%0A%20%20%20%20%20%20%20%20%20%20%20%20if%20delta%20%3C%3D%2030%3A%20%20%20score%20%2B%3D%200.20%0A%20%20%20%20%20%20%20%20%20%20%20%20elif%20delta%20%3C%3D%2090%3A%20score%20%2B%3D%200.12%0A%20%20%20%20%20%20%20%20%20%20%20%20elif%20delta%20%3C%3D%20180%3Ascore%20%2B%3D%200.06%0A%20%20%20%20%20%20%20%20except%3A%20pass%0A%20%20%20%20%0A%20%20%20%20%23%20recruiter_response_rate%20(0.15)%0A%20%20%20%20score%20%2B%3D%20s.get(&#039;recruiter_response_rate&#039;%2C%200.0)%20*%200.15%0A%20%20%20%20%0A%20%20%20%20%23%20response_speed%20(0.10)%0A%20%20%20%20hours%20%3D%20s.get(&#039;avg_response_time_hours&#039;%2C%20999)%0A%20%20%20%20if%20hours%20%3C%3D%204%3A%20%20%20%20score%20%2B%3D%200.10%0A%20%20%20%20elif%20hours%20%3C%3D%2024%3A%20score%20%2B%3D%200.07%0A%20%20%20%20elif%20hours%20%3C%3D%2072%3A%20score%20%2B%3D%200.04%0A%20%20%20%20else%3A%20%20%20%20%20%20%20%20%20%20%20%20%20score%20%2B%3D%200.01%0A%20%20%20%20%0A%20%20%20%20%23%20interview_completion_rate%20(0.15)%0A%20%20%20%20score%20%2B%3D%20s.get(&#039;interview_completion_rate&#039;%2C%200.0)%20*%200.15%0A%20%20%20%20%0A%20%20%20%20%23%20applications_submitted_30d%20(0.10)%0A%20%20%20%20apps%20%3D%20s.get(&#039;applications_submitted_30d&#039;%2C%200)%0A%20%20%20%20if%20apps%20%3E%3D%203%3A%20%20%20score%20%2B%3D%200.10%0A%20%20%20%20elif%20apps%20%3E%3D%201%3A%20score%20%2B%3D%200.05%0A%20%20%20%20%0A%20%20%20%20%23%20notice_period%20(0.05)%0A%20%20%20%20notice%20%3D%20s.get(&#039;notice_period_days&#039;%2C%2090)%0A%20%20%20%20if%20notice%20%3C%3D%2030%3A%20%20score%20%2B%3D%200.05%0A%20%20%20%20elif%20notice%20%3C%3D%2060%3Ascore%20%2B%3D%200.035%0A%20%20%20%20elif%20notice%20%3C%3D%2090%3Ascore%20%2B%3D%200.02%0A%20%20%20%20else%3A%20%20%20%20%20%20%20%20%20%20%20%20%20score%20%2B%3D%200.005%0A%20%20%20%20%0A%20%20%20%20return%20min(score%2C%201.0)%0A%60%60%60%0A%0A%23%23%23%20Step%204.4%3A%20Seniority%20Fit%0A%0A%60%60%60python%0Adef%20compute_seniority_fit(candidate%3A%20dict)%20-%3E%20float%3A%0A%20%20%20%20yoe%20%3D%20candidate%5B&#039;profile&#039;%5D.get(&#039;years_of_experience&#039;%2C%200)%0A%20%20%20%20%0A%20%20%20%20if%20IDEAL_YOE_MIN%20%3C%3D%20yoe%20%3C%3D%20IDEAL_YOE_MAX%3A%20%20%20%20base%20%3D%201.0%0A%20%20%20%20elif%204%20%3C%3D%20yoe%20%3C%206%20or%209%20%3C%20yoe%20%3C%3D%2012%3A%20%20%20%20%20%20%20%20%20%20base%20%3D%200.7%0A%20%20%20%20elif%20yoe%20%3D%3D%203%20or%2012%20%3C%20yoe%20%3C%3D%2015%3A%20%20%20%20%20%20%20%20%20%20%20%20%20base%20%3D%200.4%0A%20%20%20%20else%3A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20base%20%3D%200.1%0A%20%20%20%20%0A%20%20%20%20%23%20Education%20tier%20bonus%0A%20%20%20%20edu_tier%20%3D%20min((e.get(&#039;tier&#039;%2C%205)%20for%20e%20in%20candidate.get(&#039;education&#039;%2C%20%5B%5D))%2C%20default%3D5)%0A%20%20%20%20tier_bonus%20%3D%20%7B1%3A%200.05%2C%202%3A%200.02%7D.get(edu_tier%2C%200.0)%0A%20%20%20%20%0A%20%20%20%20return%20min(base%20%2B%20tier_bonus%2C%201.0)%0A%60%60%60%0A%0A**Unit%20tests%20for%20all%204%20scorers%20before%20running%20precompute%20on%20full%20dataset.**%0A%0A---%0A%0A%23%23%20Phase%205%20%E2%80%94%20Precomputation%20(1%E2%80%932%20hours)%0A%0A%23%23%23%20Step%205.1%3A%20Embedding%20Setup%0A%0A%60%60%60python%0A%23%20precompute.py%0Afrom%20sentence_transformers%20import%20SentenceTransformer%0Amodel%20%3D%20SentenceTransformer(EMBEDDING_MODEL)%0A%23%20Warm%20up%0A_%20%3D%20model.encode(%5B%22warm%20up%22%5D%2C%20batch_size%3D1)%0A%60%60%60%0A%0A%23%23%23%20Step%205.2%3A%20Full%20Run%20on%20Sample%20First%0A%0A%60%60%60bash%0A%23%20Test%20on%2010%20samples%20before%20100k%0Apython%20precompute.py%20--input%20data%2Fsample_candidates.json%20--output%20artifacts_test%2F%0A%60%60%60%0A%0ACheck%3A%0A-%20%60artifacts_test%2Fembeddings.npy%60%20shape%20%3D%20(10%2C%20384)%0A-%20%60artifacts_test%2Fsubscores.pkl%60%20has%2010%20entries%0A-%20No%20crashes%2C%20no%20NaN%20scores%0A%0A%23%23%23%20Step%205.3%3A%20Full%20Run%20on%20100k%0A%0A%60%60%60bash%0Atime%20python%20precompute.py%20--input%20data%2Fcandidates.jsonl%20--output%20artifacts%2F%0A%60%60%60%0A%0AMonitor%3A%0A-%20RAM%20usage%3A%20%60watch%20-n5%20free%20-h%60%0A-%20Expected%20runtime%3A%2030%E2%80%9360%20min%0A-%20Expected%20peak%20RAM%3A%20~2GB%0A%0A---%0A%0A%23%23%20Phase%206%20%E2%80%94%20Ranking%20Script%20(1%E2%80%932%20hours)%0A%0A%23%23%23%20Step%206.1%3A%20rank.py%20Core%0A%0A%60%60%60python%0Aimport%20numpy%20as%20np%2C%20pickle%2C%20json%2C%20csv%0Afrom%20config%20import%20WEIGHTS%2C%20TOP_K%2C%20SCORE_DECIMAL_PLACES%0A%0Adef%20run_ranking(artifacts_dir%2C%20jd_embedding_path%2C%20output_path%2C%20jsonl_path)%3A%0A%20%20%20%20%23%20Load%0A%20%20%20%20E%20%3D%20np.load(f%22%7Bartifacts_dir%7D%2Fembeddings.npy%22)%20%20%20%20%20%20%20%20%20%20%23%20(N%2C%20384)%0A%20%20%20%20IDs%20%3D%20np.load(f%22%7Bartifacts_dir%7D%2Fcandidate_ids.npy%22)%20%20%20%20%20%23%20(N%2C)%0A%20%20%20%20with%20open(f%22%7Bartifacts_dir%7D%2Fsubscores.pkl%22%2C%20%22rb%22)%20as%20f%3A%0A%20%20%20%20%20%20%20%20subscores%20%3D%20pickle.load(f)%0A%20%20%20%20jd_vec%20%3D%20np.load(jd_embedding_path)%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20(384%2C)%0A%20%20%20%20%0A%20%20%20%20%23%20Semantic%20similarity%20(vectorized%2C%20fast)%0A%20%20%20%20sim%20%3D%20E%20%40%20jd_vec%20%20%20%23%20already%20unit-normalized%2C%20so%20this%20%3D%20cosine%20sim%0A%20%20%20%20%0A%20%20%20%20%23%20Composite%20score%0A%20%20%20%20scores%20%3D%20np.zeros(len(IDs))%0A%20%20%20%20for%20i%2C%20cid%20in%20enumerate(IDs)%3A%0A%20%20%20%20%20%20%20%20s%20%3D%20subscores.get(cid%2C%20%7B%7D)%0A%20%20%20%20%20%20%20%20penalty%20%3D%20s.get(&#039;penalty_multiplier&#039;%2C%201.0)%0A%20%20%20%20%20%20%20%20scores%5Bi%5D%20%3D%20penalty%20*%20(%0A%20%20%20%20%20%20%20%20%20%20%20%20WEIGHTS%5B&#039;technical_fit&#039;%5D%20%20%20%20%20%20%20*%20s.get(&#039;technical_fit&#039;%2C%200)%20%2B%0A%20%20%20%20%20%20%20%20%20%20%20%20WEIGHTS%5B&#039;career_quality&#039;%5D%20%20%20%20%20%20*%20s.get(&#039;career_quality&#039;%2C%200)%20%2B%0A%20%20%20%20%20%20%20%20%20%20%20%20WEIGHTS%5B&#039;availability_signal&#039;%5D%20*%20s.get(&#039;availability_signal&#039;%2C%200)%20%2B%0A%20%20%20%20%20%20%20%20%20%20%20%20WEIGHTS%5B&#039;seniority_fit&#039;%5D%20%20%20%20%20%20%20*%20s.get(&#039;seniority_fit&#039;%2C%200)%20%2B%0A%20%20%20%20%20%20%20%20%20%20%20%20WEIGHTS%5B&#039;semantic_similarity&#039;%5D%20*%20float(sim%5Bi%5D)%0A%20%20%20%20%20%20%20%20)%0A%20%20%20%20%0A%20%20%20%20%23%20Top%20100%0A%20%20%20%20top_idx%20%3D%20np.argsort(scores)%5B%3A%3A-1%5D%5B%3ATOP_K%5D%0A%20%20%20%20%0A%20%20%20%20%23%20Monotonic%20enforcement%0A%20%20%20%20for%20i%20in%20range(1%2C%20TOP_K)%3A%0A%20%20%20%20%20%20%20%20if%20scores%5Btop_idx%5Bi%5D%5D%20%3E%20scores%5Btop_idx%5Bi-1%5D%5D%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20scores%5Btop_idx%5Bi%5D%5D%20%3D%20scores%5Btop_idx%5Bi-1%5D%5D%0A%20%20%20%20%0A%20%20%20%20%23%20Build%20candidate%20lookup%20for%20reasoning%0A%20%20%20%20candidates%20%3D%20load_candidates_by_ids(jsonl_path%2C%20set(IDs%5Btop_idx%5D))%0A%20%20%20%20%0A%20%20%20%20%23%20Write%20CSV%0A%20%20%20%20with%20open(output_path%2C%20&#039;w&#039;%2C%20newline%3D&#039;&#039;%2C%20encoding%3D&#039;utf-8&#039;)%20as%20f%3A%0A%20%20%20%20%20%20%20%20writer%20%3D%20csv.writer(f)%0A%20%20%20%20%20%20%20%20writer.writerow(%5B&#039;candidate_id&#039;%2C%20&#039;rank&#039;%2C%20&#039;score&#039;%2C%20&#039;reasoning&#039;%5D)%0A%20%20%20%20%20%20%20%20for%20rank%2C%20idx%20in%20enumerate(top_idx%2C%201)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20cid%20%3D%20IDs%5Bidx%5D%0A%20%20%20%20%20%20%20%20%20%20%20%20score%20%3D%20round(float(scores%5Bidx%5D)%2C%20SCORE_DECIMAL_PLACES)%0A%20%20%20%20%20%20%20%20%20%20%20%20candidate%20%3D%20candidates.get(cid%2C%20%7B%7D)%0A%20%20%20%20%20%20%20%20%20%20%20%20reasoning%20%3D%20generate_reasoning(candidate%2C%20subscores.get(cid%2C%20%7B%7D))%0A%20%20%20%20%20%20%20%20%20%20%20%20writer.writerow(%5Bcid%2C%20rank%2C%20score%2C%20reasoning%5D)%0A%20%20%20%20%0A%20%20%20%20print(f%22%E2%9C%93%20Top%20%7BTOP_K%7D%20written%20to%20%7Boutput_path%7D%22)%0A%60%60%60%0A%0A%23%23%23%20Step%206.2%3A%20Reasoning%20Generator%0A%0A%60%60%60python%0Adef%20generate_reasoning(candidate%3A%20dict%2C%20scores%3A%20dict)%20-%3E%20str%3A%0A%20%20%20%20p%20%3D%20candidate.get(&#039;profile&#039;%2C%20%7B%7D)%0A%20%20%20%20s%20%3D%20candidate.get(&#039;redrob_signals&#039;%2C%20%7B%7D)%0A%20%20%20%20%0A%20%20%20%20yoe%20%3D%20p.get(&#039;years_of_experience&#039;%2C%20&#039;%3F&#039;)%0A%20%20%20%20top_skills%20%3D%20scores.get(&#039;top_skills&#039;%2C%20%5B&#039;ML&#039;%2C%20&#039;Python&#039;%5D)%0A%20%20%20%20company%20%3D%20scores.get(&#039;strongest_company&#039;%2C%20p.get(&#039;current_company&#039;%2C%20&#039;a%20product%20company&#039;))%0A%20%20%20%20open_work%20%3D%20%22actively%20looking%22%20if%20s.get(&#039;open_to_work_flag&#039;)%20else%20%22passive%22%0A%20%20%20%20rr%20%3D%20s.get(&#039;recruiter_response_rate&#039;%2C%200)%0A%20%20%20%20notice%20%3D%20s.get(&#039;notice_period_days&#039;%2C%2090)%0A%20%20%20%20%0A%20%20%20%20skills_str%20%3D%20&#039;%20%2B%20&#039;.join(top_skills%5B%3A2%5D)%20if%20top_skills%20else%20&#039;ML%20systems&#039;%0A%20%20%20%20%0A%20%20%20%20reasoning%20%3D%20(%0A%20%20%20%20%20%20%20%20f%22%7Byoe%7Dyr%20ML%20engineer%20with%20production%20%7Bskills_str%7D%20experience%20at%20%7Bcompany%7D%3B%20%22%0A%20%20%20%20%20%20%20%20f%22%7Bopen_work%7D%2C%20%7Brr%3A.0%25%7D%20response%20rate%2C%20%7Bnotice%7Dd%20notice.%22%0A%20%20%20%20)%0A%20%20%20%20%0A%20%20%20%20%23%20Trim%20to%20300%20chars%20max%0A%20%20%20%20return%20reasoning%5B%3A300%5D%0A%60%60%60%0A%0A%23%23%23%20Step%206.3%3A%20Timing%20Test%0A%0A%60%60%60bash%0Atime%20python%20rank.py%0A%23%20Must%20be%20%3C%20300%20seconds%0A%60%60%60%0A%0AIf%20slow%3A%20check%20that%20semantic%20similarity%20uses%20vectorized%20%60%40%60%20not%20a%20loop.%0A%0A---%0A%0A%23%23%20Phase%207%20%E2%80%94%20Validation%20%26%20First%20Submission%20(1%20hour)%0A%0A%23%23%23%20Step%207.1%3A%20Run%20Validator%0A%0A%60%60%60bash%0Apython%20validate_submission.py%20output%2F%3Cparticipant_id%3E.csv%0A%60%60%60%0A%0ACommon%20failures%20to%20check%3A%0A-%20Score%20not%20non-increasing%20(monotonic%20bug)%0A-%20Reasoning%20contains%20newlines%20(strip%20them)%0A-%20Score%20has%20%3E%203%20decimal%20places%0A-%20Duplicate%20ranks%0A-%20candidate_id%20format%20wrong%0A%0A%23%23%23%20Step%207.2%3A%20Honeypot%20Audit%0A%0A%60%60%60bash%0Apython%20-c%20%22%0Aimport%20json%0Adisq%20%3D%20json.load(open(&#039;artifacts%2Fdisqualified.json&#039;))%0Ahoneypots%20%3D%20%5Bd%20for%20d%20in%20disq%20if%20d%5B&#039;disqualify_type&#039;%5D%20%3D%3D%20&#039;HONEYPOT&#039;%5D%0Aprint(f&#039;Total%20honeypots%20detected%3A%20%7Blen(honeypots)%7D&#039;)%0A%22%0A%60%60%60%0A%0ACheck%3A%20top%20100%20CSV%20should%20contain%20%E2%89%A410%20honeypot%20IDs.%20Cross-reference%20if%20needed.%0A%0A%23%23%23%20Step%207.3%3A%20First%20Submission%0A%0A-%20%5B%20%5D%20Validator%20passes%20with%200%20errors%0A-%20%5B%20%5D%20Sandbox%20URL%20is%20live%20and%20accessible%0A-%20%5B%20%5D%20%60submission_metadata_template.yaml%60%20filled%0A-%20%5B%20%5D%20File%20named%20%60%3Cparticipant_id%3E.csv%60%0A-%20%5B%20%5D%20Submission%20%231%20of%203%0A%0A---%0A%0A%23%23%20Phase%208%20%E2%80%94%20Demo%20Sandbox%20(2%20hours)%0A%0A%23%23%23%20Step%208.1%3A%20Streamlit%20App%20Skeleton%0A%0A%60%60%60python%0A%23%20app.py%0Aimport%20streamlit%20as%20st%0Aimport%20json%2C%20numpy%20as%20np%2C%20pandas%20as%20pd%0A%0Ast.set_page_config(page_title%3D%22RecruiterIQ%22%2C%20layout%3D%22wide%22)%0A%0A%23%20Sidebar%0Awith%20st.sidebar%3A%0A%20%20%20%20st.title(%22RecruiterIQ%22)%0A%20%20%20%20mode%20%3D%20st.radio(%22Mode%22%2C%20%5B%22Demo%20(10%20candidates)%22%2C%20%22Full%20Pipeline%22%5D)%0A%20%20%20%20jd_text%20%3D%20st.text_area(%22Job%20Description%22%2C%20height%3D200)%0A%20%20%20%20run_btn%20%3D%20st.button(%22%E2%96%B6%20Run%20Ranking%22%2C%20type%3D%22primary%22)%0A%0A%23%20Tabs%0Atab1%2C%20tab2%2C%20tab3%2C%20tab4%20%3D%20st.tabs(%5B%22%F0%9F%8F%86%20Shortlist%22%2C%20%22%F0%9F%93%8A%20Score%20Explorer%22%2C%20%22%F0%9F%93%96%20Methodology%22%2C%20%22%F0%9F%9A%AB%20Disqualified%22%5D)%0A%0Aif%20run_btn%3A%0A%20%20%20%20if%20not%20jd_text%3A%0A%20%20%20%20%20%20%20%20st.warning(%22Load%20a%20job%20description%20to%20begin%20ranking%22)%0A%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20with%20st.spinner(%22Scoring%20candidates...%22)%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20results%20%3D%20run_demo_ranking(jd_text%2C%20mode)%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20with%20tab1%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20render_shortlist(results)%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20with%20tab2%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20render_score_explorer(results)%0A%60%60%60%0A%0A%23%23%23%20Step%208.2%3A%20Deploy%20to%20HuggingFace%20Spaces%0A%0A%60%60%60%0A%23%20Space%20requirements.txt%20%E2%80%94%20must%20be%20CPU-only%0Asentence-transformers%3D%3D2.7.0%0Anumpy%3D%3D1.26.4%0Astreamlit%3D%3D1.35.0%0A%60%60%60%0A%0APush%20code%20%2B%20%60artifacts%2F%60%20(embeddings%20%2B%20subscores)%20to%20Space.%0AVerify%20it%20loads%20in%20%3C%2030%20seconds.%0A%0A---%0A%0A%23%23%20Phase%209%20%E2%80%94%20Second%20Submission%20(if%20needed)%0A%0AAfter%20Phase%208%3A%20review%20any%20obvious%20mistakes%20in%20top-10%20reasoning%20strings%20or%20scores.%0A%0APossible%20improvements%20before%20submission%202%3A%0A-%20Increase%20CONSULTING_PENALTY%20from%200.15%20%E2%86%92%200.05%20(more%20nuanced)%0A-%20Add%20%60github_activity_score%60%20bonus%20(%2B0.02%20if%20score%20%3E%2070)%20to%20technical_fit%0A-%20Tune%20%60IDEAL_YOE_MIN%2FMAX%60%20based%20on%20what%20top%20candidates%20show%0A-%20Improve%20reasoning%20strings%20to%20be%20more%20specific%0A%0A**Only%20submit%202%20if%20submission%201%20had%20clear%20errors.%20Don&#039;t%20burn%20submission%203%20on%20guesses.**%0A%0A---%0A%0A%23%23%20Risk%20Register%0A%0A%7C%20Risk%20%7C%20Probability%20%7C%20Mitigation%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20JSONL%20parsing%20crashes%20on%20malformed%20lines%20%7C%20Medium%20%7C%20Try%2Fexcept%20per%20line%2C%20log%20%2B%20skip%20%7C%0A%7C%20Embedding%20RAM%20exceeds%2014GB%20%7C%20Low%20%7C%20Streaming%20%2B%20float32%20already%20planned%20%7C%0A%7C%20rank.py%20%3E%205%20min%20%7C%20Low%20%7C%20Vectorized%20cosine%2C%20no%20Python%20loops%20%7C%0A%7C%20%3E10%20honeypots%20in%20top%20100%20%7C%20Low%20%7C%20Honeypot%20filter%20runs%20pre-scoring%20%7C%0A%7C%20Validator%20fails%20on%20CSV%20%7C%20Medium%20%7C%20Run%20validator%20after%20every%20test%20run%20%7C%0A%7C%20Date%20parsing%20fails%20silently%20%7C%20High%20%7C%20Unit%20test%20parse_year%20on%20all%20samples%20first%20%7C%0A%7C%20Wrong%20consulting%20firm%20names%20in%20dataset%20%7C%20Medium%20%7C%20Log%20all%20company%20names%2C%20spot-check%20%7C%0A%0A---%0A%0A%23%23%20Time%20Budget%20Summary%0A%0A%7C%20Phase%20%7C%20Task%20%7C%20Hours%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%200%20%7C%20Pre-build%20checklist%20%7C%200.5%20%7C%0A%7C%201%20%7C%20Environment%20%2B%20scaffold%20%7C%201.5%20%7C%0A%7C%202%20%7C%20Data%20layer%20%2B%20parsers%20%7C%202.0%20%7C%0A%7C%203%20%7C%20Disqualification%20engine%20%7C%201.5%20%7C%0A%7C%204%20%7C%20Scoring%20engine%20(all%204%20signals)%20%7C%203.5%20%7C%0A%7C%205%20%7C%20Precomputation%20(full%20100k)%20%7C%201.5%20%7C%0A%7C%206%20%7C%20rank.py%20%2B%20reasoning%20%7C%201.5%20%7C%0A%7C%207%20%7C%20Validate%20%2B%20submit%20%231%20%7C%201.0%20%7C%0A%7C%208%20%7C%20Streamlit%20sandbox%20%7C%202.0%20%7C%0A%7C%209%20%7C%20Review%20%2B%20submit%20%232%20%7C%201.0%20%7C%0A%7C%20**Total**%20%7C%20%7C%20**~16%20hrs**%20%7C%0A%0A**Critical%20path%3A**%20Phase%204%20(scoring)%20is%20where%20quality%20is%20won%20or%20lost.%20Don&#039;t%20rush%20it.%0A%0A---%0A%0A*RecruiterIQ%20Implementation%20Plan%20v1.0%20%C2%B7%202025*%0A" style="display: none;"></div>
+                  
+                    <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
+                      <ol>
+                        
+                        
+                          <li class="breadcrumb-item " >
+                            
+                              <span>Documentation</span>
+                            
+                            
+                              <span class="breadcrumb-separator">
+<svg class="lucide-icon icon-chevron-right " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+                            
+                          </li>
+                        
+                          <li class="breadcrumb-item active" aria-current=&quot;page&quot;>
+                            
+                              <span>Implementation Plan</span>
+                            
+                            
+                          </li>
+                        
+                      </ol>
+                    </nav>
+                  
+
+                  
+                    <div class="docmd-copy-widgets">
+                      
+                        <button class="docmd-copy-btn docmd-copy-raw-btn" data-copied="copiedToClipboard" title="copyMarkdown" aria-label="copyMarkdown">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-copy " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-copy"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+</svg>
+</span>
+                        </button>
+                      
+                      
+                        <button class="docmd-copy-btn docmd-copy-context-btn" data-copied="copiedToClipboard" title="copyContext">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-message-square " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-message-square"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+</svg>
+</span>
+                          <span class="docmd-btn-text">copyContext</span>
+                        </button>
+                      
+                    </div>
+                  
+                </div>
+                
+                <h1 id="implementation-plan" class="docmd-heading"><a href="#implementation-plan" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Implementation Plan</h1>
+<p><strong>RecruiterIQ — Build Execution Roadmap</strong></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total estimated time</td>
+<td>12–16 hours</td>
+</tr>
+<tr>
+<td>Language</td>
+<td>Python 3.10</td>
+</tr>
+<tr>
+<td>Submission limit</td>
+<td>3 max — plan for 2 real submissions</td>
+</tr>
+<tr>
+<td>Critical path</td>
+<td><a href="http://precompute.py">precompute.py</a> → <a href="http://rank.py">rank.py</a> → validate → submit</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="implementation-plan-0-pre-build-checklist-before-writing-code" class="docmd-heading"><a href="#implementation-plan-0-pre-build-checklist-before-writing-code" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>0. Pre-Build Checklist (Before writing code)</h2>
+<ul class="contains-task-list">
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Extract <code>job_description.docx</code> → <code>job_description.txt</code> (python-docx or LibreOffice)</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Extract <code>redrob_signals_doc.docx</code> → read signal definitions</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Extract <code>submission_spec.docx</code> → re-read all constraints</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Run <code>validate_submission.py --help</code> to understand its checks</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Open <code>sample_candidates.json</code> — inspect actual field shapes</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Open <code>candidate_schema.json</code> — check nullability, enum values, date formats</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Check <code>sample_submission.csv</code> — verify exact CSV column names + format</li>
+</ul>
+<hr>
+<h2 id="implementation-plan-phase-1-environment-setup-12-hours" class="docmd-heading"><a href="#implementation-plan-phase-1-environment-setup-12-hours" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Phase 1 — Environment Setup (1–2 hours)</h2>
+<h3 id="implementation-plan-phase-1-environment-setup-12-hours-step-11-project-init" class="docmd-heading"><a href="#implementation-plan-phase-1-environment-setup-12-hours-step-11-project-init" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 1.1: Project Init</h3>
+<pre class="hljs"><code><span class="hljs-keyword">mkdir</span> recruiteriq <span class="hljs-punctuation">&amp;&amp;</span> <span class="hljs-keyword">cd</span> recruiteriq
+python <span class="hljs-punctuation">-</span>m venv venv <span class="hljs-punctuation">&amp;&amp;</span> <span class="hljs-keyword">source</span> venv<span class="hljs-punctuation">/</span>bin<span class="hljs-punctuation">/</span>activate
+
+pip install sentence<span class="hljs-punctuation">-</span>transformers numpy pandas scikit<span class="hljs-punctuation">-</span>learn tqdm \
+            pyyaml python<span class="hljs-punctuation">-</span>docx streamlit
+
+<span class="hljs-keyword">mkdir</span> <span class="hljs-punctuation">-</span>p artifacts output docs
+</code></pre>
+<h3 id="implementation-plan-phase-1-environment-setup-12-hours-step-12-scaffold-files" class="docmd-heading"><a href="#implementation-plan-phase-1-environment-setup-12-hours-step-12-scaffold-files" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 1.2: Scaffold Files</h3>
+<pre class="hljs"><code>recruiteriq<span class="hljs-punctuation">/</span>
+├── config.<span class="hljs-attr">py</span>
+├── disqualify.<span class="hljs-attr">py</span>
+├── signals.<span class="hljs-attr">py</span>
+├── precompute.<span class="hljs-attr">py</span>
+├── rank.<span class="hljs-attr">py</span>
+├── app.<span class="hljs-attr">py</span>              <span class="hljs-comment"># Streamlit demo</span>
+├── requirements.<span class="hljs-attr">txt</span>
+├── Dockerfile
+├── validate_submission.<span class="hljs-attr">py</span>   <span class="hljs-comment"># copy from workspace</span>
+└── data<span class="hljs-punctuation">/</span>
+    ├── candidates.<span class="hljs-attr">jsonl</span>
+    ├── candidate_schema.<span class="hljs-attr">json</span>
+    ├── sample_candidates.<span class="hljs-attr">json</span>
+    ├── job_description.<span class="hljs-attr">txt</span>  <span class="hljs-comment"># extracted</span>
+    └── sample_submission.<span class="hljs-attr">csv</span>
+</code></pre>
+<h3 id="implementation-plan-phase-1-environment-setup-12-hours-step-13-configpy" class="docmd-heading"><a href="#implementation-plan-phase-1-environment-setup-12-hours-step-13-configpy" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 1.3: <a href="http://config.py">config.py</a></h3>
+<p>Write all constants first. Nothing else imports correctly without config.</p>
+<p><strong>Verify immediately:</strong> Print weights — must sum to 1.0.</p>
+<pre class="hljs"><code>assert <span class="hljs-title function_">abs</span>(<span class="hljs-title function_">sum</span>(WEIGHTS.<span class="hljs-title function_">values</span>()) <span class="hljs-punctuation">-</span> <span class="hljs-number">1.0</span>) <span class="hljs-punctuation">&lt;</span> <span class="hljs-number">1e-6</span>, <span class="hljs-string">&quot;Weights must sum to 1.0&quot;</span>
+assert <span class="hljs-title function_">abs</span>(<span class="hljs-title function_">sum</span>(AVAILABILITY_WEIGHTS.<span class="hljs-title function_">values</span>()) <span class="hljs-punctuation">-</span> <span class="hljs-number">1.0</span>) <span class="hljs-punctuation">&lt;</span> <span class="hljs-number">1e-6</span>
+</code></pre>
+<hr>
+<h2 id="implementation-plan-phase-2-data-layer-23-hours" class="docmd-heading"><a href="#implementation-plan-phase-2-data-layer-23-hours" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Phase 2 — Data Layer (2–3 hours)</h2>
+<h3 id="implementation-plan-phase-2-data-layer-23-hours-step-21-schema-validator" class="docmd-heading"><a href="#implementation-plan-phase-2-data-layer-23-hours-step-21-schema-validator" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 2.1: Schema Validator</h3>
+<pre class="hljs"><code><span class="hljs-comment"># Check actual field presence in sample_candidates.json first</span>
+<span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">with</span> <span class="hljs-title function_">open</span>(<span class="hljs-string">&#039;data/sample_candidates.json&#039;</span>) <span class="hljs-keyword">as</span> f<span class="hljs-punctuation">:</span>
+    samples <span class="hljs-punctuation">=</span> json.<span class="hljs-title function_">load</span>(f)
+    
+<span class="hljs-comment"># Print all keys to verify schema matches assumption</span>
+<span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> samples<span class="hljs-punctuation">:</span>
+    <span class="hljs-title function_">print</span>(s.<span class="hljs-title function_">keys</span>())
+    <span class="hljs-title function_">print</span>(s[<span class="hljs-string">&#039;redrob_signals&#039;</span>].<span class="hljs-title function_">keys</span>())
+    <span class="hljs-keyword">break</span>
+</code></pre>
+<p>Fix any field name discrepancies in <code>config.py</code> BEFORE writing scoring code.</p>
+<h3 id="implementation-plan-phase-2-data-layer-23-hours-step-22-jsonl-streaming-parser" class="docmd-heading"><a href="#implementation-plan-phase-2-data-layer-23-hours-step-22-jsonl-streaming-parser" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 2.2: JSONL Streaming Parser</h3>
+<pre class="hljs"><code><span class="hljs-comment"># precompute.py — streaming (never load all 100k at once)</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">stream_candidates</span>(jsonl_path<span class="hljs-punctuation">:</span> str, chunk_size<span class="hljs-punctuation">:</span> <span class="hljs-keyword">int</span> <span class="hljs-punctuation">=</span> <span class="hljs-number">1000</span>)<span class="hljs-punctuation">:</span>
+    buffer <span class="hljs-punctuation">=</span> []
+    <span class="hljs-keyword">with</span> <span class="hljs-title function_">open</span>(jsonl_path, <span class="hljs-string">&#039;r&#039;</span>) <span class="hljs-keyword">as</span> f<span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> f<span class="hljs-punctuation">:</span>
+            <span class="hljs-keyword">try</span><span class="hljs-punctuation">:</span>
+                candidate <span class="hljs-punctuation">=</span> json.<span class="hljs-title function_">loads</span>(line.<span class="hljs-title function_">strip</span>())
+                buffer.<span class="hljs-title function_">append</span>(candidate)
+                <span class="hljs-keyword">if</span> <span class="hljs-title function_">len</span>(buffer) <span class="hljs-punctuation">&gt;=</span> chunk_size<span class="hljs-punctuation">:</span>
+                    <span class="hljs-keyword">yield</span> buffer
+                    buffer <span class="hljs-punctuation">=</span> []
+            except json.<span class="hljs-attr">JSONDecodeError</span> <span class="hljs-keyword">as</span> e<span class="hljs-punctuation">:</span>
+                log.<span class="hljs-title function_">warning</span>(f<span class="hljs-string">&quot;Parse error: {e}&quot;</span>)
+    <span class="hljs-keyword">if</span> buffer<span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">yield</span> buffer
+</code></pre>
+<h3 id="implementation-plan-phase-2-data-layer-23-hours-step-23-date-parser-critical-for-honeypot-detection" class="docmd-heading"><a href="#implementation-plan-phase-2-data-layer-23-hours-step-23-date-parser-critical-for-honeypot-detection" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 2.3: Date Parser (critical for honeypot detection)</h3>
+<p>Date strings in career_history are NOT guaranteed ISO format. Write defensive parser:</p>
+<pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">parse_year</span>(date_str<span class="hljs-punctuation">:</span> str) <span class="hljs-punctuation">-&gt;</span> Optional[<span class="hljs-keyword">int</span>]<span class="hljs-punctuation">:</span>
+    <span class="hljs-string">&quot;&quot;</span><span class="hljs-string">&quot;Extract year from various date formats:
+    &#039;Jan 2019&#039;, &#039;2019&#039;, &#039;2019-01&#039;, &#039;January 2019&#039;, &#039;Present&#039;
+    &quot;</span><span class="hljs-string">&quot;&quot;</span>
+    <span class="hljs-keyword">if</span> not date_str or date_str <span class="hljs-punctuation">==</span> <span class="hljs-string">&quot;Present&quot;</span><span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">None</span>
+    <span class="hljs-comment"># Try regex: find 4-digit year</span>
+    <span class="hljs-keyword">import</span> re
+    <span class="hljs-keyword">match</span> <span class="hljs-punctuation">=</span> re.<span class="hljs-title function_">search</span>(r<span class="hljs-string">&#039;\b(19|20)\d{2}\b&#039;</span>, <span class="hljs-title function_">str</span>(date_str))
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">int</span>(<span class="hljs-keyword">match</span>.<span class="hljs-title function_">group</span>()) <span class="hljs-keyword">if</span> <span class="hljs-keyword">match</span> <span class="hljs-keyword">else</span> <span class="hljs-keyword">None</span>
+</code></pre>
+<p><strong>Test on all 10 sample candidates before proceeding.</strong></p>
+<hr>
+<h2 id="implementation-plan-phase-3-disqualification-engine-12-hours" class="docmd-heading"><a href="#implementation-plan-phase-3-disqualification-engine-12-hours" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Phase 3 — Disqualification Engine (1–2 hours)</h2>
+<h3 id="implementation-plan-phase-3-disqualification-engine-12-hours-step-31-honeypot-detector" class="docmd-heading"><a href="#implementation-plan-phase-3-disqualification-engine-12-hours-step-31-honeypot-detector" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 3.1: Honeypot Detector</h3>
+<pre class="hljs"><code><span class="hljs-comment"># disqualify.py</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">is_honeypot</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> tuple[<span class="hljs-keyword">bool</span>, str]<span class="hljs-punctuation">:</span>
+    yoe <span class="hljs-punctuation">=</span> candidate[<span class="hljs-string">&#039;profile&#039;</span>].<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;years_of_experience&#039;</span>, <span class="hljs-number">0</span>)
+    career <span class="hljs-punctuation">=</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;career_history&#039;</span>, [])
+    
+    <span class="hljs-keyword">if</span> career<span class="hljs-punctuation">:</span>
+        start_years <span class="hljs-punctuation">=</span> [<span class="hljs-title function_">parse_year</span>(r[<span class="hljs-string">&#039;dates&#039;</span>][<span class="hljs-string">&#039;start&#039;</span>]) <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> career]
+        start_years <span class="hljs-punctuation">=</span> [y <span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> start_years <span class="hljs-keyword">if</span> y is not <span class="hljs-keyword">None</span>]
+        <span class="hljs-keyword">if</span> start_years<span class="hljs-punctuation">:</span>
+            earliest <span class="hljs-punctuation">=</span> <span class="hljs-title function_">min</span>(start_years)
+            <span class="hljs-keyword">if</span> yoe <span class="hljs-punctuation">&gt;</span> (<span class="hljs-number">2025</span> <span class="hljs-punctuation">-</span> earliest <span class="hljs-punctuation">+</span> HONEYPOT_YOE_TOLERANCE)<span class="hljs-punctuation">:</span>
+                <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>, f<span class="hljs-string">&quot;Claims {yoe}yr YoE but career starts {earliest} ({2025-earliest}yr ago)&quot;</span>
+    
+    <span class="hljs-comment"># Ghost profile check</span>
+    s <span class="hljs-punctuation">=</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;redrob_signals&#039;</span>, {})
+    <span class="hljs-keyword">if</span> (s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;profile_completeness_score&#039;</span>, <span class="hljs-number">100</span>) <span class="hljs-punctuation">&lt;</span> HONEYPOT_COMPLETENESS_MAX and
+        not s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;verified_email&#039;</span>, <span class="hljs-keyword">True</span>) and
+        not s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;verified_phone&#039;</span>, <span class="hljs-keyword">True</span>))<span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>, <span class="hljs-string">&quot;Ghost profile: &lt;5% complete, no verified contacts&quot;</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>, <span class="hljs-string">&quot;&quot;</span>
+</code></pre>
+<h3 id="implementation-plan-phase-3-disqualification-engine-12-hours-step-32-consulting-penalty" class="docmd-heading"><a href="#implementation-plan-phase-3-disqualification-engine-12-hours-step-32-consulting-penalty" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 3.2: Consulting Penalty</h3>
+<pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">should_hard_penalize</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> tuple[<span class="hljs-keyword">float</span>, str]<span class="hljs-punctuation">:</span>
+    companies <span class="hljs-punctuation">=</span> [r.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;company&#039;</span>, <span class="hljs-string">&#039;&#039;</span>) <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;career_history&#039;</span>, [])]
+    consulting_count <span class="hljs-punctuation">=</span> <span class="hljs-title function_">sum</span>(
+        <span class="hljs-number">1</span> <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> companies
+        <span class="hljs-keyword">if</span> <span class="hljs-title function_">any</span>(firm.<span class="hljs-title function_">lower</span>() <span class="hljs-keyword">in</span> c.<span class="hljs-title function_">lower</span>() <span class="hljs-keyword">for</span> firm <span class="hljs-keyword">in</span> CONSULTING_FIRMS)
+    )
+    <span class="hljs-keyword">if</span> consulting_count <span class="hljs-punctuation">==</span> <span class="hljs-title function_">len</span>(companies) and <span class="hljs-title function_">len</span>(companies) <span class="hljs-punctuation">&gt;</span> <span class="hljs-number">0</span><span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">return</span> CONSULTING_PENALTY, <span class="hljs-string">&quot;All-consulting career, no product company&quot;</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1.0</span>, <span class="hljs-string">&quot;&quot;</span>
+</code></pre>
+<p><strong>Unit test:</strong> Create fake candidates matching each rule. Verify detection rate.</p>
+<hr>
+<h2 id="implementation-plan-phase-4-scoring-engine-34-hours" class="docmd-heading"><a href="#implementation-plan-phase-4-scoring-engine-34-hours" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Phase 4 — Scoring Engine (3–4 hours)</h2>
+<h3 id="implementation-plan-phase-4-scoring-engine-34-hours-step-41-technical-fit" class="docmd-heading"><a href="#implementation-plan-phase-4-scoring-engine-34-hours-step-41-technical-fit" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 4.1: Technical Fit</h3>
+<p>This is the highest-weight signal (0.35). Get it right.</p>
+<pre class="hljs"><code><span class="hljs-comment"># signals.py</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_technical_fit</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span><span class="hljs-punctuation">:</span>
+    score <span class="hljs-punctuation">=</span> <span class="hljs-number">0.0</span>
+    
+    <span class="hljs-comment"># Build skill lookup: {normalized_name: proficiency_weight}</span>
+    skill_weights <span class="hljs-punctuation">=</span> {<span class="hljs-string">&quot;beginner&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.1</span>, <span class="hljs-string">&quot;intermediate&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.4</span>, <span class="hljs-string">&quot;advanced&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.75</span>, <span class="hljs-string">&quot;expert&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">1.0</span>}
+    skills <span class="hljs-punctuation">=</span> {}
+    <span class="hljs-keyword">for</span> skill <span class="hljs-keyword">in</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;skills&#039;</span>, [])<span class="hljs-punctuation">:</span>
+        name <span class="hljs-punctuation">=</span> skill.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;name&#039;</span>, <span class="hljs-string">&#039;&#039;</span>).<span class="hljs-title function_">lower</span>()
+        prof <span class="hljs-punctuation">=</span> skill_weights.<span class="hljs-title function_">get</span>(skill.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;proficiency&#039;</span>, <span class="hljs-string">&#039;beginner&#039;</span>), <span class="hljs-number">0.1</span>)
+        skills[name] <span class="hljs-punctuation">=</span> prof
+    
+    <span class="hljs-comment"># Override with platform assessment scores if available</span>
+    assessments <span class="hljs-punctuation">=</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;redrob_signals&#039;</span>, {}).<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;skill_assessment_scores&#039;</span>, {})
+    <span class="hljs-keyword">for</span> skill_name, assessed_score <span class="hljs-keyword">in</span> assessments.<span class="hljs-title function_">items</span>()<span class="hljs-punctuation">:</span>
+        normalized <span class="hljs-punctuation">=</span> skill_name.<span class="hljs-title function_">lower</span>()
+        <span class="hljs-keyword">if</span> normalized <span class="hljs-keyword">in</span> skills or <span class="hljs-title function_">any</span>(kw <span class="hljs-keyword">in</span> normalized <span class="hljs-keyword">for</span> kw <span class="hljs-keyword">in</span> [<span class="hljs-string">&#039;python&#039;</span>, <span class="hljs-string">&#039;ml&#039;</span>, <span class="hljs-string">&#039;nlp&#039;</span>])<span class="hljs-punctuation">:</span>
+            skills[normalized] <span class="hljs-punctuation">=</span> assessed_score <span class="hljs-punctuation">/</span> <span class="hljs-number">100.0</span>
+    
+    <span class="hljs-comment"># Score against JD must-haves</span>
+    <span class="hljs-keyword">for</span> criterion, cfg <span class="hljs-keyword">in</span> JD_MUST_HAVES.<span class="hljs-title function_">items</span>()<span class="hljs-punctuation">:</span>
+        best_match <span class="hljs-punctuation">=</span> <span class="hljs-number">0.0</span>
+        <span class="hljs-keyword">for</span> kw <span class="hljs-keyword">in</span> cfg[<span class="hljs-string">&#039;keywords&#039;</span>]<span class="hljs-punctuation">:</span>
+            <span class="hljs-keyword">for</span> skill_name, skill_strength <span class="hljs-keyword">in</span> skills.<span class="hljs-title function_">items</span>()<span class="hljs-punctuation">:</span>
+                <span class="hljs-keyword">if</span> kw.<span class="hljs-title function_">lower</span>() <span class="hljs-keyword">in</span> skill_name<span class="hljs-punctuation">:</span>
+                    best_match <span class="hljs-punctuation">=</span> <span class="hljs-title function_">max</span>(best_match, skill_strength)
+        score <span class="hljs-punctuation">+=</span> best_match <span class="hljs-punctuation">*</span> cfg[<span class="hljs-string">&#039;weight&#039;</span>]
+    
+    <span class="hljs-comment"># Score against career descriptions (production evidence)</span>
+    career_text <span class="hljs-punctuation">=</span> <span class="hljs-string">&#039; &#039;</span>.<span class="hljs-title function_">join</span>(
+        r.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;description&#039;</span>, <span class="hljs-string">&#039;&#039;</span>) <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;career_history&#039;</span>, [])
+    ).<span class="hljs-title function_">lower</span>()
+    
+    production_bonus <span class="hljs-punctuation">=</span> <span class="hljs-title function_">sum</span>(<span class="hljs-number">1</span> <span class="hljs-keyword">for</span> kw <span class="hljs-keyword">in</span> PRODUCTION_SIGNALS <span class="hljs-keyword">if</span> kw.<span class="hljs-title function_">lower</span>() <span class="hljs-keyword">in</span> career_text)
+    retrieval_bonus <span class="hljs-punctuation">=</span> <span class="hljs-title function_">sum</span>(<span class="hljs-number">1</span> <span class="hljs-keyword">for</span> kw <span class="hljs-keyword">in</span> RETRIEVAL_SIGNALS <span class="hljs-keyword">if</span> kw.<span class="hljs-title function_">lower</span>() <span class="hljs-keyword">in</span> career_text)
+    
+    score <span class="hljs-punctuation">+=</span> <span class="hljs-title function_">min</span>(production_bonus <span class="hljs-punctuation">*</span> <span class="hljs-number">0.02</span>, <span class="hljs-number">0.10</span>)   <span class="hljs-comment"># max +0.10 bonus</span>
+    score <span class="hljs-punctuation">+=</span> <span class="hljs-title function_">min</span>(retrieval_bonus <span class="hljs-punctuation">*</span> <span class="hljs-number">0.02</span>, <span class="hljs-number">0.10</span>)    <span class="hljs-comment"># max +0.10 bonus</span>
+    
+    <span class="hljs-comment"># Nice-to-haves (smaller contribution)</span>
+    <span class="hljs-keyword">for</span> criterion, cfg <span class="hljs-keyword">in</span> JD_NICE_TO_HAVES.<span class="hljs-title function_">items</span>()<span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">for</span> kw <span class="hljs-keyword">in</span> cfg[<span class="hljs-string">&#039;keywords&#039;</span>]<span class="hljs-punctuation">:</span>
+            <span class="hljs-keyword">if</span> <span class="hljs-title function_">any</span>(kw.<span class="hljs-title function_">lower</span>() <span class="hljs-keyword">in</span> s <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> skills.<span class="hljs-title function_">keys</span>()) or kw.<span class="hljs-title function_">lower</span>() <span class="hljs-keyword">in</span> career_text<span class="hljs-punctuation">:</span>
+                score <span class="hljs-punctuation">+=</span> cfg[<span class="hljs-string">&#039;weight&#039;</span>] <span class="hljs-punctuation">*</span> <span class="hljs-number">0.5</span>
+                <span class="hljs-keyword">break</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">min</span>(score, <span class="hljs-number">1.0</span>)
+</code></pre>
+<h3 id="implementation-plan-phase-4-scoring-engine-34-hours-step-42-career-quality" class="docmd-heading"><a href="#implementation-plan-phase-4-scoring-engine-34-hours-step-42-career-quality" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 4.2: Career Quality</h3>
+<pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_career_quality</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span><span class="hljs-punctuation">:</span>
+    score <span class="hljs-punctuation">=</span> <span class="hljs-number">0.0</span>
+    career <span class="hljs-punctuation">=</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;career_history&#039;</span>, [])
+    
+    <span class="hljs-keyword">if</span> not career<span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0.0</span>
+    
+    companies <span class="hljs-punctuation">=</span> [r.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;company&#039;</span>, <span class="hljs-string">&#039;&#039;</span>) <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> career]
+    
+    <span class="hljs-comment"># Product company presence</span>
+    non_consulting <span class="hljs-punctuation">=</span> [c <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> companies <span class="hljs-keyword">if</span> not <span class="hljs-title function_">any</span>(f.<span class="hljs-title function_">lower</span>() <span class="hljs-keyword">in</span> c.<span class="hljs-title function_">lower</span>() <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> CONSULTING_FIRMS)]
+    <span class="hljs-keyword">if</span> non_consulting<span class="hljs-punctuation">:</span>
+        score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.30</span>
+    
+    <span class="hljs-comment"># Meaningful seniority in history</span>
+    senior_titles <span class="hljs-punctuation">=</span> [<span class="hljs-string">&#039;senior&#039;</span>, <span class="hljs-string">&#039;lead&#039;</span>, <span class="hljs-string">&#039;principal&#039;</span>, <span class="hljs-string">&#039;staff&#039;</span>, <span class="hljs-string">&#039;head&#039;</span>, <span class="hljs-string">&#039;director&#039;</span>]
+    ml_titles <span class="hljs-punctuation">=</span> [<span class="hljs-string">&#039;ml&#039;</span>, <span class="hljs-string">&#039;machine learning&#039;</span>, <span class="hljs-string">&#039;ai&#039;</span>, <span class="hljs-string">&#039;data scientist&#039;</span>, <span class="hljs-string">&#039;nlp&#039;</span>, <span class="hljs-string">&#039;research&#039;</span>]
+    <span class="hljs-keyword">for</span> role <span class="hljs-keyword">in</span> career<span class="hljs-punctuation">:</span>
+        title_lower <span class="hljs-punctuation">=</span> role.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;title&#039;</span>, <span class="hljs-string">&#039;&#039;</span>).<span class="hljs-title function_">lower</span>()
+        <span class="hljs-keyword">if</span> <span class="hljs-title function_">any</span>(t <span class="hljs-keyword">in</span> title_lower <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> ml_titles)<span class="hljs-punctuation">:</span>
+            score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.15</span>
+            <span class="hljs-keyword">break</span>
+    
+    <span class="hljs-comment"># Tenure quality (median tenure across roles)</span>
+    durations <span class="hljs-punctuation">=</span> []
+    <span class="hljs-keyword">for</span> role <span class="hljs-keyword">in</span> career<span class="hljs-punctuation">:</span>
+        start_yr <span class="hljs-punctuation">=</span> <span class="hljs-title function_">parse_year</span>(role[<span class="hljs-string">&#039;dates&#039;</span>][<span class="hljs-string">&#039;start&#039;</span>])
+        end_str <span class="hljs-punctuation">=</span> role[<span class="hljs-string">&#039;dates&#039;</span>].<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;end&#039;</span>, <span class="hljs-string">&#039;Present&#039;</span>)
+        end_yr <span class="hljs-punctuation">=</span> <span class="hljs-number">2025</span> <span class="hljs-keyword">if</span> end_str <span class="hljs-punctuation">==</span> <span class="hljs-string">&#039;Present&#039;</span> <span class="hljs-keyword">else</span> <span class="hljs-title function_">parse_year</span>(end_str)
+        <span class="hljs-keyword">if</span> start_yr and end_yr<span class="hljs-punctuation">:</span>
+            durations.<span class="hljs-title function_">append</span>(end_yr <span class="hljs-punctuation">-</span> start_yr)
+    
+    <span class="hljs-keyword">if</span> durations<span class="hljs-punctuation">:</span>
+        median_tenure <span class="hljs-punctuation">=</span> <span class="hljs-title function_">sorted</span>(durations)[<span class="hljs-title function_">len</span>(durations)<span class="hljs-comment">//2]</span>
+        <span class="hljs-keyword">if</span> median_tenure <span class="hljs-punctuation">&gt;=</span> <span class="hljs-number">3</span><span class="hljs-punctuation">:</span>
+            score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.20</span>
+        elif median_tenure <span class="hljs-punctuation">&gt;=</span> <span class="hljs-number">2</span><span class="hljs-punctuation">:</span>
+            score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.12</span>
+        elif median_tenure <span class="hljs-punctuation">&gt;=</span> <span class="hljs-number">1.5</span><span class="hljs-punctuation">:</span>
+            score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.05</span>
+    
+    <span class="hljs-comment"># Career progression (last title &gt; first title seniority)</span>
+    score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.20</span> <span class="hljs-keyword">if</span> <span class="hljs-title function_">_has_upward_progression</span>(career) <span class="hljs-keyword">else</span> <span class="hljs-number">0.0</span>
+    
+    <span class="hljs-comment"># No consulting penalty already handled via penalty_multiplier</span>
+    <span class="hljs-keyword">if</span> not non_consulting<span class="hljs-punctuation">:</span>
+        score <span class="hljs-punctuation">=</span> <span class="hljs-number">0.0</span>  <span class="hljs-comment"># redundant safety (penalty_multiplier handles it)</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">min</span>(score, <span class="hljs-number">1.0</span>)
+</code></pre>
+<h3 id="implementation-plan-phase-4-scoring-engine-34-hours-step-43-availability-signal" class="docmd-heading"><a href="#implementation-plan-phase-4-scoring-engine-34-hours-step-43-availability-signal" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 4.3: Availability Signal</h3>
+<pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_availability_signal</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span><span class="hljs-punctuation">:</span>
+    s <span class="hljs-punctuation">=</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;redrob_signals&#039;</span>, {})
+    score <span class="hljs-punctuation">=</span> <span class="hljs-number">0.0</span>
+    
+    <span class="hljs-comment"># open_to_work (0.25)</span>
+    score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.25</span> <span class="hljs-keyword">if</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;open_to_work_flag&#039;</span>, <span class="hljs-keyword">False</span>) <span class="hljs-keyword">else</span> <span class="hljs-number">0.0</span>
+    
+    <span class="hljs-comment"># last_active_recency (0.20)</span>
+    <span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> date
+    last_active <span class="hljs-punctuation">=</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;last_active_date&#039;</span>)
+    <span class="hljs-keyword">if</span> last_active<span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">try</span><span class="hljs-punctuation">:</span>
+            delta <span class="hljs-punctuation">=</span> (date.<span class="hljs-title function_">today</span>() <span class="hljs-punctuation">-</span> date.<span class="hljs-title function_">fromisoformat</span>(last_active[<span class="hljs-punctuation">:</span><span class="hljs-number">10</span>])).<span class="hljs-attr">days</span>
+            <span class="hljs-keyword">if</span> delta <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">30</span><span class="hljs-punctuation">:</span>   score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.20</span>
+            elif delta <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">90</span><span class="hljs-punctuation">:</span> score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.12</span>
+            elif delta <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">180</span><span class="hljs-punctuation">:</span>score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.06</span>
+        except<span class="hljs-punctuation">:</span> <span class="hljs-keyword">pass</span>
+    
+    <span class="hljs-comment"># recruiter_response_rate (0.15)</span>
+    score <span class="hljs-punctuation">+=</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;recruiter_response_rate&#039;</span>, <span class="hljs-number">0.0</span>) <span class="hljs-punctuation">*</span> <span class="hljs-number">0.15</span>
+    
+    <span class="hljs-comment"># response_speed (0.10)</span>
+    hours <span class="hljs-punctuation">=</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;avg_response_time_hours&#039;</span>, <span class="hljs-number">999</span>)
+    <span class="hljs-keyword">if</span> hours <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">4</span><span class="hljs-punctuation">:</span>    score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.10</span>
+    elif hours <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">24</span><span class="hljs-punctuation">:</span> score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.07</span>
+    elif hours <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">72</span><span class="hljs-punctuation">:</span> score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.04</span>
+    <span class="hljs-keyword">else</span><span class="hljs-punctuation">:</span>             score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.01</span>
+    
+    <span class="hljs-comment"># interview_completion_rate (0.15)</span>
+    score <span class="hljs-punctuation">+=</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;interview_completion_rate&#039;</span>, <span class="hljs-number">0.0</span>) <span class="hljs-punctuation">*</span> <span class="hljs-number">0.15</span>
+    
+    <span class="hljs-comment"># applications_submitted_30d (0.10)</span>
+    apps <span class="hljs-punctuation">=</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;applications_submitted_30d&#039;</span>, <span class="hljs-number">0</span>)
+    <span class="hljs-keyword">if</span> apps <span class="hljs-punctuation">&gt;=</span> <span class="hljs-number">3</span><span class="hljs-punctuation">:</span>   score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.10</span>
+    elif apps <span class="hljs-punctuation">&gt;=</span> <span class="hljs-number">1</span><span class="hljs-punctuation">:</span> score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.05</span>
+    
+    <span class="hljs-comment"># notice_period (0.05)</span>
+    notice <span class="hljs-punctuation">=</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;notice_period_days&#039;</span>, <span class="hljs-number">90</span>)
+    <span class="hljs-keyword">if</span> notice <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">30</span><span class="hljs-punctuation">:</span>  score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.05</span>
+    elif notice <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">60</span><span class="hljs-punctuation">:</span>score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.035</span>
+    elif notice <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">90</span><span class="hljs-punctuation">:</span>score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.02</span>
+    <span class="hljs-keyword">else</span><span class="hljs-punctuation">:</span>             score <span class="hljs-punctuation">+=</span> <span class="hljs-number">0.005</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">min</span>(score, <span class="hljs-number">1.0</span>)
+</code></pre>
+<h3 id="implementation-plan-phase-4-scoring-engine-34-hours-step-44-seniority-fit" class="docmd-heading"><a href="#implementation-plan-phase-4-scoring-engine-34-hours-step-44-seniority-fit" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 4.4: Seniority Fit</h3>
+<pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">compute_seniority_fit</span>(candidate<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span><span class="hljs-punctuation">:</span>
+    yoe <span class="hljs-punctuation">=</span> candidate[<span class="hljs-string">&#039;profile&#039;</span>].<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;years_of_experience&#039;</span>, <span class="hljs-number">0</span>)
+    
+    <span class="hljs-keyword">if</span> IDEAL_YOE_MIN <span class="hljs-punctuation">&lt;=</span> yoe <span class="hljs-punctuation">&lt;=</span> IDEAL_YOE_MAX<span class="hljs-punctuation">:</span>    base <span class="hljs-punctuation">=</span> <span class="hljs-number">1.0</span>
+    elif <span class="hljs-number">4</span> <span class="hljs-punctuation">&lt;=</span> yoe <span class="hljs-punctuation">&lt;</span> <span class="hljs-number">6</span> or <span class="hljs-number">9</span> <span class="hljs-punctuation">&lt;</span> yoe <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">12</span><span class="hljs-punctuation">:</span>          base <span class="hljs-punctuation">=</span> <span class="hljs-number">0.7</span>
+    elif yoe <span class="hljs-punctuation">==</span> <span class="hljs-number">3</span> or <span class="hljs-number">12</span> <span class="hljs-punctuation">&lt;</span> yoe <span class="hljs-punctuation">&lt;=</span> <span class="hljs-number">15</span><span class="hljs-punctuation">:</span>             base <span class="hljs-punctuation">=</span> <span class="hljs-number">0.4</span>
+    <span class="hljs-keyword">else</span><span class="hljs-punctuation">:</span>                                         base <span class="hljs-punctuation">=</span> <span class="hljs-number">0.1</span>
+    
+    <span class="hljs-comment"># Education tier bonus</span>
+    edu_tier <span class="hljs-punctuation">=</span> <span class="hljs-title function_">min</span>((e.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;tier&#039;</span>, <span class="hljs-number">5</span>) <span class="hljs-keyword">for</span> e <span class="hljs-keyword">in</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;education&#039;</span>, [])), <span class="hljs-keyword">default</span><span class="hljs-punctuation">=</span><span class="hljs-number">5</span>)
+    tier_bonus <span class="hljs-punctuation">=</span> {<span class="hljs-number">1</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.05</span>, <span class="hljs-number">2</span><span class="hljs-punctuation">:</span> <span class="hljs-number">0.02</span>}.<span class="hljs-title function_">get</span>(edu_tier, <span class="hljs-number">0.0</span>)
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-title function_">min</span>(base <span class="hljs-punctuation">+</span> tier_bonus, <span class="hljs-number">1.0</span>)
+</code></pre>
+<p><strong>Unit tests for all 4 scorers before running precompute on full dataset.</strong></p>
+<hr>
+<h2 id="implementation-plan-phase-5-precomputation-12-hours" class="docmd-heading"><a href="#implementation-plan-phase-5-precomputation-12-hours" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Phase 5 — Precomputation (1–2 hours)</h2>
+<h3 id="implementation-plan-phase-5-precomputation-12-hours-step-51-embedding-setup" class="docmd-heading"><a href="#implementation-plan-phase-5-precomputation-12-hours-step-51-embedding-setup" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 5.1: Embedding Setup</h3>
+<pre class="hljs"><code><span class="hljs-comment"># precompute.py</span>
+<span class="hljs-keyword">from</span> sentence_transformers <span class="hljs-keyword">import</span> SentenceTransformer
+model <span class="hljs-punctuation">=</span> <span class="hljs-title function_">SentenceTransformer</span>(EMBEDDING_MODEL)
+<span class="hljs-comment"># Warm up</span>
+_ <span class="hljs-punctuation">=</span> model.<span class="hljs-title function_">encode</span>([<span class="hljs-string">&quot;warm up&quot;</span>], batch_size<span class="hljs-punctuation">=</span><span class="hljs-number">1</span>)
+</code></pre>
+<h3 id="implementation-plan-phase-5-precomputation-12-hours-step-52-full-run-on-sample-first" class="docmd-heading"><a href="#implementation-plan-phase-5-precomputation-12-hours-step-52-full-run-on-sample-first" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 5.2: Full Run on Sample First</h3>
+<pre class="hljs"><code><span class="hljs-comment"># Test on 10 samples before 100k</span>
+python precompute.<span class="hljs-attr">py</span> <span class="hljs-punctuation">--</span>input data<span class="hljs-punctuation">/</span>sample_candidates.<span class="hljs-attr">json</span> <span class="hljs-punctuation">--</span>output artifacts_test<span class="hljs-punctuation">/</span>
+</code></pre>
+<p>Check:</p>
+<ul>
+<li><code>artifacts_test/embeddings.npy</code> shape = (10, 384)</li>
+<li><code>artifacts_test/subscores.pkl</code> has 10 entries</li>
+<li>No crashes, no NaN scores</li>
+</ul>
+<h3 id="implementation-plan-phase-5-precomputation-12-hours-step-53-full-run-on-100k" class="docmd-heading"><a href="#implementation-plan-phase-5-precomputation-12-hours-step-53-full-run-on-100k" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 5.3: Full Run on 100k</h3>
+<pre class="hljs"><code>time python precompute.<span class="hljs-attr">py</span> <span class="hljs-punctuation">--</span>input data<span class="hljs-punctuation">/</span>candidates.<span class="hljs-attr">jsonl</span> <span class="hljs-punctuation">--</span>output artifacts<span class="hljs-punctuation">/</span>
+</code></pre>
+<p>Monitor:</p>
+<ul>
+<li>RAM usage: <code>watch -n5 free -h</code></li>
+<li>Expected runtime: 30–60 min</li>
+<li>Expected peak RAM: ~2GB</li>
+</ul>
+<hr>
+<h2 id="implementation-plan-phase-6-ranking-script-12-hours" class="docmd-heading"><a href="#implementation-plan-phase-6-ranking-script-12-hours" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Phase 6 — Ranking Script (1–2 hours)</h2>
+<h3 id="implementation-plan-phase-6-ranking-script-12-hours-step-61-rankpy-core" class="docmd-heading"><a href="#implementation-plan-phase-6-ranking-script-12-hours-step-61-rankpy-core" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 6.1: <a href="http://rank.py">rank.py</a> Core</h3>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np, pickle, json, csv
+<span class="hljs-keyword">from</span> config <span class="hljs-keyword">import</span> WEIGHTS, TOP_K, SCORE_DECIMAL_PLACES
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">run_ranking</span>(artifacts_dir, jd_embedding_path, output_path, jsonl_path)<span class="hljs-punctuation">:</span>
+    <span class="hljs-comment"># Load</span>
+    E <span class="hljs-punctuation">=</span> np.<span class="hljs-title function_">load</span>(f<span class="hljs-string">&quot;{artifacts_dir}/embeddings.npy&quot;</span>)          <span class="hljs-comment"># (N, 384)</span>
+    IDs <span class="hljs-punctuation">=</span> np.<span class="hljs-title function_">load</span>(f<span class="hljs-string">&quot;{artifacts_dir}/candidate_ids.npy&quot;</span>)     <span class="hljs-comment"># (N,)</span>
+    <span class="hljs-keyword">with</span> <span class="hljs-title function_">open</span>(f<span class="hljs-string">&quot;{artifacts_dir}/subscores.pkl&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>) <span class="hljs-keyword">as</span> f<span class="hljs-punctuation">:</span>
+        subscores <span class="hljs-punctuation">=</span> pickle.<span class="hljs-title function_">load</span>(f)
+    jd_vec <span class="hljs-punctuation">=</span> np.<span class="hljs-title function_">load</span>(jd_embedding_path)                     <span class="hljs-comment"># (384,)</span>
+    
+    <span class="hljs-comment"># Semantic similarity (vectorized, fast)</span>
+    sim <span class="hljs-punctuation">=</span> E @ jd_vec   <span class="hljs-comment"># already unit-normalized, so this = cosine sim</span>
+    
+    <span class="hljs-comment"># Composite score</span>
+    scores <span class="hljs-punctuation">=</span> np.<span class="hljs-title function_">zeros</span>(<span class="hljs-title function_">len</span>(IDs))
+    <span class="hljs-keyword">for</span> i, cid <span class="hljs-keyword">in</span> <span class="hljs-title function_">enumerate</span>(IDs)<span class="hljs-punctuation">:</span>
+        s <span class="hljs-punctuation">=</span> subscores.<span class="hljs-title function_">get</span>(cid, {})
+        penalty <span class="hljs-punctuation">=</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;penalty_multiplier&#039;</span>, <span class="hljs-number">1.0</span>)
+        scores[i] <span class="hljs-punctuation">=</span> penalty <span class="hljs-punctuation">*</span> (
+            WEIGHTS[<span class="hljs-string">&#039;technical_fit&#039;</span>]       <span class="hljs-punctuation">*</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;technical_fit&#039;</span>, <span class="hljs-number">0</span>) <span class="hljs-punctuation">+</span>
+            WEIGHTS[<span class="hljs-string">&#039;career_quality&#039;</span>]      <span class="hljs-punctuation">*</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;career_quality&#039;</span>, <span class="hljs-number">0</span>) <span class="hljs-punctuation">+</span>
+            WEIGHTS[<span class="hljs-string">&#039;availability_signal&#039;</span>] <span class="hljs-punctuation">*</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;availability_signal&#039;</span>, <span class="hljs-number">0</span>) <span class="hljs-punctuation">+</span>
+            WEIGHTS[<span class="hljs-string">&#039;seniority_fit&#039;</span>]       <span class="hljs-punctuation">*</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;seniority_fit&#039;</span>, <span class="hljs-number">0</span>) <span class="hljs-punctuation">+</span>
+            WEIGHTS[<span class="hljs-string">&#039;semantic_similarity&#039;</span>] <span class="hljs-punctuation">*</span> <span class="hljs-keyword">float</span>(sim[i])
+        )
+    
+    <span class="hljs-comment"># Top 100</span>
+    top_idx <span class="hljs-punctuation">=</span> np.<span class="hljs-title function_">argsort</span>(scores)[<span class="hljs-punctuation">::-</span><span class="hljs-number">1</span>][<span class="hljs-punctuation">:</span>TOP_K]
+    
+    <span class="hljs-comment"># Monotonic enforcement</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-title function_">range</span>(<span class="hljs-number">1</span>, TOP_K)<span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">if</span> scores[top_idx[i]] <span class="hljs-punctuation">&gt;</span> scores[top_idx[i<span class="hljs-punctuation">-</span><span class="hljs-number">1</span>]]<span class="hljs-punctuation">:</span>
+            scores[top_idx[i]] <span class="hljs-punctuation">=</span> scores[top_idx[i<span class="hljs-punctuation">-</span><span class="hljs-number">1</span>]]
+    
+    <span class="hljs-comment"># Build candidate lookup for reasoning</span>
+    candidates <span class="hljs-punctuation">=</span> <span class="hljs-title function_">load_candidates_by_ids</span>(jsonl_path, <span class="hljs-keyword">set</span>(IDs[top_idx]))
+    
+    <span class="hljs-comment"># Write CSV</span>
+    <span class="hljs-keyword">with</span> <span class="hljs-title function_">open</span>(output_path, <span class="hljs-string">&#039;w&#039;</span>, newline<span class="hljs-punctuation">=</span><span class="hljs-string">&#039;&#039;</span>, encoding<span class="hljs-punctuation">=</span><span class="hljs-string">&#039;utf-8&#039;</span>) <span class="hljs-keyword">as</span> f<span class="hljs-punctuation">:</span>
+        writer <span class="hljs-punctuation">=</span> csv.<span class="hljs-title function_">writer</span>(f)
+        writer.<span class="hljs-title function_">writerow</span>([<span class="hljs-string">&#039;candidate_id&#039;</span>, <span class="hljs-string">&#039;rank&#039;</span>, <span class="hljs-string">&#039;score&#039;</span>, <span class="hljs-string">&#039;reasoning&#039;</span>])
+        <span class="hljs-keyword">for</span> rank, idx <span class="hljs-keyword">in</span> <span class="hljs-title function_">enumerate</span>(top_idx, <span class="hljs-number">1</span>)<span class="hljs-punctuation">:</span>
+            cid <span class="hljs-punctuation">=</span> IDs[idx]
+            score <span class="hljs-punctuation">=</span> <span class="hljs-title function_">round</span>(<span class="hljs-keyword">float</span>(scores[idx]), SCORE_DECIMAL_PLACES)
+            candidate <span class="hljs-punctuation">=</span> candidates.<span class="hljs-title function_">get</span>(cid, {})
+            reasoning <span class="hljs-punctuation">=</span> <span class="hljs-title function_">generate_reasoning</span>(candidate, subscores.<span class="hljs-title function_">get</span>(cid, {}))
+            writer.<span class="hljs-title function_">writerow</span>([cid, rank, score, reasoning])
+    
+    <span class="hljs-title function_">print</span>(f<span class="hljs-string">&quot;✓ Top {TOP_K} written to {output_path}&quot;</span>)
+</code></pre>
+<h3 id="implementation-plan-phase-6-ranking-script-12-hours-step-62-reasoning-generator" class="docmd-heading"><a href="#implementation-plan-phase-6-ranking-script-12-hours-step-62-reasoning-generator" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 6.2: Reasoning Generator</h3>
+<pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">generate_reasoning</span>(candidate<span class="hljs-punctuation">:</span> dict, scores<span class="hljs-punctuation">:</span> dict) <span class="hljs-punctuation">-&gt;</span> str<span class="hljs-punctuation">:</span>
+    p <span class="hljs-punctuation">=</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;profile&#039;</span>, {})
+    s <span class="hljs-punctuation">=</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;redrob_signals&#039;</span>, {})
+    
+    yoe <span class="hljs-punctuation">=</span> p.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;years_of_experience&#039;</span>, <span class="hljs-string">&#039;?&#039;</span>)
+    top_skills <span class="hljs-punctuation">=</span> scores.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;top_skills&#039;</span>, [<span class="hljs-string">&#039;ML&#039;</span>, <span class="hljs-string">&#039;Python&#039;</span>])
+    company <span class="hljs-punctuation">=</span> scores.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;strongest_company&#039;</span>, p.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;current_company&#039;</span>, <span class="hljs-string">&#039;a product company&#039;</span>))
+    open_work <span class="hljs-punctuation">=</span> <span class="hljs-string">&quot;actively looking&quot;</span> <span class="hljs-keyword">if</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;open_to_work_flag&#039;</span>) <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;passive&quot;</span>
+    rr <span class="hljs-punctuation">=</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;recruiter_response_rate&#039;</span>, <span class="hljs-number">0</span>)
+    notice <span class="hljs-punctuation">=</span> s.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;notice_period_days&#039;</span>, <span class="hljs-number">90</span>)
+    
+    skills_str <span class="hljs-punctuation">=</span> <span class="hljs-string">&#039; + &#039;</span>.<span class="hljs-title function_">join</span>(top_skills[<span class="hljs-punctuation">:</span><span class="hljs-number">2</span>]) <span class="hljs-keyword">if</span> top_skills <span class="hljs-keyword">else</span> <span class="hljs-string">&#039;ML systems&#039;</span>
+    
+    reasoning <span class="hljs-punctuation">=</span> (
+        f<span class="hljs-string">&quot;{yoe}yr ML engineer with production {skills_str} experience at {company}; &quot;</span>
+        f<span class="hljs-string">&quot;{open_work}, {rr:.0%} response rate, {notice}d notice.&quot;</span>
+    )
+    
+    <span class="hljs-comment"># Trim to 300 chars max</span>
+    <span class="hljs-keyword">return</span> reasoning[<span class="hljs-punctuation">:</span><span class="hljs-number">300</span>]
+</code></pre>
+<h3 id="implementation-plan-phase-6-ranking-script-12-hours-step-63-timing-test" class="docmd-heading"><a href="#implementation-plan-phase-6-ranking-script-12-hours-step-63-timing-test" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 6.3: Timing Test</h3>
+<pre class="hljs"><code>time python rank.<span class="hljs-attr">py</span>
+<span class="hljs-comment"># Must be &lt; 300 seconds</span>
+</code></pre>
+<p>If slow: check that semantic similarity uses vectorized <code>@</code> not a loop.</p>
+<hr>
+<h2 id="implementation-plan-phase-7-validation-first-submission-1-hour" class="docmd-heading"><a href="#implementation-plan-phase-7-validation-first-submission-1-hour" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Phase 7 — Validation &amp; First Submission (1 hour)</h2>
+<h3 id="implementation-plan-phase-7-validation-first-submission-1-hour-step-71-run-validator" class="docmd-heading"><a href="#implementation-plan-phase-7-validation-first-submission-1-hour-step-71-run-validator" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 7.1: Run Validator</h3>
+<pre class="hljs"><code>python validate_submission.<span class="hljs-attr">py</span> output<span class="hljs-punctuation">/&lt;</span>participant_id<span class="hljs-punctuation">&gt;</span>.<span class="hljs-attr">csv</span>
+</code></pre>
+<p>Common failures to check:</p>
+<ul>
+<li>Score not non-increasing (monotonic bug)</li>
+<li>Reasoning contains newlines (strip them)</li>
+<li>Score has &gt; 3 decimal places</li>
+<li>Duplicate ranks</li>
+<li>candidate_id format wrong</li>
+</ul>
+<h3 id="implementation-plan-phase-7-validation-first-submission-1-hour-step-72-honeypot-audit" class="docmd-heading"><a href="#implementation-plan-phase-7-validation-first-submission-1-hour-step-72-honeypot-audit" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 7.2: Honeypot Audit</h3>
+<pre class="hljs"><code>python <span class="hljs-punctuation">-</span>c <span class="hljs-string">&quot;
+import json
+disq = json.load(open(&#039;artifacts/disqualified.json&#039;))
+honeypots = [d for d in disq if d[&#039;disqualify_type&#039;] == &#039;HONEYPOT&#039;]
+print(f&#039;Total honeypots detected: {len(honeypots)}&#039;)
+&quot;</span>
+</code></pre>
+<p>Check: top 100 CSV should contain ≤10 honeypot IDs. Cross-reference if needed.</p>
+<h3 id="implementation-plan-phase-7-validation-first-submission-1-hour-step-73-first-submission" class="docmd-heading"><a href="#implementation-plan-phase-7-validation-first-submission-1-hour-step-73-first-submission" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 7.3: First Submission</h3>
+<ul class="contains-task-list">
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Validator passes with 0 errors</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Sandbox URL is live and accessible</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> <code>submission_metadata_template.yaml</code> filled</li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> File named <code>&lt;participant_id&gt;.csv</code></li>
+<li><input class="task-list-item-checkbox" disabled="" type="checkbox"> Submission #1 of 3</li>
+</ul>
+<hr>
+<h2 id="implementation-plan-phase-8-demo-sandbox-2-hours" class="docmd-heading"><a href="#implementation-plan-phase-8-demo-sandbox-2-hours" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Phase 8 — Demo Sandbox (2 hours)</h2>
+<h3 id="implementation-plan-phase-8-demo-sandbox-2-hours-step-81-streamlit-app-skeleton" class="docmd-heading"><a href="#implementation-plan-phase-8-demo-sandbox-2-hours-step-81-streamlit-app-skeleton" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 8.1: Streamlit App Skeleton</h3>
+<pre class="hljs"><code><span class="hljs-comment"># app.py</span>
+<span class="hljs-keyword">import</span> streamlit <span class="hljs-keyword">as</span> st
+<span class="hljs-keyword">import</span> json, numpy <span class="hljs-keyword">as</span> np, pandas <span class="hljs-keyword">as</span> pd
+
+st.<span class="hljs-title function_">set_page_config</span>(page_title<span class="hljs-punctuation">=</span><span class="hljs-string">&quot;RecruiterIQ&quot;</span>, layout<span class="hljs-punctuation">=</span><span class="hljs-string">&quot;wide&quot;</span>)
+
+<span class="hljs-comment"># Sidebar</span>
+<span class="hljs-keyword">with</span> st.<span class="hljs-attr">sidebar</span><span class="hljs-punctuation">:</span>
+    st.<span class="hljs-title function_">title</span>(<span class="hljs-string">&quot;RecruiterIQ&quot;</span>)
+    mode <span class="hljs-punctuation">=</span> st.<span class="hljs-title function_">radio</span>(<span class="hljs-string">&quot;Mode&quot;</span>, [<span class="hljs-string">&quot;Demo (10 candidates)&quot;</span>, <span class="hljs-string">&quot;Full Pipeline&quot;</span>])
+    jd_text <span class="hljs-punctuation">=</span> st.<span class="hljs-title function_">text_area</span>(<span class="hljs-string">&quot;Job Description&quot;</span>, height<span class="hljs-punctuation">=</span><span class="hljs-number">200</span>)
+    run_btn <span class="hljs-punctuation">=</span> st.<span class="hljs-title function_">button</span>(<span class="hljs-string">&quot;▶ Run Ranking&quot;</span>, <span class="hljs-keyword">type</span><span class="hljs-punctuation">=</span><span class="hljs-string">&quot;primary&quot;</span>)
+
+<span class="hljs-comment"># Tabs</span>
+tab1, tab2, tab3, tab4 <span class="hljs-punctuation">=</span> st.<span class="hljs-title function_">tabs</span>([<span class="hljs-string">&quot;🏆 Shortlist&quot;</span>, <span class="hljs-string">&quot;📊 Score Explorer&quot;</span>, <span class="hljs-string">&quot;📖 Methodology&quot;</span>, <span class="hljs-string">&quot;🚫 Disqualified&quot;</span>])
+
+<span class="hljs-keyword">if</span> run_btn<span class="hljs-punctuation">:</span>
+    <span class="hljs-keyword">if</span> not jd_text<span class="hljs-punctuation">:</span>
+        st.<span class="hljs-title function_">warning</span>(<span class="hljs-string">&quot;Load a job description to begin ranking&quot;</span>)
+    <span class="hljs-keyword">else</span><span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">with</span> st.<span class="hljs-title function_">spinner</span>(<span class="hljs-string">&quot;Scoring candidates...&quot;</span>)<span class="hljs-punctuation">:</span>
+            results <span class="hljs-punctuation">=</span> <span class="hljs-title function_">run_demo_ranking</span>(jd_text, mode)
+        
+        <span class="hljs-keyword">with</span> tab1<span class="hljs-punctuation">:</span>
+            <span class="hljs-title function_">render_shortlist</span>(results)
+        
+        <span class="hljs-keyword">with</span> tab2<span class="hljs-punctuation">:</span>
+            <span class="hljs-title function_">render_score_explorer</span>(results)
+</code></pre>
+<h3 id="implementation-plan-phase-8-demo-sandbox-2-hours-step-82-deploy-to-huggingface-spaces" class="docmd-heading"><a href="#implementation-plan-phase-8-demo-sandbox-2-hours-step-82-deploy-to-huggingface-spaces" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Step 8.2: Deploy to HuggingFace Spaces</h3>
+<pre class="hljs"><code><span class="hljs-comment"># Space requirements.txt — must be CPU-only</span>
+sentence<span class="hljs-punctuation">-</span>transformers<span class="hljs-punctuation">==</span><span class="hljs-number">2.7</span>.<span class="hljs-number">0</span>
+numpy<span class="hljs-punctuation">==</span><span class="hljs-number">1.26</span>.<span class="hljs-number">4</span>
+streamlit<span class="hljs-punctuation">==</span><span class="hljs-number">1.35</span>.<span class="hljs-number">0</span>
+</code></pre>
+<p>Push code + <code>artifacts/</code> (embeddings + subscores) to Space.<br>
+Verify it loads in &lt; 30 seconds.</p>
+<hr>
+<h2 id="implementation-plan-phase-9-second-submission-if-needed" class="docmd-heading"><a href="#implementation-plan-phase-9-second-submission-if-needed" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Phase 9 — Second Submission (if needed)</h2>
+<p>After Phase 8: review any obvious mistakes in top-10 reasoning strings or scores.</p>
+<p>Possible improvements before submission 2:</p>
+<ul>
+<li>Increase CONSULTING_PENALTY from 0.15 → 0.05 (more nuanced)</li>
+<li>Add <code>github_activity_score</code> bonus (+0.02 if score &gt; 70) to technical_fit</li>
+<li>Tune <code>IDEAL_YOE_MIN/MAX</code> based on what top candidates show</li>
+<li>Improve reasoning strings to be more specific</li>
+</ul>
+<p><strong>Only submit 2 if submission 1 had clear errors. Don’t burn submission 3 on guesses.</strong></p>
+<hr>
+<h2 id="implementation-plan-risk-register" class="docmd-heading"><a href="#implementation-plan-risk-register" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Risk Register</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Probability</th>
+<th>Mitigation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSONL parsing crashes on malformed lines</td>
+<td>Medium</td>
+<td>Try/except per line, log + skip</td>
+</tr>
+<tr>
+<td>Embedding RAM exceeds 14GB</td>
+<td>Low</td>
+<td>Streaming + float32 already planned</td>
+</tr>
+<tr>
+<td><a href="http://rank.py">rank.py</a> &gt; 5 min</td>
+<td>Low</td>
+<td>Vectorized cosine, no Python loops</td>
+</tr>
+<tr>
+<td>&gt;10 honeypots in top 100</td>
+<td>Low</td>
+<td>Honeypot filter runs pre-scoring</td>
+</tr>
+<tr>
+<td>Validator fails on CSV</td>
+<td>Medium</td>
+<td>Run validator after every test run</td>
+</tr>
+<tr>
+<td>Date parsing fails silently</td>
+<td>High</td>
+<td>Unit test parse_year on all samples first</td>
+</tr>
+<tr>
+<td>Wrong consulting firm names in dataset</td>
+<td>Medium</td>
+<td>Log all company names, spot-check</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="implementation-plan-time-budget-summary" class="docmd-heading"><a href="#implementation-plan-time-budget-summary" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Time Budget Summary</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Task</th>
+<th>Hours</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Pre-build checklist</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Environment + scaffold</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Data layer + parsers</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Disqualification engine</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Scoring engine (all 4 signals)</td>
+<td>3.5</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Precomputation (full 100k)</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>6</td>
+<td><a href="http://rank.py">rank.py</a> + reasoning</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Validate + submit #1</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Streamlit sandbox</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Review + submit #2</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td><strong>Total</strong></td>
+<td></td>
+<td><strong>~16 hrs</strong></td>
+</tr>
+</tbody>
+</table>
+</div><p><strong>Critical path:</strong> Phase 4 (scoring) is where quality is won or lost. Don’t rush it.</p>
+<hr>
+<p><em>RecruiterIQ Implementation Plan v1.0 · 2025</em></p>
+
+                
+              </div>
+              <div class="toc-sidebar">
+                
+
+
+  <div class="toc-container">
+    <h2 class="toc-title">onThisPage<span class="mobile-view toc-menu-button float-right">
+<svg class="lucide-icon icon-chevron-down " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-down"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</span></h2>
+    <ul class="toc-list">
+      
+        <li class="toc-item toc-level-1">
+          <a href="#implementation-plan" class="toc-link">Implementation Plan</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-0-pre-build-checklist-before-writing-code" class="toc-link">0. Pre-Build Checklist (Before writing code)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-phase-1-environment-setup-12-hours" class="toc-link">Phase 1 — Environment Setup (1–2 hours)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-1-environment-setup-12-hours-step-11-project-init" class="toc-link">Step 1.1: Project Init</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-1-environment-setup-12-hours-step-12-scaffold-files" class="toc-link">Step 1.2: Scaffold Files</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-1-environment-setup-12-hours-step-13-configpy" class="toc-link">Step 1.3: config.py</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-phase-2-data-layer-23-hours" class="toc-link">Phase 2 — Data Layer (2–3 hours)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-2-data-layer-23-hours-step-21-schema-validator" class="toc-link">Step 2.1: Schema Validator</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-2-data-layer-23-hours-step-22-jsonl-streaming-parser" class="toc-link">Step 2.2: JSONL Streaming Parser</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-2-data-layer-23-hours-step-23-date-parser-critical-for-honeypot-detection" class="toc-link">Step 2.3: Date Parser (critical for honeypot detection)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-phase-3-disqualification-engine-12-hours" class="toc-link">Phase 3 — Disqualification Engine (1–2 hours)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-3-disqualification-engine-12-hours-step-31-honeypot-detector" class="toc-link">Step 3.1: Honeypot Detector</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-3-disqualification-engine-12-hours-step-32-consulting-penalty" class="toc-link">Step 3.2: Consulting Penalty</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-phase-4-scoring-engine-34-hours" class="toc-link">Phase 4 — Scoring Engine (3–4 hours)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-4-scoring-engine-34-hours-step-41-technical-fit" class="toc-link">Step 4.1: Technical Fit</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-4-scoring-engine-34-hours-step-42-career-quality" class="toc-link">Step 4.2: Career Quality</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-4-scoring-engine-34-hours-step-43-availability-signal" class="toc-link">Step 4.3: Availability Signal</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-4-scoring-engine-34-hours-step-44-seniority-fit" class="toc-link">Step 4.4: Seniority Fit</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-phase-5-precomputation-12-hours" class="toc-link">Phase 5 — Precomputation (1–2 hours)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-5-precomputation-12-hours-step-51-embedding-setup" class="toc-link">Step 5.1: Embedding Setup</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-5-precomputation-12-hours-step-52-full-run-on-sample-first" class="toc-link">Step 5.2: Full Run on Sample First</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-5-precomputation-12-hours-step-53-full-run-on-100k" class="toc-link">Step 5.3: Full Run on 100k</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-phase-6-ranking-script-12-hours" class="toc-link">Phase 6 — Ranking Script (1–2 hours)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-6-ranking-script-12-hours-step-61-rankpy-core" class="toc-link">Step 6.1: rank.py Core</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-6-ranking-script-12-hours-step-62-reasoning-generator" class="toc-link">Step 6.2: Reasoning Generator</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-6-ranking-script-12-hours-step-63-timing-test" class="toc-link">Step 6.3: Timing Test</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-phase-7-validation-first-submission-1-hour" class="toc-link">Phase 7 — Validation &amp; First Submission (1 hour)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-7-validation-first-submission-1-hour-step-71-run-validator" class="toc-link">Step 7.1: Run Validator</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-7-validation-first-submission-1-hour-step-72-honeypot-audit" class="toc-link">Step 7.2: Honeypot Audit</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-7-validation-first-submission-1-hour-step-73-first-submission" class="toc-link">Step 7.3: First Submission</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-phase-8-demo-sandbox-2-hours" class="toc-link">Phase 8 — Demo Sandbox (2 hours)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-8-demo-sandbox-2-hours-step-81-streamlit-app-skeleton" class="toc-link">Step 8.1: Streamlit App Skeleton</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#implementation-plan-phase-8-demo-sandbox-2-hours-step-82-deploy-to-huggingface-spaces" class="toc-link">Step 8.2: Deploy to HuggingFace Spaces</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-phase-9-second-submission-if-needed" class="toc-link">Phase 9 — Second Submission (if needed)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-risk-register" class="toc-link">Risk Register</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#implementation-plan-time-budget-summary" class="toc-link">Time Budget Summary</a>
+        </li>
+      
+    </ul>
+  </div>
+
+              </div>
+            </div>
+            <div class="page-footer-actions">
+              
+              
+                <span class="git-last-updated" data-timestamp="1781074771000">
+                  <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span class="git-label">Last updated:</span>
+                  <span class="git-time" data-timestamp="1781074771000"></span>
+                  
+                  <div class="git-commit-tooltip" role="tooltip">
+                    <div class="git-tooltip-title">Recent commits</div>
+                    <ul class="git-commit-list">
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="DevanshSrajput">
+                            
+                              <img src="https://www.gravatar.com/avatar/7f22948119fdb4e2d70c1be1a1f39659?d=mp&amp;s=64" alt="DevanshSrajput">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="Initialize the Project: (Add Initial Project Documentation)">Initialize the Project: (Add Initial ...</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">DevanshSrajput</span>
+                              <span class="git-commit-date" data-timestamp="1781074771000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                    </ul>
+                  </div>
+                  
+                </span>
+              
+              <span class="git-spacer"></span>
+              
+            </div>
+          </main>
+          
+
+
+<footer class="page-footer">
+  <div class="footer-content">
+    <div class="user-footer"></div>
+    
+      <div class="branding-footer">
+        builtWith <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
+      </div>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+      
+      <script src="../../assets/js/docmd-main.js?v=mqcpwj52"></script>
+      
+      <script src="../../assets/js/docmd-git.js?v=mqcpwj52"></script>
+      <script src="../../assets/js/docmd-image-lightbox.js?v=mqcpwj52" ></script>
+<script src="https://cdn.jsdelivr.net/npm/minisearch@7.2.0/dist/umd/index.min.js" ></script>
+<script src="../../assets/js/docmd-search.js?v=mqcpwj52" ></script>
+<script src="../../assets/js/init-mermaid.js?v=mqcpwj52" type="module"></script>
+<script src="../../assets/js/docmd-git.js?v=mqcpwj52" type="module"></script>
+
+  <!-- Search Modal (Injected by @docmd/plugin-search) -->
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-show-confidence="false" data-show-filters="true"
+       data-search-placeholder="Search documentation..."
+       data-search-no-results="No results found."
+       data-search-error="Failed to load search index."
+       data-search-initial="Type to start searching..."
+       data-search-navigate="to navigate"
+       data-search-escape="to close">
+      <div class="docmd-search-box">
+          <div class="docmd-search-header">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-search"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input type="text" id="docmd-search-input" placeholder="Search documentation..." autocomplete="off" spellcheck="false">
+              <button onclick="window.closeDocmdSearch()" class="docmd-search-close" aria-label="Close search">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+          </div>
+          <div id="docmd-search-results" class="docmd-search-results"></div>
+          <div class="docmd-search-footer">
+              <span><kbd class="docmd-kbd">↑</kbd> <kbd class="docmd-kbd">↓</kbd> to navigate</span>
+              <span><kbd class="docmd-kbd">ESC</kbd> to close</span>
+          </div>
+      </div>
+  </div>
+
+    <script>
+      (function() {
+        var searchDebounceTimer;
+
+        document.addEventListener('click', function(e) {
+          var link = e.target.closest('a');
+          if (!link || !window.gtag) return;
+          
+          var url = link.href;
+          var hostname = window.location.hostname;
+          var isExternal = link.hostname && link.hostname !== hostname;
+          var isDownload = link.hasAttribute('download') || url.match(/\.(pdf|zip|tar|gz|exe|pkg)$/i);
+          
+          if (isExternal) {
+            gtag('event', 'click_external', { 'url': url, 'link_text': link.innerText.trim() });
+          } else if (isDownload) {
+            gtag('event', 'download', { 'file_name': url.split('/').pop(), 'url': url });
+          }
+
+          // TOC tracking
+          if (link.classList.contains('toc-link')) {
+            gtag('event', 'toc_click', { 'target_id': link.getAttribute('href'), 'title': link.innerText.trim() });
+          }
+
+          // Permalink tracking
+          if (link.classList.contains('heading-anchor')) {
+            gtag('event', 'permalink_click', { 'url': url });
+          }
+        });
+
+        
+        // Search Keyword Tracking
+        document.addEventListener('input', function(e) {
+          if (e.target.id === 'docmd-search-input' && window.gtag) {
+            var query = e.target.value.trim();
+            if (query.length < 3) return;
+            
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(function() {
+              gtag('event', 'search', { 'search_term': query });
+            }, 1000);
+          }
+        });
+        
+      })();
+    </script>
+
+<script>window.__git_config={"repo":null,"branch":"main","editLink":false,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+      
+  </body>
+</html>

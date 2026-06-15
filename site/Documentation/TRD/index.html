@@ -1,0 +1,1211 @@
+<!--
+  ---------------------------------------------------------------
+  docmd : the zero-config documentation engine.
+  @website https://docmd.io
+  [docmd-source] - Please do not remove this header.
+  ---------------------------------------------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="generator" content="docmd v0.5.x">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+    <style>
+      html {
+        visibility: hidden;
+      }
+    </style>
+    
+    <script>
+      var root = "../../";
+      if (root && !root.endsWith('/')) root += '/';
+      if (root === '') root = './';
+      window.DOCMD_ROOT = root;
+
+      var siteRoot = "../../";
+      if (siteRoot && !siteRoot.endsWith('/')) siteRoot += '/';
+      if (siteRoot === '') siteRoot = './';
+      window.DOCMD_SITE_ROOT = siteRoot;
+
+      window.DOCMD_APPEARANCE = "system";
+      window.DOCMD_VERSION_ROOT = "/";
+      window.DOCMD_BASE = "/";
+      window.DOCMD_LOCALE = "";
+      window.DOCMD_DEFAULT_LOCALE = "";
+    </script>
+    <title>
+      Technical Requirements Document (TRD) : SignalHire
+    </title>
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-main.css?v=mqcpwj52">
+    
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-light.css?v=mqcpwj52" id="hljs-light" >
+    <link rel="stylesheet" href="../../assets/css/docmd-highlight-dark.css?v=mqcpwj52" id="hljs-dark" disabled>
+    
+    
+<meta name="description" content="">
+<link rel="canonical" href="/Documentation/TRD/">
+<meta property="og:title" content="Technical Requirements Document (TRD) - SignalHire">
+<meta property="og:description" content="">
+<meta property="og:url" content="/Documentation/TRD/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Technical Requirements Document (TRD) - SignalHire">
+<meta name="twitter:description" content="">
+
+
+
+<link rel="stylesheet" href="../../assets/css/docmd-git.css?v=mqcpwj52" >
+<link rel="stylesheet" href="../../assets/css/docmd-openapi.css?v=mqcpwj52" >
+
+    
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+  </head>
+  <body
+    class="sidebar-collapsible"
+    data-default-collapsed="false"
+    data-copy-code-enabled="false" data-spa-enabled="true" data-source-file="Documentation/TRD.md">
+
+    <a href="#main-content" class="skip-link">skipToContent</a>
+
+    
+    
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          
+            <h1><a href="../../">
+                SignalHire
+              </a></h1>
+          
+          <span class="mobile-view sidebar-menu-button float-right">
+            
+<svg class="lucide-icon icon-menu " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-menu"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+
+          </span>
+        </div>
+        <div class="sidebar-top-group">
+          
+          
+          
+          
+        </div>
+        
+
+<nav class="sidebar-nav" aria-label="mainNavigation">
+  <ul>
+    
+      <li class="" >
+      
+        <a href="../../" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 SignalHire — AI-Powered Candidate Ranking
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../GOOD_FIRST_ISSUES/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 Good First Issues
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active-parent collapsible expanded nav-group"  aria-expanded="true" >
+      
+        <span class="nav-label nav-group">
+          
+          <span class="nav-item-title">
+            Documentation
+          </span>
+          
+            <span class="collapse-icon-wrapper">
+<svg class="lucide-icon icon-chevron-right collapse-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+          
+        </span>
+        
+
+        
+          <ul class="submenu">
+            
+      <li class="" >
+      
+        <a href="../../Documentation/APP_FLOW/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            App Flow Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/BACKEND_SCHEMA/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Backend Schema Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/IMPLEMENTATION_PLAN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Implementation Plan
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/RecruiterIQ_PRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            RecruiterIQ — Product Requirements Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="active" >
+      
+        <a href="../../Documentation/TRD/" class="active "
+          >
+          
+          <span class="nav-item-title">
+            Technical Requirements Document (TRD)
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="../../Documentation/UIUX_DESIGN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            UI/UX Design Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+          </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+        <div class="sidebar-bottom-group mt-auto">
+          
+          
+          
+          
+        </div>
+      </aside>
+      
+      <div class="main-content-wrapper">
+        
+        
+          <header class="page-header">
+            <div class="header-left">
+              
+                <button id="sidebar-toggle-button" class="sidebar-toggle-button"
+                  aria-label="toggleSidebar">
+                  
+<svg class="lucide-icon icon-chevron-left " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+
+                </button>
+              
+              <div class="header-titles-wrapper">
+                <span class="header-title">
+                  Technical Requirements Document (TRD)
+                </span>
+              </div>
+            </div>
+            <div class="header-right">
+              
+                
+
+
+<div class="docmd-options-menu">
+    
+    <button class="docmd-search-trigger" aria-label="search">
+        
+<svg class="lucide-icon icon-search " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-search"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" />
+</svg>
+
+        <span class="search-label">search</span>
+        <span class="search-keys"><kbd class="docmd-kbd">⌘</kbd><kbd class="docmd-kbd">K</kbd></span>
+    </button>
+    
+
+    
+
+    
+
+    
+    <button class="theme-toggle-button" aria-label="toggleTheme">
+        
+<svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-sun"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg>
+ 
+<svg class="lucide-icon icon-moon icon-moon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-moon"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+</svg>
+
+    </button>
+    
+
+    
+</div>
+
+              
+            </div>
+          </header>
+        
+        <div class="content-theme-cover">
+          <main class="content-area" id="main-content">
+            <div class="content-layout">
+              <div class="main-content">
+                <div class="docmd-breadcrumbs-row">
+                  <div id="docmd-raw-markdown" data-content="%23%20Technical%20Requirements%20Document%20(TRD)%0A**RecruiterIQ%20%E2%80%94%20AI%20Candidate%20Ranking%20System**%0A%0A%7C%20Field%20%7C%20Value%20%7C%0A%7C---%7C---%7C%0A%7C%20Version%20%7C%201.0%20%7C%0A%7C%20System%20%7C%20RecruiterIQ%20%E2%80%94%20Offline%20Hybrid%20Scoring%20Pipeline%20%7C%0A%7C%20Constraint%20%7C%20CPU-only%20%C2%B7%2016GB%20RAM%20%C2%B7%205%20min%20ranking%20%C2%B7%20No%20network%20at%20inference%20%7C%0A%0A---%0A%0A%23%23%201.%20System%20Overview%0A%0ATwo-phase%20system%3A%0A-%20**Phase%20A%20%E2%80%94%20Precomputation**%20(offline%2C%20before%20submission)%3A%20embed%20100k%20candidates%2C%20compute%20sub-scores%2C%20serialize%20artifacts%0A-%20**Phase%20B%20%E2%80%94%20Ranking**%20(sandbox%20execution%2C%20%E2%89%A45%20min)%3A%20load%20artifacts%2C%20score%2C%20sort%2C%20emit%20CSV%0A%0A---%0A%0A%23%23%202.%20Functional%20Requirements%0A%0A%23%23%23%20FR-01%3A%20Data%20Ingestion%0A-%20Parse%20%60candidates.jsonl%60%20(100k%20lines%2C%20streaming%20%E2%80%94%20do%20not%20load%20all%20into%20RAM%20at%20once)%0A-%20Validate%20each%20record%20against%20%60candidate_schema.json%60%0A-%20Handle%20missing%20fields%20gracefully%20(default%20values%2C%20not%20crashes)%0A-%20Stream%20batch%20size%3A%201%2C000%20records%20per%20chunk%0A%0A%23%23%23%20FR-02%3A%20Disqualification%0A-%20Hard-drop%20honeypots%20before%20any%20scoring%20(saves%20compute)%0A-%20Disqualify%20conditions%20(see%20Disqualify%20Rules%20below)%0A-%20Flag%20output%3A%20%60%7Bcandidate_id%2C%20disqualify_reason%7D%60%20for%20audit%20log%0A%0A%23%23%23%20FR-03%3A%20Profile%20Embedding%0A-%20Build%20profile%20blob%20per%20candidate%20(headline%20%2B%20summary%20%2B%20career%20descriptions%20%2B%20skill%20names)%0A-%20Embed%20using%20%60all-MiniLM-L6-v2%60%20(384-dim%2C%20CPU-optimized)%0A-%20Batch%20size%3A%20512%20for%20memory%20efficiency%0A-%20Output%3A%20%60(N%2C%20384)%60%20float32%20numpy%20array%2C%20saved%20as%20%60artifacts%2Fembeddings.npy%60%0A-%20Also%20save%20%60artifacts%2Fcandidate_ids.npy%60%20(aligned%20index%20%E2%86%92%20candidate_id%20map)%0A%0A%23%23%23%20FR-04%3A%20JD%20Embedding%0A-%20Embed%20JD%20text%20once%3A%20%60artifacts%2Fjd_embedding.npy%60%0A-%20JD%20text%20%3D%20full%20%60job_description.docx%60%20content%20(must%20be%20extracted%20to%20%60.txt%60%20first)%0A%0A%23%23%23%20FR-05%3A%20Sub-Score%20Computation%0A-%20Compute%20%60technical_fit%60%2C%20%60career_quality%60%2C%20%60availability_signal%60%2C%20%60seniority_fit%60%20per%20candidate%0A-%20Serialize%20to%20%60artifacts%2Fsubscores.pkl%60%20(dict%3A%20candidate_id%20%E2%86%92%20score%20dict)%0A-%20All%20scores%3A%20float32%2C%20range%20%5B0.0%2C%201.0%5D%0A%0A%23%23%23%20FR-06%3A%20Composite%20Scoring%20(Ranking%20Phase)%0A-%20Load%20%60embeddings.npy%60%2C%20%60jd_embedding.npy%60%2C%20%60subscores.pkl%60%0A-%20Compute%20%60semantic_similarity%60%20%3D%20cosine(candidate_embedding%2C%20jd_embedding)%0A-%20Compute%20composite%20S%20per%20candidate%20(see%20formula%20in%20PRD)%0A-%20Sort%20descending%2C%20take%20top%20100%0A-%20Enforce%20monotonic%20scores%3A%20if%20%60score%5Bi%5D%20%3C%20score%5Bi%2B1%5D%60%2C%20clamp%0A%0A%23%23%23%20FR-07%3A%20Reasoning%20Generation%0A-%20Per%20top-100%20candidate%3A%20generate%201%E2%80%932%20sentence%20string%0A-%20Must%20reference%3A%20years_of_experience%2C%20top%20skill%20match%2C%20strongest%20company%2C%20availability%20status%0A-%20Must%20NOT%20be%20generic%20filler%20(e.g.%2C%20%22Strong%20candidate%20with%20relevant%20skills%22)%0A-%20Length%3A%20120%E2%80%93300%20characters%0A%0A%23%23%23%20FR-08%3A%20CSV%20Output%0A-%20Columns%3A%20%60candidate_id%2C%20rank%2C%20score%2C%20reasoning%60%0A-%20Exactly%20100%20rows%20%2B%20header%0A-%20Ranks%201%E2%80%93100%2C%20each%20exactly%20once%0A-%20Score%3A%20float%2C%203%20decimal%20places%2C%20non-increasing%0A-%20Encoding%3A%20UTF-8%0A-%20Filename%3A%20%60%3Cparticipant_id%3E.csv%60%0A%0A%23%23%23%20FR-09%3A%20Validation%0A-%20Run%20%60validate_submission.py%60%20on%20output%0A-%20Must%20pass%20with%20zero%20errors%20before%20submission%0A%0A%23%23%23%20FR-10%3A%20Demo%20Sandbox%0A-%20Streamlit%20app%20accepting%3A%20JD%20text%20%2B%20candidate%20JSON%20%E2%86%92%20returns%20ranked%20top-10%20with%20score%20breakdown%0A-%20Deployable%20to%20HuggingFace%20Spaces%20(CPU%2C%20public)%0A-%20Loads%20pre-computed%20artifacts%20from%20repo%0A%0A---%0A%0A%23%23%203.%20Non-Functional%20Requirements%0A%0A%7C%20Requirement%20%7C%20Target%20%7C%0A%7C---%7C---%7C%0A%7C%20Ranking%20runtime%20(Phase%20B)%20%7C%20%3C%20300%20seconds%20on%20CPU%2C%2016GB%20%7C%0A%7C%20Precomputation%20runtime%20%7C%20%3C%2060%20minutes%20on%20CPU%20(offline%2C%20no%20constraint)%20%7C%0A%7C%20Peak%20RAM%20(Phase%20B)%20%7C%20%3C%2014GB%20(leave%202GB%20buffer)%20%7C%0A%7C%20Embedding%20model%20size%20%7C%20%3C%20200MB%20%7C%0A%7C%20Output%20correctness%20%7C%200%20format%20errors%20on%20validator%20%7C%0A%7C%20Honeypot%20rate%20in%20top%20100%20%7C%20%E2%89%A4%2010%20(hard%20disqualification%20threshold)%20%7C%0A%7C%20Reproducibility%20%7C%20Same%20seed%20%E2%86%92%20same%20output%2C%20every%20run%20%7C%0A%0A---%0A%0A%23%23%204.%20Disqualification%20Rules%20(Hard%20Filters)%0A%0A%60%60%60python%0ACONSULTING_FIRMS%20%3D%20%5B%0A%20%20%20%20%22TCS%22%2C%20%22Infosys%22%2C%20%22Wipro%22%2C%20%22Capgemini%22%2C%20%22Cognizant%22%2C%0A%20%20%20%20%22Accenture%22%2C%20%22HCL%22%2C%20%22Mphasis%22%2C%20%22Tech%20Mahindra%22%2C%20%22Hexaware%22%2C%0A%20%20%20%20%22IBM%20GBS%22%2C%20%22Deloitte%22%2C%20%22EY%22%2C%20%22KPMG%22%2C%20%22Mindtree%22%0A%5D%0A%0Adef%20is_honeypot(candidate)%20-%3E%20bool%3A%0A%20%20%20%20%23%20Rule%201%3A%20Experience%20%3E%20career%20timeline%0A%20%20%20%20yoe%20%3D%20candidate%5B&#039;profile&#039;%5D%5B&#039;years_of_experience&#039;%5D%0A%20%20%20%20earliest_start%20%3D%20min(parse_year(r%5B&#039;dates&#039;%5D%5B&#039;start&#039;%5D)%20for%20r%20in%20candidate%5B&#039;career_history&#039;%5D)%0A%20%20%20%20if%20yoe%20%3E%20(2025%20-%20earliest_start%20%2B%202)%3A%20%20%23%20%2B2%20tolerance%0A%20%20%20%20%20%20%20%20return%20True%0A%20%20%20%20%0A%20%20%20%20%23%20Rule%202%3A%20Ghost%20profile%0A%20%20%20%20s%20%3D%20candidate%5B&#039;redrob_signals&#039;%5D%0A%20%20%20%20if%20(s%5B&#039;profile_completeness_score&#039;%5D%20%3C%205%20and%0A%20%20%20%20%20%20%20%20not%20s%5B&#039;verified_email&#039;%5D%20and%20not%20s%5B&#039;verified_phone&#039;%5D)%3A%0A%20%20%20%20%20%20%20%20return%20True%0A%20%20%20%20%0A%20%20%20%20return%20False%0A%0Adef%20should_hard_penalize(candidate)%20-%3E%20float%3A%0A%20%20%20%20%23%20Returns%20penalty%20multiplier%20%5B0.0%20%E2%80%93%201.0%5D%3B%201.0%20%3D%20no%20penalty%0A%20%20%20%20roles%20%3D%20candidate%5B&#039;career_history&#039;%5D%0A%20%20%20%20companies%20%3D%20%5Br%5B&#039;company&#039;%5D%20for%20r%20in%20roles%5D%0A%20%20%20%20%0A%20%20%20%20%23%20All%20consulting%2C%20no%20product%20company%0A%20%20%20%20consulting_count%20%3D%20sum(1%20for%20c%20in%20companies%20if%20any(f%20in%20c%20for%20f%20in%20CONSULTING_FIRMS))%0A%20%20%20%20if%20consulting_count%20%3D%3D%20len(companies)%3A%0A%20%20%20%20%20%20%20%20return%200.15%20%20%23%20Severe%20penalty%2C%20not%20hard%20drop%20(might%20have%201%20good%20role%20missed)%0A%20%20%20%20%0A%20%20%20%20return%201.0%0A%60%60%60%0A%0A---%0A%0A%23%23%205.%20Embedding%20Strategy%0A%0A%23%23%23%20Model%3A%20%60sentence-transformers%2Fall-MiniLM-L6-v2%60%0A-%20Size%3A%2080MB%0A-%20Dimensions%3A%20384%0A-%20CPU%20inference%3A%20~0.5ms%2Fsample%0A-%20100k%20candidates%3A%20~50%2C000ms%20%3D%20~50%20seconds%20(batched%20at%20512)%0A%0A%23%23%23%20Profile%20Blob%20Construction%0A%60%60%60python%0Adef%20build_profile_blob(candidate)%20-%3E%20str%3A%0A%20%20%20%20parts%20%3D%20%5B%5D%0A%20%20%20%20p%20%3D%20candidate%5B&#039;profile&#039;%5D%0A%20%20%20%20parts.append(p.get(&#039;headline&#039;%2C%20&#039;&#039;))%0A%20%20%20%20parts.append(p.get(&#039;summary&#039;%2C%20&#039;&#039;))%0A%20%20%20%20parts.append(p.get(&#039;current_title&#039;%2C%20&#039;&#039;))%0A%20%20%20%20%0A%20%20%20%20for%20role%20in%20candidate.get(&#039;career_history&#039;%2C%20%5B%5D)%3A%0A%20%20%20%20%20%20%20%20parts.append(role.get(&#039;title&#039;%2C%20&#039;&#039;))%0A%20%20%20%20%20%20%20%20parts.append(role.get(&#039;description&#039;%2C%20&#039;&#039;))%0A%20%20%20%20%0A%20%20%20%20%23%20Skills%3A%20name%20only%2C%20proficiency%20as%20qualifier%0A%20%20%20%20for%20skill%20in%20candidate.get(&#039;skills&#039;%2C%20%5B%5D)%3A%0A%20%20%20%20%20%20%20%20prof%20%3D%20skill.get(&#039;proficiency&#039;%2C%20&#039;&#039;)%0A%20%20%20%20%20%20%20%20name%20%3D%20skill.get(&#039;name&#039;%2C%20&#039;&#039;)%0A%20%20%20%20%20%20%20%20if%20prof%20in%20%5B&#039;expert&#039;%2C%20&#039;advanced&#039;%5D%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20parts.append(f%22expert%20%7Bname%7D%22)%0A%20%20%20%20%20%20%20%20else%3A%0A%20%20%20%20%20%20%20%20%20%20%20%20parts.append(name)%0A%20%20%20%20%0A%20%20%20%20return%20&#039;%20&#039;.join(filter(None%2C%20parts))%5B%3A512%5D%20%20%23%20Truncate%20at%20512%20tokens%0A%60%60%60%0A%0A%23%23%23%20RAM%20Estimate%20for%20Embeddings%0A-%20100k%20%C3%97%20384%20dims%20%C3%97%204%20bytes%20(float32)%20%3D%20**153MB**%20%E2%80%94%20trivially%20fits%20in%2016GB%0A%0A---%0A%0A%23%23%206.%20Scoring%20Engine%20Requirements%0A%0A%23%23%23%20Technical%20Fit%20Computation%0A%60%60%60%0AInput%3A%20%20candidate%20skills%5B%5D%2C%20career_history%5B%5D.description%2C%20skill_assessment_scores%7B%7D%0AOutput%3A%20float%20%5B0.0%2C%201.0%5D%0A%0ALogic%3A%0A%20%201.%20Build%20candidate%20skill%20set%20with%20proficiency%20weights%0A%20%202.%20Check%20skill_assessment_scores%20for%20platform-verified%20overrides%0A%20%203.%20Score%20against%20JD_MUST_HAVES%20and%20JD_NICE_TO_HAVES%0A%20%204.%20Check%20career%20descriptions%20for%20production%20evidence%20keywords%0A%20%205.%20Normalize%20to%20%5B0%2C%201%5D%0A%60%60%60%0A%0A%23%23%23%20Production%20Evidence%20Keywords%20(for%20career%20description%20scan)%0A%60%60%60python%0APRODUCTION_SIGNALS%20%3D%20%5B%0A%20%20%20%20%22production%22%2C%20%22deployed%22%2C%20%22shipped%22%2C%20%22serving%22%2C%20%22inference%22%2C%0A%20%20%20%20%22million%20users%22%2C%20%22at%20scale%22%2C%20%22latency%22%2C%20%22throughput%22%2C%0A%20%20%20%20%22A%2FB%20test%22%2C%20%22evaluated%22%2C%20%22benchmark%22%2C%20%22NDCG%22%2C%20%22MRR%22%0A%5D%0ARETRIEVAL_SIGNALS%20%3D%20%5B%0A%20%20%20%20%22embeddings%22%2C%20%22vector%22%2C%20%22semantic%20search%22%2C%20%22RAG%22%2C%20%22retrieval%22%2C%0A%20%20%20%20%22sentence-transformers%22%2C%20%22FAISS%22%2C%20%22Pinecone%22%2C%20%22Milvus%22%2C%20%22Qdrant%22%2C%0A%20%20%20%20%22Weaviate%22%2C%20%22OpenSearch%22%2C%20%22Elasticsearch%22%2C%20%22BM25%22%2C%20%22dense%20retrieval%22%0A%5D%0A%60%60%60%0A%0A%23%23%23%20Availability%20Signal%20Computation%0A%60%60%60%0AInput%3A%20%20redrob_signals%7B%7D%0AOutput%3A%20float%20%5B0.0%2C%201.0%5D%0A%0AWeighted%20combination%3A%0A%20%20open_to_work_flag%20%20%20%20%20%20%20%C3%97%200.25%0A%20%20last_active_recency()%20%20%20%C3%97%200.20%0A%20%20recruiter_response_rate%20%C3%97%200.15%0A%20%20response_speed_score()%20%20%C3%97%200.10%0A%20%20interview_completion%20%20%20%20%C3%97%200.15%0A%20%20applications_30d_score()%C3%97%200.10%0A%20%20notice_period_score()%20%20%20%C3%97%200.05%0A%60%60%60%0A%0A---%0A%0A%23%23%207.%20Artifact%20Manifest%0A%0A%7C%20Artifact%20%7C%20Size%20(est.)%20%7C%20Description%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20%60artifacts%2Fembeddings.npy%60%20%7C%20~153MB%20%7C%20float32%20(100k%2C%20384)%20%7C%0A%7C%20%60artifacts%2Fcandidate_ids.npy%60%20%7C%20~6MB%20%7C%20str%20array%20aligned%20to%20embeddings%20%7C%0A%7C%20%60artifacts%2Fjd_embedding.npy%60%20%7C%20~1.5KB%20%7C%20float32%20(384%2C)%20%7C%0A%7C%20%60artifacts%2Fsubscores.pkl%60%20%7C%20~20MB%20%7C%20dict%3A%20cand_id%20%E2%86%92%20%7Btech%2C%20career%2C%20avail%2C%20senior%7D%20%7C%0A%7C%20%60artifacts%2Fdisqualified.json%60%20%7C%20~1MB%20%7C%20list%20of%20%7Bcand_id%2C%20reason%7D%20%7C%0A%0A---%0A%0A%23%23%208.%20Seed%20%26%20Reproducibility%0A%0A%60%60%60python%0Aimport%20numpy%20as%20np%2C%20random%0ASEED%20%3D%2042%0Anp.random.seed(SEED)%0Arandom.seed(SEED)%0A%60%60%60%0A%0ADeterministic%20output%20required%20for%20Stage%203%20sandbox%20reproduction.%0A%0A---%0A%0A%23%23%209.%20Constraints%20Summary%0A%0A%7C%20Constraint%20%7C%20Handling%20%7C%0A%7C---%7C---%7C%0A%7C%20No%20network%20at%20ranking%20%7C%20All%20models%2Fartifacts%20bundled%20or%20pre-downloaded%20%7C%0A%7C%20CPU%20only%20%7C%20MiniLM%20(no%20GPU%20dep)%2C%20pure%20numpy%20cosine%20%7C%0A%7C%2016GB%20RAM%20%7C%20Streaming%20ingestion%2C%20float32%20arrays%2C%20no%20full%20JSONL%20in%20RAM%20%7C%0A%7C%205%20min%20runtime%20%7C%20Phase%20B%20only%20loads%20%2B%20scores%20(no%20embedding%20at%20rank%20time)%20%7C%0A%7C%20Max%203%20submissions%20%7C%20%60validate_submission.py%60%20mandatory%20before%20each%20%7C%0A%0A---%0A%0A%23%23%2010.%20Dependencies%0A%0A%60%60%60%0Asentence-transformers%3D%3D2.7.0%0Anumpy%3D%3D1.26.4%0Apandas%3D%3D2.2.2%0Ascikit-learn%3D%3D1.4.2%20%20%20%23%20cosine_similarity%20utility%0Atqdm%3D%3D4.66.4%20%20%20%20%20%20%20%20%20%20%23%20progress%20bars%0Apyyaml%3D%3D6.0.1%20%20%20%20%20%20%20%20%20%23%20metadata%20template%0Astreamlit%3D%3D1.35.0%20%20%20%20%20%23%20demo%20sandbox%0Apython-docx%3D%3D1.1.2%20%20%20%20%23%20JD%20extraction%0A%60%60%60%0A%0A---%0A%0A*RecruiterIQ%20TRD%20v1.0%20%C2%B7%202025*%0A" style="display: none;"></div>
+                  
+                    <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
+                      <ol>
+                        
+                        
+                          <li class="breadcrumb-item " >
+                            
+                              <span>Documentation</span>
+                            
+                            
+                              <span class="breadcrumb-separator">
+<svg class="lucide-icon icon-chevron-right " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+                            
+                          </li>
+                        
+                          <li class="breadcrumb-item active" aria-current=&quot;page&quot;>
+                            
+                              <span>Technical Requirements Document (TRD)</span>
+                            
+                            
+                          </li>
+                        
+                      </ol>
+                    </nav>
+                  
+
+                  
+                    <div class="docmd-copy-widgets">
+                      
+                        <button class="docmd-copy-btn docmd-copy-raw-btn" data-copied="copiedToClipboard" title="copyMarkdown" aria-label="copyMarkdown">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-copy " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-copy"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+</svg>
+</span>
+                        </button>
+                      
+                      
+                        <button class="docmd-copy-btn docmd-copy-context-btn" data-copied="copiedToClipboard" title="copyContext">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-message-square " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-message-square"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+</svg>
+</span>
+                          <span class="docmd-btn-text">copyContext</span>
+                        </button>
+                      
+                    </div>
+                  
+                </div>
+                
+                <h1 id="technical-requirements-document-trd" class="docmd-heading"><a href="#technical-requirements-document-trd" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Technical Requirements Document (TRD)</h1>
+<p><strong>RecruiterIQ — AI Candidate Ranking System</strong></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Version</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>System</td>
+<td>RecruiterIQ — Offline Hybrid Scoring Pipeline</td>
+</tr>
+<tr>
+<td>Constraint</td>
+<td>CPU-only · 16GB RAM · 5 min ranking · No network at inference</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="technical-requirements-document-trd-1-system-overview" class="docmd-heading"><a href="#technical-requirements-document-trd-1-system-overview" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>1. System Overview</h2>
+<p>Two-phase system:</p>
+<ul>
+<li><strong>Phase A — Precomputation</strong> (offline, before submission): embed 100k candidates, compute sub-scores, serialize artifacts</li>
+<li><strong>Phase B — Ranking</strong> (sandbox execution, ≤5 min): load artifacts, score, sort, emit CSV</li>
+</ul>
+<hr>
+<h2 id="technical-requirements-document-trd-2-functional-requirements" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>2. Functional Requirements</h2>
+<h3 id="technical-requirements-document-trd-2-functional-requirements-fr-01-data-ingestion" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements-fr-01-data-ingestion" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>FR-01: Data Ingestion</h3>
+<ul>
+<li>Parse <code>candidates.jsonl</code> (100k lines, streaming — do not load all into RAM at once)</li>
+<li>Validate each record against <code>candidate_schema.json</code></li>
+<li>Handle missing fields gracefully (default values, not crashes)</li>
+<li>Stream batch size: 1,000 records per chunk</li>
+</ul>
+<h3 id="technical-requirements-document-trd-2-functional-requirements-fr-02-disqualification" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements-fr-02-disqualification" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>FR-02: Disqualification</h3>
+<ul>
+<li>Hard-drop honeypots before any scoring (saves compute)</li>
+<li>Disqualify conditions (see Disqualify Rules below)</li>
+<li>Flag output: <code>{candidate_id, disqualify_reason}</code> for audit log</li>
+</ul>
+<h3 id="technical-requirements-document-trd-2-functional-requirements-fr-03-profile-embedding" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements-fr-03-profile-embedding" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>FR-03: Profile Embedding</h3>
+<ul>
+<li>Build profile blob per candidate (headline + summary + career descriptions + skill names)</li>
+<li>Embed using <code>all-MiniLM-L6-v2</code> (384-dim, CPU-optimized)</li>
+<li>Batch size: 512 for memory efficiency</li>
+<li>Output: <code>(N, 384)</code> float32 numpy array, saved as <code>artifacts/embeddings.npy</code></li>
+<li>Also save <code>artifacts/candidate_ids.npy</code> (aligned index → candidate_id map)</li>
+</ul>
+<h3 id="technical-requirements-document-trd-2-functional-requirements-fr-04-jd-embedding" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements-fr-04-jd-embedding" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>FR-04: JD Embedding</h3>
+<ul>
+<li>Embed JD text once: <code>artifacts/jd_embedding.npy</code></li>
+<li>JD text = full <code>job_description.docx</code> content (must be extracted to <code>.txt</code> first)</li>
+</ul>
+<h3 id="technical-requirements-document-trd-2-functional-requirements-fr-05-sub-score-computation" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements-fr-05-sub-score-computation" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>FR-05: Sub-Score Computation</h3>
+<ul>
+<li>Compute <code>technical_fit</code>, <code>career_quality</code>, <code>availability_signal</code>, <code>seniority_fit</code> per candidate</li>
+<li>Serialize to <code>artifacts/subscores.pkl</code> (dict: candidate_id → score dict)</li>
+<li>All scores: float32, range [0.0, 1.0]</li>
+</ul>
+<h3 id="technical-requirements-document-trd-2-functional-requirements-fr-06-composite-scoring-ranking-phase" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements-fr-06-composite-scoring-ranking-phase" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>FR-06: Composite Scoring (Ranking Phase)</h3>
+<ul>
+<li>Load <code>embeddings.npy</code>, <code>jd_embedding.npy</code>, <code>subscores.pkl</code></li>
+<li>Compute <code>semantic_similarity</code> = cosine(candidate_embedding, jd_embedding)</li>
+<li>Compute composite S per candidate (see formula in PRD)</li>
+<li>Sort descending, take top 100</li>
+<li>Enforce monotonic scores: if <code>score[i] &lt; score[i+1]</code>, clamp</li>
+</ul>
+<h3 id="technical-requirements-document-trd-2-functional-requirements-fr-07-reasoning-generation" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements-fr-07-reasoning-generation" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>FR-07: Reasoning Generation</h3>
+<ul>
+<li>Per top-100 candidate: generate 1–2 sentence string</li>
+<li>Must reference: years_of_experience, top skill match, strongest company, availability status</li>
+<li>Must NOT be generic filler (e.g., “Strong candidate with relevant skills”)</li>
+<li>Length: 120–300 characters</li>
+</ul>
+<h3 id="technical-requirements-document-trd-2-functional-requirements-fr-08-csv-output" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements-fr-08-csv-output" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>FR-08: CSV Output</h3>
+<ul>
+<li>Columns: <code>candidate_id, rank, score, reasoning</code></li>
+<li>Exactly 100 rows + header</li>
+<li>Ranks 1–100, each exactly once</li>
+<li>Score: float, 3 decimal places, non-increasing</li>
+<li>Encoding: UTF-8</li>
+<li>Filename: <code>&lt;participant_id&gt;.csv</code></li>
+</ul>
+<h3 id="technical-requirements-document-trd-2-functional-requirements-fr-09-validation" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements-fr-09-validation" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>FR-09: Validation</h3>
+<ul>
+<li>Run <code>validate_submission.py</code> on output</li>
+<li>Must pass with zero errors before submission</li>
+</ul>
+<h3 id="technical-requirements-document-trd-2-functional-requirements-fr-10-demo-sandbox" class="docmd-heading"><a href="#technical-requirements-document-trd-2-functional-requirements-fr-10-demo-sandbox" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>FR-10: Demo Sandbox</h3>
+<ul>
+<li>Streamlit app accepting: JD text + candidate JSON → returns ranked top-10 with score breakdown</li>
+<li>Deployable to HuggingFace Spaces (CPU, public)</li>
+<li>Loads pre-computed artifacts from repo</li>
+</ul>
+<hr>
+<h2 id="technical-requirements-document-trd-3-non-functional-requirements" class="docmd-heading"><a href="#technical-requirements-document-trd-3-non-functional-requirements" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3. Non-Functional Requirements</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ranking runtime (Phase B)</td>
+<td>&lt; 300 seconds on CPU, 16GB</td>
+</tr>
+<tr>
+<td>Precomputation runtime</td>
+<td>&lt; 60 minutes on CPU (offline, no constraint)</td>
+</tr>
+<tr>
+<td>Peak RAM (Phase B)</td>
+<td>&lt; 14GB (leave 2GB buffer)</td>
+</tr>
+<tr>
+<td>Embedding model size</td>
+<td>&lt; 200MB</td>
+</tr>
+<tr>
+<td>Output correctness</td>
+<td>0 format errors on validator</td>
+</tr>
+<tr>
+<td>Honeypot rate in top 100</td>
+<td>≤ 10 (hard disqualification threshold)</td>
+</tr>
+<tr>
+<td>Reproducibility</td>
+<td>Same seed → same output, every run</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="technical-requirements-document-trd-4-disqualification-rules-hard-filters" class="docmd-heading"><a href="#technical-requirements-document-trd-4-disqualification-rules-hard-filters" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>4. Disqualification Rules (Hard Filters)</h2>
+<pre class="hljs"><code>CONSULTING_FIRMS <span class="hljs-punctuation">=</span> [
+    <span class="hljs-string">&quot;TCS&quot;</span>, <span class="hljs-string">&quot;Infosys&quot;</span>, <span class="hljs-string">&quot;Wipro&quot;</span>, <span class="hljs-string">&quot;Capgemini&quot;</span>, <span class="hljs-string">&quot;Cognizant&quot;</span>,
+    <span class="hljs-string">&quot;Accenture&quot;</span>, <span class="hljs-string">&quot;HCL&quot;</span>, <span class="hljs-string">&quot;Mphasis&quot;</span>, <span class="hljs-string">&quot;Tech Mahindra&quot;</span>, <span class="hljs-string">&quot;Hexaware&quot;</span>,
+    <span class="hljs-string">&quot;IBM GBS&quot;</span>, <span class="hljs-string">&quot;Deloitte&quot;</span>, <span class="hljs-string">&quot;EY&quot;</span>, <span class="hljs-string">&quot;KPMG&quot;</span>, <span class="hljs-string">&quot;Mindtree&quot;</span>
+]
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">is_honeypot</span>(candidate) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">bool</span><span class="hljs-punctuation">:</span>
+    <span class="hljs-comment"># Rule 1: Experience &gt; career timeline</span>
+    yoe <span class="hljs-punctuation">=</span> candidate[<span class="hljs-string">&#039;profile&#039;</span>][<span class="hljs-string">&#039;years_of_experience&#039;</span>]
+    earliest_start <span class="hljs-punctuation">=</span> <span class="hljs-title function_">min</span>(<span class="hljs-title function_">parse_year</span>(r[<span class="hljs-string">&#039;dates&#039;</span>][<span class="hljs-string">&#039;start&#039;</span>]) <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> candidate[<span class="hljs-string">&#039;career_history&#039;</span>])
+    <span class="hljs-keyword">if</span> yoe <span class="hljs-punctuation">&gt;</span> (<span class="hljs-number">2025</span> <span class="hljs-punctuation">-</span> earliest_start <span class="hljs-punctuation">+</span> <span class="hljs-number">2</span>)<span class="hljs-punctuation">:</span>  <span class="hljs-comment"># +2 tolerance</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+    
+    <span class="hljs-comment"># Rule 2: Ghost profile</span>
+    s <span class="hljs-punctuation">=</span> candidate[<span class="hljs-string">&#039;redrob_signals&#039;</span>]
+    <span class="hljs-keyword">if</span> (s[<span class="hljs-string">&#039;profile_completeness_score&#039;</span>] <span class="hljs-punctuation">&lt;</span> <span class="hljs-number">5</span> and
+        not s[<span class="hljs-string">&#039;verified_email&#039;</span>] and not s[<span class="hljs-string">&#039;verified_phone&#039;</span>])<span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">True</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">False</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">should_hard_penalize</span>(candidate) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">float</span><span class="hljs-punctuation">:</span>
+    <span class="hljs-comment"># Returns penalty multiplier [0.0 – 1.0]; 1.0 = no penalty</span>
+    roles <span class="hljs-punctuation">=</span> candidate[<span class="hljs-string">&#039;career_history&#039;</span>]
+    companies <span class="hljs-punctuation">=</span> [r[<span class="hljs-string">&#039;company&#039;</span>] <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> roles]
+    
+    <span class="hljs-comment"># All consulting, no product company</span>
+    consulting_count <span class="hljs-punctuation">=</span> <span class="hljs-title function_">sum</span>(<span class="hljs-number">1</span> <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> companies <span class="hljs-keyword">if</span> <span class="hljs-title function_">any</span>(f <span class="hljs-keyword">in</span> c <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> CONSULTING_FIRMS))
+    <span class="hljs-keyword">if</span> consulting_count <span class="hljs-punctuation">==</span> <span class="hljs-title function_">len</span>(companies)<span class="hljs-punctuation">:</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0.15</span>  <span class="hljs-comment"># Severe penalty, not hard drop (might have 1 good role missed)</span>
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-number">1.0</span>
+</code></pre>
+<hr>
+<h2 id="technical-requirements-document-trd-5-embedding-strategy" class="docmd-heading"><a href="#technical-requirements-document-trd-5-embedding-strategy" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>5. Embedding Strategy</h2>
+<h3 id="technical-requirements-document-trd-5-embedding-strategy-model-sentence-transformersall-minilm-l6-v2" class="docmd-heading"><a href="#technical-requirements-document-trd-5-embedding-strategy-model-sentence-transformersall-minilm-l6-v2" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Model: <code>sentence-transformers/all-MiniLM-L6-v2</code></h3>
+<ul>
+<li>Size: 80MB</li>
+<li>Dimensions: 384</li>
+<li>CPU inference: ~0.5ms/sample</li>
+<li>100k candidates: ~50,000ms = ~50 seconds (batched at 512)</li>
+</ul>
+<h3 id="technical-requirements-document-trd-5-embedding-strategy-profile-blob-construction" class="docmd-heading"><a href="#technical-requirements-document-trd-5-embedding-strategy-profile-blob-construction" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Profile Blob Construction</h3>
+<pre class="hljs"><code><span class="hljs-keyword">def</span> <span class="hljs-title function_">build_profile_blob</span>(candidate) <span class="hljs-punctuation">-&gt;</span> str<span class="hljs-punctuation">:</span>
+    parts <span class="hljs-punctuation">=</span> []
+    p <span class="hljs-punctuation">=</span> candidate[<span class="hljs-string">&#039;profile&#039;</span>]
+    parts.<span class="hljs-title function_">append</span>(p.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;headline&#039;</span>, <span class="hljs-string">&#039;&#039;</span>))
+    parts.<span class="hljs-title function_">append</span>(p.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;summary&#039;</span>, <span class="hljs-string">&#039;&#039;</span>))
+    parts.<span class="hljs-title function_">append</span>(p.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;current_title&#039;</span>, <span class="hljs-string">&#039;&#039;</span>))
+    
+    <span class="hljs-keyword">for</span> role <span class="hljs-keyword">in</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;career_history&#039;</span>, [])<span class="hljs-punctuation">:</span>
+        parts.<span class="hljs-title function_">append</span>(role.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;title&#039;</span>, <span class="hljs-string">&#039;&#039;</span>))
+        parts.<span class="hljs-title function_">append</span>(role.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;description&#039;</span>, <span class="hljs-string">&#039;&#039;</span>))
+    
+    <span class="hljs-comment"># Skills: name only, proficiency as qualifier</span>
+    <span class="hljs-keyword">for</span> skill <span class="hljs-keyword">in</span> candidate.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;skills&#039;</span>, [])<span class="hljs-punctuation">:</span>
+        prof <span class="hljs-punctuation">=</span> skill.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;proficiency&#039;</span>, <span class="hljs-string">&#039;&#039;</span>)
+        name <span class="hljs-punctuation">=</span> skill.<span class="hljs-title function_">get</span>(<span class="hljs-string">&#039;name&#039;</span>, <span class="hljs-string">&#039;&#039;</span>)
+        <span class="hljs-keyword">if</span> prof <span class="hljs-keyword">in</span> [<span class="hljs-string">&#039;expert&#039;</span>, <span class="hljs-string">&#039;advanced&#039;</span>]<span class="hljs-punctuation">:</span>
+            parts.<span class="hljs-title function_">append</span>(f<span class="hljs-string">&quot;expert {name}&quot;</span>)
+        <span class="hljs-keyword">else</span><span class="hljs-punctuation">:</span>
+            parts.<span class="hljs-title function_">append</span>(name)
+    
+    <span class="hljs-keyword">return</span> <span class="hljs-string">&#039; &#039;</span>.<span class="hljs-title function_">join</span>(<span class="hljs-title function_">filter</span>(<span class="hljs-keyword">None</span>, parts))[<span class="hljs-punctuation">:</span><span class="hljs-number">512</span>]  <span class="hljs-comment"># Truncate at 512 tokens</span>
+</code></pre>
+<h3 id="technical-requirements-document-trd-5-embedding-strategy-ram-estimate-for-embeddings" class="docmd-heading"><a href="#technical-requirements-document-trd-5-embedding-strategy-ram-estimate-for-embeddings" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>RAM Estimate for Embeddings</h3>
+<ul>
+<li>100k × 384 dims × 4 bytes (float32) = <strong>153MB</strong> — trivially fits in 16GB</li>
+</ul>
+<hr>
+<h2 id="technical-requirements-document-trd-6-scoring-engine-requirements" class="docmd-heading"><a href="#technical-requirements-document-trd-6-scoring-engine-requirements" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>6. Scoring Engine Requirements</h2>
+<h3 id="technical-requirements-document-trd-6-scoring-engine-requirements-technical-fit-computation" class="docmd-heading"><a href="#technical-requirements-document-trd-6-scoring-engine-requirements-technical-fit-computation" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Technical Fit Computation</h3>
+<pre class="hljs"><code>Input<span class="hljs-punctuation">:</span>  candidate skills[], career_history[].<span class="hljs-attr">description</span>, skill_assessment_scores{}
+Output<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span> [<span class="hljs-number">0.0</span>, <span class="hljs-number">1.0</span>]
+
+Logic<span class="hljs-punctuation">:</span>
+  <span class="hljs-number">1</span>. Build candidate skill <span class="hljs-keyword">set</span> <span class="hljs-keyword">with</span> proficiency weights
+  <span class="hljs-number">2</span>. Check skill_assessment_scores <span class="hljs-keyword">for</span> platform<span class="hljs-punctuation">-</span>verified overrides
+  <span class="hljs-number">3</span>. Score against JD_MUST_HAVES and JD_NICE_TO_HAVES
+  <span class="hljs-number">4</span>. Check career descriptions <span class="hljs-keyword">for</span> production evidence keywords
+  <span class="hljs-number">5</span>. Normalize to [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]
+</code></pre>
+<h3 id="technical-requirements-document-trd-6-scoring-engine-requirements-production-evidence-keywords-for-career-description-scan" class="docmd-heading"><a href="#technical-requirements-document-trd-6-scoring-engine-requirements-production-evidence-keywords-for-career-description-scan" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Production Evidence Keywords (for career description scan)</h3>
+<pre class="hljs"><code>PRODUCTION_SIGNALS <span class="hljs-punctuation">=</span> [
+    <span class="hljs-string">&quot;production&quot;</span>, <span class="hljs-string">&quot;deployed&quot;</span>, <span class="hljs-string">&quot;shipped&quot;</span>, <span class="hljs-string">&quot;serving&quot;</span>, <span class="hljs-string">&quot;inference&quot;</span>,
+    <span class="hljs-string">&quot;million users&quot;</span>, <span class="hljs-string">&quot;at scale&quot;</span>, <span class="hljs-string">&quot;latency&quot;</span>, <span class="hljs-string">&quot;throughput&quot;</span>,
+    <span class="hljs-string">&quot;A/B test&quot;</span>, <span class="hljs-string">&quot;evaluated&quot;</span>, <span class="hljs-string">&quot;benchmark&quot;</span>, <span class="hljs-string">&quot;NDCG&quot;</span>, <span class="hljs-string">&quot;MRR&quot;</span>
+]
+RETRIEVAL_SIGNALS <span class="hljs-punctuation">=</span> [
+    <span class="hljs-string">&quot;embeddings&quot;</span>, <span class="hljs-string">&quot;vector&quot;</span>, <span class="hljs-string">&quot;semantic search&quot;</span>, <span class="hljs-string">&quot;RAG&quot;</span>, <span class="hljs-string">&quot;retrieval&quot;</span>,
+    <span class="hljs-string">&quot;sentence-transformers&quot;</span>, <span class="hljs-string">&quot;FAISS&quot;</span>, <span class="hljs-string">&quot;Pinecone&quot;</span>, <span class="hljs-string">&quot;Milvus&quot;</span>, <span class="hljs-string">&quot;Qdrant&quot;</span>,
+    <span class="hljs-string">&quot;Weaviate&quot;</span>, <span class="hljs-string">&quot;OpenSearch&quot;</span>, <span class="hljs-string">&quot;Elasticsearch&quot;</span>, <span class="hljs-string">&quot;BM25&quot;</span>, <span class="hljs-string">&quot;dense retrieval&quot;</span>
+]
+</code></pre>
+<h3 id="technical-requirements-document-trd-6-scoring-engine-requirements-availability-signal-computation" class="docmd-heading"><a href="#technical-requirements-document-trd-6-scoring-engine-requirements-availability-signal-computation" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Availability Signal Computation</h3>
+<pre class="hljs"><code>Input<span class="hljs-punctuation">:</span>  redrob_signals{}
+Output<span class="hljs-punctuation">:</span> <span class="hljs-keyword">float</span> [<span class="hljs-number">0.0</span>, <span class="hljs-number">1.0</span>]
+
+Weighted combination<span class="hljs-punctuation">:</span>
+  open_to_work_flag       × <span class="hljs-number">0.25</span>
+  <span class="hljs-title function_">last_active_recency</span>()   × <span class="hljs-number">0.20</span>
+  recruiter_response_rate × <span class="hljs-number">0.15</span>
+  <span class="hljs-title function_">response_speed_score</span>()  × <span class="hljs-number">0.10</span>
+  interview_completion    × <span class="hljs-number">0.15</span>
+  <span class="hljs-title function_">applications_30d_score</span>()× <span class="hljs-number">0.10</span>
+  <span class="hljs-title function_">notice_period_score</span>()   × <span class="hljs-number">0.05</span>
+</code></pre>
+<hr>
+<h2 id="technical-requirements-document-trd-7-artifact-manifest" class="docmd-heading"><a href="#technical-requirements-document-trd-7-artifact-manifest" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>7. Artifact Manifest</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Artifact</th>
+<th>Size (est.)</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>artifacts/embeddings.npy</code></td>
+<td>~153MB</td>
+<td>float32 (100k, 384)</td>
+</tr>
+<tr>
+<td><code>artifacts/candidate_ids.npy</code></td>
+<td>~6MB</td>
+<td>str array aligned to embeddings</td>
+</tr>
+<tr>
+<td><code>artifacts/jd_embedding.npy</code></td>
+<td>~1.5KB</td>
+<td>float32 (384,)</td>
+</tr>
+<tr>
+<td><code>artifacts/subscores.pkl</code></td>
+<td>~20MB</td>
+<td tech,="" career,="" avail,="" senior="">dict: cand_id →</td>
+</tr>
+<tr>
+<td><code>artifacts/disqualified.json</code></td>
+<td>~1MB</td>
+<td cand_id,="" reason="">list of</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="technical-requirements-document-trd-8-seed-reproducibility" class="docmd-heading"><a href="#technical-requirements-document-trd-8-seed-reproducibility" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>8. Seed &amp; Reproducibility</h2>
+<pre class="hljs"><code><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np, random
+SEED <span class="hljs-punctuation">=</span> <span class="hljs-number">42</span>
+np.<span class="hljs-attr">random</span>.<span class="hljs-title function_">seed</span>(SEED)
+random.<span class="hljs-title function_">seed</span>(SEED)
+</code></pre>
+<p>Deterministic output required for Stage 3 sandbox reproduction.</p>
+<hr>
+<h2 id="technical-requirements-document-trd-9-constraints-summary" class="docmd-heading"><a href="#technical-requirements-document-trd-9-constraints-summary" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>9. Constraints Summary</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>Handling</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>No network at ranking</td>
+<td>All models/artifacts bundled or pre-downloaded</td>
+</tr>
+<tr>
+<td>CPU only</td>
+<td>MiniLM (no GPU dep), pure numpy cosine</td>
+</tr>
+<tr>
+<td>16GB RAM</td>
+<td>Streaming ingestion, float32 arrays, no full JSONL in RAM</td>
+</tr>
+<tr>
+<td>5 min runtime</td>
+<td>Phase B only loads + scores (no embedding at rank time)</td>
+</tr>
+<tr>
+<td>Max 3 submissions</td>
+<td><code>validate_submission.py</code> mandatory before each</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="technical-requirements-document-trd-10-dependencies" class="docmd-heading"><a href="#technical-requirements-document-trd-10-dependencies" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>10. Dependencies</h2>
+<pre class="hljs"><code>sentence<span class="hljs-punctuation">-</span>transformers<span class="hljs-punctuation">==</span><span class="hljs-number">2.7</span>.<span class="hljs-number">0</span>
+numpy<span class="hljs-punctuation">==</span><span class="hljs-number">1.26</span>.<span class="hljs-number">4</span>
+pandas<span class="hljs-punctuation">==</span><span class="hljs-number">2.2</span>.<span class="hljs-number">2</span>
+scikit<span class="hljs-punctuation">-</span>learn<span class="hljs-punctuation">==</span><span class="hljs-number">1.4</span>.<span class="hljs-number">2</span>   <span class="hljs-comment"># cosine_similarity utility</span>
+tqdm<span class="hljs-punctuation">==</span><span class="hljs-number">4.66</span>.<span class="hljs-number">4</span>          <span class="hljs-comment"># progress bars</span>
+pyyaml<span class="hljs-punctuation">==</span><span class="hljs-number">6.0</span>.<span class="hljs-number">1</span>         <span class="hljs-comment"># metadata template</span>
+streamlit<span class="hljs-punctuation">==</span><span class="hljs-number">1.35</span>.<span class="hljs-number">0</span>     <span class="hljs-comment"># demo sandbox</span>
+python<span class="hljs-punctuation">-</span>docx<span class="hljs-punctuation">==</span><span class="hljs-number">1.1</span>.<span class="hljs-number">2</span>    <span class="hljs-comment"># JD extraction</span>
+</code></pre>
+<hr>
+<p><em>RecruiterIQ TRD v1.0 · 2025</em></p>
+
+                
+              </div>
+              <div class="toc-sidebar">
+                
+
+
+  <div class="toc-container">
+    <h2 class="toc-title">onThisPage<span class="mobile-view toc-menu-button float-right">
+<svg class="lucide-icon icon-chevron-down " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-down"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</span></h2>
+    <ul class="toc-list">
+      
+        <li class="toc-item toc-level-1">
+          <a href="#technical-requirements-document-trd" class="toc-link">Technical Requirements Document (TRD)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#technical-requirements-document-trd-1-system-overview" class="toc-link">1. System Overview</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#technical-requirements-document-trd-2-functional-requirements" class="toc-link">2. Functional Requirements</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-2-functional-requirements-fr-01-data-ingestion" class="toc-link">FR-01: Data Ingestion</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-2-functional-requirements-fr-02-disqualification" class="toc-link">FR-02: Disqualification</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-2-functional-requirements-fr-03-profile-embedding" class="toc-link">FR-03: Profile Embedding</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-2-functional-requirements-fr-04-jd-embedding" class="toc-link">FR-04: JD Embedding</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-2-functional-requirements-fr-05-sub-score-computation" class="toc-link">FR-05: Sub-Score Computation</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-2-functional-requirements-fr-06-composite-scoring-ranking-phase" class="toc-link">FR-06: Composite Scoring (Ranking Phase)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-2-functional-requirements-fr-07-reasoning-generation" class="toc-link">FR-07: Reasoning Generation</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-2-functional-requirements-fr-08-csv-output" class="toc-link">FR-08: CSV Output</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-2-functional-requirements-fr-09-validation" class="toc-link">FR-09: Validation</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-2-functional-requirements-fr-10-demo-sandbox" class="toc-link">FR-10: Demo Sandbox</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#technical-requirements-document-trd-3-non-functional-requirements" class="toc-link">3. Non-Functional Requirements</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#technical-requirements-document-trd-4-disqualification-rules-hard-filters" class="toc-link">4. Disqualification Rules (Hard Filters)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#technical-requirements-document-trd-5-embedding-strategy" class="toc-link">5. Embedding Strategy</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-5-embedding-strategy-model-sentence-transformersall-minilm-l6-v2" class="toc-link">Model: sentence-transformers/all-MiniLM-L6-v2</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-5-embedding-strategy-profile-blob-construction" class="toc-link">Profile Blob Construction</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-5-embedding-strategy-ram-estimate-for-embeddings" class="toc-link">RAM Estimate for Embeddings</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#technical-requirements-document-trd-6-scoring-engine-requirements" class="toc-link">6. Scoring Engine Requirements</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-6-scoring-engine-requirements-technical-fit-computation" class="toc-link">Technical Fit Computation</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-6-scoring-engine-requirements-production-evidence-keywords-for-career-description-scan" class="toc-link">Production Evidence Keywords (for career description scan)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#technical-requirements-document-trd-6-scoring-engine-requirements-availability-signal-computation" class="toc-link">Availability Signal Computation</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#technical-requirements-document-trd-7-artifact-manifest" class="toc-link">7. Artifact Manifest</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#technical-requirements-document-trd-8-seed-reproducibility" class="toc-link">8. Seed &amp; Reproducibility</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#technical-requirements-document-trd-9-constraints-summary" class="toc-link">9. Constraints Summary</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#technical-requirements-document-trd-10-dependencies" class="toc-link">10. Dependencies</a>
+        </li>
+      
+    </ul>
+  </div>
+
+              </div>
+            </div>
+            <div class="page-footer-actions">
+              
+              
+                <span class="git-last-updated" data-timestamp="1781074771000">
+                  <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span class="git-label">Last updated:</span>
+                  <span class="git-time" data-timestamp="1781074771000"></span>
+                  
+                  <div class="git-commit-tooltip" role="tooltip">
+                    <div class="git-tooltip-title">Recent commits</div>
+                    <ul class="git-commit-list">
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="DevanshSrajput">
+                            
+                              <img src="https://www.gravatar.com/avatar/7f22948119fdb4e2d70c1be1a1f39659?d=mp&amp;s=64" alt="DevanshSrajput">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="Initialize the Project: (Add Initial Project Documentation)">Initialize the Project: (Add Initial ...</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">DevanshSrajput</span>
+                              <span class="git-commit-date" data-timestamp="1781074771000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                    </ul>
+                  </div>
+                  
+                </span>
+              
+              <span class="git-spacer"></span>
+              
+            </div>
+          </main>
+          
+
+
+<footer class="page-footer">
+  <div class="footer-content">
+    <div class="user-footer"></div>
+    
+      <div class="branding-footer">
+        builtWith <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
+      </div>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+      
+      <script src="../../assets/js/docmd-main.js?v=mqcpwj52"></script>
+      
+      <script src="../../assets/js/docmd-git.js?v=mqcpwj52"></script>
+      <script src="../../assets/js/docmd-image-lightbox.js?v=mqcpwj52" ></script>
+<script src="https://cdn.jsdelivr.net/npm/minisearch@7.2.0/dist/umd/index.min.js" ></script>
+<script src="../../assets/js/docmd-search.js?v=mqcpwj52" ></script>
+<script src="../../assets/js/init-mermaid.js?v=mqcpwj52" type="module"></script>
+<script src="../../assets/js/docmd-git.js?v=mqcpwj52" type="module"></script>
+
+  <!-- Search Modal (Injected by @docmd/plugin-search) -->
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-show-confidence="false" data-show-filters="true"
+       data-search-placeholder="Search documentation..."
+       data-search-no-results="No results found."
+       data-search-error="Failed to load search index."
+       data-search-initial="Type to start searching..."
+       data-search-navigate="to navigate"
+       data-search-escape="to close">
+      <div class="docmd-search-box">
+          <div class="docmd-search-header">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-search"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input type="text" id="docmd-search-input" placeholder="Search documentation..." autocomplete="off" spellcheck="false">
+              <button onclick="window.closeDocmdSearch()" class="docmd-search-close" aria-label="Close search">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+          </div>
+          <div id="docmd-search-results" class="docmd-search-results"></div>
+          <div class="docmd-search-footer">
+              <span><kbd class="docmd-kbd">↑</kbd> <kbd class="docmd-kbd">↓</kbd> to navigate</span>
+              <span><kbd class="docmd-kbd">ESC</kbd> to close</span>
+          </div>
+      </div>
+  </div>
+
+    <script>
+      (function() {
+        var searchDebounceTimer;
+
+        document.addEventListener('click', function(e) {
+          var link = e.target.closest('a');
+          if (!link || !window.gtag) return;
+          
+          var url = link.href;
+          var hostname = window.location.hostname;
+          var isExternal = link.hostname && link.hostname !== hostname;
+          var isDownload = link.hasAttribute('download') || url.match(/\.(pdf|zip|tar|gz|exe|pkg)$/i);
+          
+          if (isExternal) {
+            gtag('event', 'click_external', { 'url': url, 'link_text': link.innerText.trim() });
+          } else if (isDownload) {
+            gtag('event', 'download', { 'file_name': url.split('/').pop(), 'url': url });
+          }
+
+          // TOC tracking
+          if (link.classList.contains('toc-link')) {
+            gtag('event', 'toc_click', { 'target_id': link.getAttribute('href'), 'title': link.innerText.trim() });
+          }
+
+          // Permalink tracking
+          if (link.classList.contains('heading-anchor')) {
+            gtag('event', 'permalink_click', { 'url': url });
+          }
+        });
+
+        
+        // Search Keyword Tracking
+        document.addEventListener('input', function(e) {
+          if (e.target.id === 'docmd-search-input' && window.gtag) {
+            var query = e.target.value.trim();
+            if (query.length < 3) return;
+            
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(function() {
+              gtag('event', 'search', { 'search_term': query });
+            }, 1000);
+          }
+        });
+        
+      })();
+    </script>
+
+<script>window.__git_config={"repo":null,"branch":"main","editLink":false,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+      
+  </body>
+</html>

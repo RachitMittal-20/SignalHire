@@ -1,0 +1,246 @@
+{
+  "title": "SignalHire",
+  "description": "",
+  "pages": [
+    {
+      "title": "App Flow Document",
+      "url": "/Documentation/APP_FLOW/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Backend Schema Document",
+      "url": "/Documentation/BACKEND_SCHEMA/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Implementation Plan",
+      "url": "/Documentation/IMPLEMENTATION_PLAN/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "RecruiterIQ — Product Requirements Document",
+      "url": "/Documentation/RecruiterIQ_PRD/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Technical Requirements Document (TRD)",
+      "url": "/Documentation/TRD/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "UI/UX Design Document",
+      "url": "/Documentation/UIUX_DESIGN/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "🎯 Good First Issues",
+      "url": "/GOOD_FIRST_ISSUES/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "🎯 SignalHire — AI-Powered Candidate Ranking",
+      "url": "/",
+      "description": "",
+      "priority": "high"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/_plotly_utils/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "JupyterChart",
+      "url": "/venv/lib/python3.14/site-packages/altair/jupyter/js/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/cuda/pathfinder/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/httpcore-1.0.9.dist-info/licenses/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/httpx-0.28.1.dist-info/licenses/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Dataset Card for {{ pretty_name | default(\"Dataset Name\", true) }}",
+      "url": "/venv/lib/python3.14/site-packages/huggingface_hub/templates/datasetcard_template/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Model Card for {{ model_id | default(\"Model ID\", true) }}",
+      "url": "/venv/lib/python3.14/site-packages/huggingface_hub/templates/modelcard_template/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/idna-3.18.dist-info/licenses/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/narwhals-2.22.1.dist-info/licenses/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/numpy-2.4.6.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/numpy-2.4.6.dist-info/licenses/numpy/fft/pocketfft/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "NCSA Open Source License",
+      "url": "/venv/lib/python3.14/site-packages/numpy-2.4.6.dist-info/licenses/numpy/random/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/numpy-2.4.6.dist-info/licenses/numpy/random/src/distributions/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "MT19937",
+      "url": "/venv/lib/python3.14/site-packages/numpy-2.4.6.dist-info/licenses/numpy/random/src/mt19937/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "PCG64",
+      "url": "/venv/lib/python3.14/site-packages/numpy-2.4.6.dist-info/licenses/numpy/random/src/pcg64/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "PHILOX",
+      "url": "/venv/lib/python3.14/site-packages/numpy-2.4.6.dist-info/licenses/numpy/random/src/philox/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "SFC64",
+      "url": "/venv/lib/python3.14/site-packages/numpy-2.4.6.dist-info/licenses/numpy/random/src/sfc64/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "SPLITMIX64",
+      "url": "/venv/lib/python3.14/site-packages/numpy-2.4.6.dist-info/licenses/numpy/random/src/splitmix64/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "NCSA Open Source License",
+      "url": "/venv/lib/python3.14/site-packages/numpy/random/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Add A Figure Factory to the Plotly [Python Library](https://plot.ly/python/)",
+      "url": "/venv/lib/python3.14/site-packages/plotly/figure_factory/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/pyarrow/tests/data/orc/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/pyparsing/ai/best_practices/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/scipy/fft/_pocketfft/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "{{ model_name if model_name else \"Sentence Transformer model\" }}",
+      "url": "/venv/lib/python3.14/site-packages/sentence_transformers/base/model_card_template/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "{{ model_name if model_name else \"Cross Encoder model\" }}",
+      "url": "/venv/lib/python3.14/site-packages/sentence_transformers/cross_encoder/model_card_template/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "{{ model_name if model_name else \"Sentence Transformer model\" }}",
+      "url": "/venv/lib/python3.14/site-packages/sentence_transformers/sentence_transformer/model_card_template/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "{{ model_name if model_name else ((model_type or \"Sparse Encoder\") + \" model\") }}",
+      "url": "/venv/lib/python3.14/site-packages/sentence_transformers/sparse_encoder/model_card_template/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/sklearn/externals/array_api_compat/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/sklearn/externals/array_api_extra/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/starlette-1.3.0.dist-info/licenses/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/torchgen/packaged/autograd/",
+      "description": "",
+      "priority": "medium"
+    },
+    {
+      "title": "Untitled",
+      "url": "/venv/lib/python3.14/site-packages/uvicorn-0.49.0.dist-info/licenses/LICENSE/",
+      "description": "",
+      "priority": "medium"
+    }
+  ]
+}

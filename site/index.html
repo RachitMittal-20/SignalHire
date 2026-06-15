@@ -1,0 +1,1471 @@
+<!--
+  ---------------------------------------------------------------
+  docmd : the zero-config documentation engine.
+  @website https://docmd.io
+  [docmd-source] - Please do not remove this header.
+  ---------------------------------------------------------------
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="generator" content="docmd v0.5.x">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+    <style>
+      html {
+        visibility: hidden;
+      }
+    </style>
+    
+    <script>
+      var root = "./";
+      if (root && !root.endsWith('/')) root += '/';
+      if (root === '') root = './';
+      window.DOCMD_ROOT = root;
+
+      var siteRoot = "./";
+      if (siteRoot && !siteRoot.endsWith('/')) siteRoot += '/';
+      if (siteRoot === '') siteRoot = './';
+      window.DOCMD_SITE_ROOT = siteRoot;
+
+      window.DOCMD_APPEARANCE = "system";
+      window.DOCMD_VERSION_ROOT = "/";
+      window.DOCMD_BASE = "/";
+      window.DOCMD_LOCALE = "";
+      window.DOCMD_DEFAULT_LOCALE = "";
+    </script>
+    <title>
+      🎯 SignalHire — AI-Powered Candidate Ranking : SignalHire
+    </title>
+    
+    <link rel="stylesheet" href="./assets/css/docmd-main.css?v=mqcpwj52">
+    
+    <link rel="stylesheet" href="./assets/css/docmd-highlight-light.css?v=mqcpwj52" id="hljs-light" >
+    <link rel="stylesheet" href="./assets/css/docmd-highlight-dark.css?v=mqcpwj52" id="hljs-dark" disabled>
+    
+    
+<meta name="description" content="">
+<link rel="canonical" href="/">
+<meta property="og:title" content="🎯 SignalHire — AI-Powered Candidate Ranking - SignalHire">
+<meta property="og:description" content="">
+<meta property="og:url" content="/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="🎯 SignalHire — AI-Powered Candidate Ranking - SignalHire">
+<meta name="twitter:description" content="">
+
+
+
+<link rel="stylesheet" href="./assets/css/docmd-git.css?v=mqcpwj52" >
+<link rel="stylesheet" href="./assets/css/docmd-openapi.css?v=mqcpwj52" >
+
+    
+    <script>/**
+ * --------------------------------------------------------------------
+ * docmd : the zero-config documentation engine.
+ *
+ * @package     @docmd/core (and ecosystem)
+ * @website     https://docmd.io
+ * @repository  https://github.com/docmd-io/docmd
+ * @license     MIT
+ * @copyright   Copyright (c) 2025-present docmd.io
+ *
+ * [docmd-source] - Please do not remove this header.
+ * --------------------------------------------------------------------
+ */
+
+(function () {
+  try {
+    // 1. Determine Theme
+    var localValue = localStorage.getItem('docmd-theme');
+    var configValue = window.DOCMD_DEFAULT_MODE || 'light';
+    var theme = localValue ? localValue : configValue;
+
+    if (theme === 'system') {
+      theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    // 2. Apply to Root
+    document.documentElement.setAttribute('data-theme', theme);
+
+    // 3. Highlight.js Toggle Strategy
+    var lightLink = document.getElementById('hljs-light');
+    var darkLink = document.getElementById('hljs-dark');
+
+    if (lightLink && darkLink) {
+      if (theme === 'dark') {
+        lightLink.disabled = true;
+        darkLink.disabled = false;
+      } else {
+        lightLink.disabled = false;
+        darkLink.disabled = true;
+      }
+    }
+
+    document.documentElement.style.visibility = "visible";
+  } catch (e) {
+    document.documentElement.style.visibility = "visible";
+    console.error('Theme init failed', e);
+  }
+})();</script>
+  </head>
+  <body
+    class="sidebar-collapsible"
+    data-default-collapsed="false"
+    data-copy-code-enabled="false" data-spa-enabled="true" data-source-file="README.md">
+
+    <a href="#main-content" class="skip-link">skipToContent</a>
+
+    
+    
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          
+            <h1><a href="./">
+                SignalHire
+              </a></h1>
+          
+          <span class="mobile-view sidebar-menu-button float-right">
+            
+<svg class="lucide-icon icon-menu " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-menu"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M4 5h16" />
+  <path d="M4 12h16" />
+  <path d="M4 19h16" />
+</svg>
+
+          </span>
+        </div>
+        <div class="sidebar-top-group">
+          
+          
+          
+          
+        </div>
+        
+
+<nav class="sidebar-nav" aria-label="mainNavigation">
+  <ul>
+    
+      <li class="active" >
+      
+        <a href="./" class="active "
+          >
+          
+          <span class="nav-item-title">
+            🎯 SignalHire — AI-Powered Candidate Ranking
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="./GOOD_FIRST_ISSUES/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            🎯 Good First Issues
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="collapsible nav-group"  aria-expanded="false" >
+      
+        <span class="nav-label nav-group">
+          
+          <span class="nav-item-title">
+            Documentation
+          </span>
+          
+            <span class="collapse-icon-wrapper">
+<svg class="lucide-icon icon-chevron-right collapse-icon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-right"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m9 18 6-6-6-6" />
+</svg>
+</span>
+          
+        </span>
+        
+
+        
+          <ul class="submenu">
+            
+      <li class="" >
+      
+        <a href="./Documentation/APP_FLOW/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            App Flow Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="./Documentation/BACKEND_SCHEMA/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Backend Schema Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="./Documentation/IMPLEMENTATION_PLAN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Implementation Plan
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="./Documentation/RecruiterIQ_PRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            RecruiterIQ — Product Requirements Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="./Documentation/TRD/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            Technical Requirements Document (TRD)
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+      <li class="" >
+      
+        <a href="./Documentation/UIUX_DESIGN/" class=" "
+          >
+          
+          <span class="nav-item-title">
+            UI/UX Design Document
+            </span>
+          
+          
+        </a>
+        
+
+        
+      </li>
+    
+          </ul>
+        
+      </li>
+    
+  </ul>
+</nav>
+        <div class="sidebar-bottom-group mt-auto">
+          
+          
+          
+          
+        </div>
+      </aside>
+      
+      <div class="main-content-wrapper">
+        
+        
+          <header class="page-header">
+            <div class="header-left">
+              
+                <button id="sidebar-toggle-button" class="sidebar-toggle-button"
+                  aria-label="toggleSidebar">
+                  
+<svg class="lucide-icon icon-chevron-left " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-left"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m15 18-6-6 6-6" />
+</svg>
+
+                </button>
+              
+              <div class="header-titles-wrapper">
+                <span class="header-title">
+                  🎯 SignalHire — AI-Powered Candidate Ranking
+                </span>
+              </div>
+            </div>
+            <div class="header-right">
+              
+                
+
+
+<div class="docmd-options-menu">
+    
+    <button class="docmd-search-trigger" aria-label="search">
+        
+<svg class="lucide-icon icon-search " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-search"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m21 21-4.34-4.34" />
+  <circle cx="11" cy="11" r="8" />
+</svg>
+
+        <span class="search-label">search</span>
+        <span class="search-keys"><kbd class="docmd-kbd">⌘</kbd><kbd class="docmd-kbd">K</kbd></span>
+    </button>
+    
+
+    
+
+    
+
+    
+    <button class="theme-toggle-button" aria-label="toggleTheme">
+        
+<svg class="lucide-icon icon-sun icon-sun" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-sun"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <circle cx="12" cy="12" r="4" />
+  <path d="M12 2v2" />
+  <path d="M12 20v2" />
+  <path d="m4.93 4.93 1.41 1.41" />
+  <path d="m17.66 17.66 1.41 1.41" />
+  <path d="M2 12h2" />
+  <path d="M20 12h2" />
+  <path d="m6.34 17.66-1.41 1.41" />
+  <path d="m19.07 4.93-1.41 1.41" />
+</svg>
+ 
+<svg class="lucide-icon icon-moon icon-moon" width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-moon"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401" />
+</svg>
+
+    </button>
+    
+
+    
+</div>
+
+              
+            </div>
+          </header>
+        
+        <div class="content-theme-cover">
+          <main class="content-area" id="main-content">
+            <div class="content-layout">
+              <div class="main-content">
+                <div class="docmd-breadcrumbs-row">
+                  <div id="docmd-raw-markdown" data-content="%23%20%F0%9F%8E%AF%20SignalHire%20%E2%80%94%20AI-Powered%20Candidate%20Ranking%0A%0A%3E%20**100%2C000%20profiles%20%E2%86%92%20top%20100%20best%20matches**%20for%20a%20Senior%20AI%20Engineer%20role.%20%20%0A%3E%20Built%20for%20the%20Redrob%20AI%20Challenge%20(India%20Runs%20Hackathon).%0A%0A%5B!%5BPython%203.10%2B%5D(https%3A%2F%2Fimg.shields.io%2Fbadge%2Fpython-3.10%252B-blue%3Flogo%3Dpython)%5D()%0A%5B!%5BCUDA%2013%5D(https%3A%2F%2Fimg.shields.io%2Fbadge%2FCUDA-13-green%3Flogo%3Dnvidia)%5D()%0A%5B!%5Bsentence-transformers%5D(https%3A%2F%2Fimg.shields.io%2Fbadge%2Fsentence--transformers-all--MiniLM--L6--v2-orange)%5D()%0A%5B!%5BStreamlit%5D(https%3A%2F%2Fimg.shields.io%2Fbadge%2FStreamlit-1.28%252B-FF4B4B%3Flogo%3Dstreamlit)%5D()%0A%5B!%5BLicense%5D(https%3A%2F%2Fimg.shields.io%2Fbadge%2Flicense-MIT-lightgrey)%5D()%0A%0A---%0A%0A%23%23%20%E2%9C%A8%20Features%20at%20a%20Glance%0A%0A%7C%20%7C%20%7C%0A%7C---%7C---%7C%0A%7C%20%F0%9F%9A%80%20**GPU-accelerated%20precompute**%20%7C%20Embed%20100K%20profiles%20in%20~4%20min%20via%20%60all-MiniLM-L6-v2%60%20%7C%0A%7C%20%E2%9A%A1%20**Live%20re-ranking**%20%7C%20Drag%20sliders%20%E2%86%92%20instant%20100K%20re-score%20(single%20matrix%20multiply)%20%7C%0A%7C%20%F0%9F%A7%A0%20**Evidence-cited%20reasoning**%20%7C%20Every%20score%20cites%20the%20exact%20skill%20or%20sentence%20that%20triggered%20it%20%7C%0A%7C%20%F0%9F%9B%A1%EF%B8%8F%20**Adversarial%20detection**%20%7C%20Honeypot%20%2F%20ghost%20%2F%20pure-research%20profiles%20caught%20%26%20disqualified%20%7C%0A%7C%20%F0%9F%93%8A%20**Fairness%20audit**%20%7C%20Shortlist%20vs%20pool%20distribution%20by%20education%20tier%2C%20country%2C%20YoE%20%7C%0A%7C%20%F0%9F%8E%9B%EF%B8%8F%20**Diversity%20control**%20%7C%20MMR%20slider%20%E2%80%94%20penalize%20near-duplicates%2C%20surface%20distinct%20archetypes%20%7C%0A%7C%20%F0%9F%95%B6%EF%B8%8F%20**Blind%20screening**%20%7C%20Hide%20names%2Fcompanies%2Finstitutions%20to%20reduce%20reviewer%20bias%20%7C%0A%7C%20%F0%9F%93%A6%20**One-command%20export**%20%7C%20Submission%20CSV%20%2B%20personalized%20outreach%20pack%20%2B%20ranking%20config%20%7C%0A%0A---%0A%0A%23%23%20%F0%9F%93%8B%20Table%20of%20Contents%0A%0A-%20%5BPipeline%5D(%23pipeline)%0A-%20%5BQuick%20Start%5D(%23quick-start)%0A-%20%5BHow%20to%20Run%5D(%23how-to-run)%0A%20%20-%20%5BPrecompute%20(GPU)%5D(%231-precompute-gpu)%0A%20%20-%20%5BRank%20(CPU)%5D(%232-rank-cpu)%0A%20%20-%20%5BDashboard%5D(%233-dashboard)%0A%20%20-%20%5BDocker%5D(%23docker)%0A-%20%5BDashboard%20Deep%20Dive%5D(%23dashboard-deep-dive)%0A-%20%5BHow%20Scoring%20Works%5D(%23how-scoring-works)%0A-%20%5BDisqualification%20%26%20Penalties%5D(%23disqualification--penalties)%0A-%20%5BProject%20Structure%5D(%23project-structure)%0A-%20%5BOutput%20Format%5D(%23output-format)%0A-%20%5BSandbox%20Constraints%5D(%23sandbox-constraints)%0A-%20%5BPerformance%5D(%23performance)%0A-%20%5BContributing%5D(%23contributing)%0A%0A---%0A%0A%23%23%20Pipeline%0A%0A%60%60%60%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20candidates.jsonl%20(100K)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20PHASE%20A%3A%20Precompute%20(GPU%2C%20~4%20min)%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20Stream%20JSONL%20%E2%94%80%E2%96%BA%20Disqualify%20fakes%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%96%BA%20Embed%20(MiniLM%2C%20384-dim)%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%96%BA%20Compute%204%20sub-scores%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%96%BA%20Serialize%20artifacts%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20embeddings.npy%20%2B%20subscores.pkl%20(~155%20MB)%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%E2%94%8C%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%90%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20PHASE%20B%3A%20Ranking%20(CPU%2C%20%3C10%20s)%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20Load%20artifacts%20%E2%94%80%E2%96%BA%20Cosine%20similarity%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%96%BA%20Weighted%20composite%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%96%BA%20argpartition%20%E2%86%92%20top%20100%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%96%BA%20Evidence-based%20reasoning%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%82%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%96%BA%20Validate%20%26%20write%20CSV%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%E2%94%94%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%AC%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%80%E2%94%98%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%94%82%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%E2%96%BC%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20submission.csv%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20(100%20ranked%20candidates)%0A%60%60%60%0A%0A---%0A%0A%23%23%20Quick%20Start%0A%0A%60%60%60bash%0A%23%20Setup%0Apython%20-m%20venv%20venv%20%26%26%20source%20venv%2Fbin%2Factivate%0Apip%20install%20-r%20requirements.txt%0A%0A%23%20Precompute%20(GPU%20recommended)%0Apython%20precompute.py%0A%0A%23%20Rank%20%26%20generate%20submission%0Apython%20rank.py%0A%0A%23%20Launch%20interactive%20dashboard%0Astreamlit%20run%20app.py%0A%60%60%60%0A%0A%23%23%23%20Prerequisites%0A%0A%7C%20Requirement%20%7C%20Notes%20%7C%0A%7C---%7C---%7C%0A%7C%20Python%20%E2%89%A5%203.10%20%7C%20%7C%0A%7C%20NVIDIA%20GPU%20%2B%20CUDA%20%7C%20Optional%20%E2%80%94%20speeds%20precompute%20~10%C3%97.%20Set%20%60EMBEDDING_DEVICE%20%3D%20%22cpu%22%60%20in%20%60config.py%60%20without%20one.%20%7C%0A%7C%20Disk%20%7C%20~500%20MB%20for%20data%20%2B%20~160%20MB%20for%20generated%20artifacts%20%7C%0A%7C%20RAM%20%7C%2016%20GB%20recommended%20%7C%0A%0A---%0A%0A%23%23%20How%20to%20Run%0A%0A%23%23%23%201.%20Precompute%20(GPU)%0A%0AProcesses%20all%20100K%20candidates%3A%20disqualifies%20bad%20actors%2C%20generates%20384-dim%0Aembeddings%20via%20%60all-MiniLM-L6-v2%60%2C%20computes%204%20sub-scores%20per%20candidate.%0A%0A%60%60%60bash%0Apython%20precompute.py%0A%60%60%60%0A%0A**Artifacts%20produced**%20(saved%20to%20%60artifacts%2F%60)%3A%0A%0A%7C%20File%20%7C%20Size%20%7C%20Description%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20%60embeddings.npy%60%20%7C%20~147%20MB%20%7C%20384-dim%20normalized%20embeddings%20(99%2C965%20%C3%97%20384)%20%7C%0A%7C%20%60candidate_ids.npy%60%20%7C%20~1.5%20MB%20%7C%20Parallel%20array%20of%20candidate%20IDs%20%7C%0A%7C%20%60jd_embedding.npy%60%20%7C%20~1.7%20KB%20%7C%20JD%20text%20embedding%20for%20cosine%20similarity%20%7C%0A%7C%20%60subscores.pkl%60%20%7C%20~7.1%20MB%20%7C%20Dict%3A%20candidate%20%E2%86%92%204%20sub-scores%20%2B%20penalty%20multiplier%20%7C%0A%7C%20%60disqualified.json%60%20%7C%20~4%20KB%20%7C%20Log%20of%20every%20disqualified%20candidate%20and%20why%20%7C%0A%0A%23%23%23%202.%20Rank%20(CPU)%0A%0ALoads%20artifacts%2C%20computes%20composite%20scores%2C%20picks%20top%20100%2C%20generates%0Aevidence-based%20reasoning%2C%20validates%20output%20against%20challenge%20spec.%0A%0A%60%60%60bash%0Apython%20rank.py%0A%60%60%60%0A%0A**Output%3A**%20%60output%2Fsubmission.csv%60%0A%0AUses%20a%20**byte-offset%20index**%20(~2%20s%20build)%20so%20loading%20the%20top%20100%20candidates%0Afor%20reasoning%20is%20~100%20seeks%20instead%20of%20a%20full%20487%20MB%20file%20scan.%0A%0A%23%23%23%203.%20Dashboard%0A%0A%60%60%60bash%0Astreamlit%20run%20app.py%0A%60%60%60%0A%0AAn%20interactive%20ranking%20workbench.%20Every%20control%20re-ranks%20all%20100K%20candidates%0Ain%20~50%20ms%20because%20scoring%20is%20a%20single%20%60float32%60%20matrix%20multiply%20over%0Aprecomputed%20artifacts.%0A%0A%23%23%23%20Docker%0A%0A%60%60%60bash%0Adocker%20build%20-t%20signalhire%20.%0Adocker%20run%20--rm%20-v%20%24(pwd)%2Fdata%3A%2Fapp%2Fdata%20-v%20%24(pwd)%2Foutput%3A%2Fapp%2Foutput%20signalhire%20python%20rank.py%0A%60%60%60%0A%0A%3E%20The%20image%20pre-downloads%20the%20embedding%20model.%20Add%20%60--gpus%20all%60%20for%20GPU.%0A%0A---%0A%0A%23%23%20Dashboard%20Deep%20Dive%0A%0A%23%23%23%20%F0%9F%8F%86%20Shortlist%20Tab%0A%0AEach%20candidate%20card%20shows%3A%0A-%20**Stability%20badge**%20%E2%80%94%20how%20often%20the%20candidate%20stays%20top-100%20under%20%C2%B120%25%0A%20%20random%20weight%20perturbations%20(200%20trials).%20If%2098%25%20%E2%86%92%20robust%20ranking%2C%20not%20an%0A%20%20artifact%20of%20one%20weight%20choice.%0A-%20**Penalty%20badge**%20%E2%80%94%20flagged%20if%20consulting%2Fno-code%2FCV-only%20penalties%20applied%0A-%20**Horizontal%20score%20bars**%20%E2%80%94%20technical%20fit%2C%20career%20quality%2C%20availability%2C%0A%20%20seniority%20fit%2C%20semantic%20match%0A-%20**Evidence%20chips**%20%E2%80%94%20every%20JD%20requirement%20that%20matched%2C%20with%20the%20exact%0A%20%20skill%20or%20text%20snippet%20that%20triggered%20it.%20Missing%20must-haves%20are%20flagged%20in%0A%20%20red.%0A-%20**One-liner%20reasoning**%20%E2%80%94%20cites%20actual%20skills%20and%20production%20signals%2C%20not%0A%20%20templated%20claims%0A%0A%23%23%23%20%E2%9A%96%EF%B8%8F%20Compare%20Tab%0A%0ARadar-chart%20side-by-side%20of%20up%20to%204%20candidates%20across%20all%205%20score%20dimensions.%0AShows%20matched%2Fmissing%20criteria%20for%20each.%0A%0A%23%23%23%20%F0%9F%93%8A%20Insights%20Tab%0A%0A-%20**Score%20landscape**%20%E2%80%94%20histogram%20of%20top%205000%20scores%20with%20top-100%20cutoff%0A-%20**Fairness%20audit**%20%E2%80%94%20shortlist%20vs%20full-pool%20distribution%20by%20education%20tier%2C%0A%20%20country%2C%20and%20years%20of%20experience.%20Helps%20detect%20encoded%20bias.%0A%0A%23%23%23%20%F0%9F%9B%A1%EF%B8%8F%20Integrity%20Tab%0A%0ADisplays%20all%20disqualified%20candidates%20by%20category%20(honeypot%2C%20ghost%2C%20pure%0Aresearch)%20with%20concrete%20examples%20showing%20*why*%20each%20was%20caught.%0A%0A%23%23%23%20%F0%9F%93%A4%20Export%20Tab%0A%0A%7C%20Export%20%7C%20Format%20%7C%20Description%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20Submission%20CSV%20%7C%20CSV%20%7C%20Challenge-format%3A%20id%2C%20rank%2C%20score%2C%20evidence%20reasoning%20%7C%0A%7C%20Outreach%20pack%20%7C%20Markdown%20%7C%20Top-10%20personalized%20first-touch%20drafts%20%7C%0A%7C%20Ranking%20config%20%7C%20JSON%20%7C%20Weights%2C%20JD%20label%2C%20shortlist%20IDs%20%E2%80%94%20reproducible%20snapshot%20%7C%0A%0A%23%23%23%20%F0%9F%8E%9B%EF%B8%8F%20Sidebar%20Controls%0A%0A%7C%20Control%20%7C%20Effect%20%7C%0A%7C---%7C---%7C%0A%7C%20**Custom%20JD**%20%7C%20Paste%20any%20job%20description%20or%20query%20%E2%86%92%20embedded%20on%20the%20fly%20and%20ranked%20against%20%7C%0A%7C%20**Weight%20sliders**%20%7C%20Drag%20any%20signal%20weight%20%E2%86%92%20100K%20re-score%20in%20~50%20ms%20%7C%0A%7C%20**Diversity%20(MMR)**%20%7C%200%20%3D%20pure%20score.%20Higher%20values%20penalize%20similarity%20to%20already-selected%20profiles%20%7C%0A%7C%20**Blind%20screening**%20%7C%20Hides%20names%2C%20companies%2C%20institutions%20%7C%0A%0A---%0A%0A%23%23%20How%20Scoring%20Works%0A%0A%23%23%23%20Composite%20Formula%0A%0A%60%60%60%0AS%20%3D%20penalty_multiplier%20%C3%97%20(%0A%20%20%20%200.35%20%C3%97%20technical_fit%0A%20%20%2B%200.25%20%C3%97%20career_quality%0A%20%20%2B%200.20%20%C3%97%20availability_signal%0A%20%20%2B%200.12%20%C3%97%20seniority_fit%0A%20%20%2B%200.08%20%C3%97%20semantic_similarity%0A)%0A%60%60%60%0A%0AAll%20sub-scores%20normalized%20to%20%5B0%2C%201%5D.%0A%0A%23%23%23%20Signal%20Details%0A%0A%7C%20Signal%20%7C%20Weight%20%7C%20Components%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20**Technical%20Fit**%20%7C%200.35%20%7C%20JD%20must-haves%3A%20embeddings%2Fretrieval%20(0.25)%2C%20vector%20DBs%20(0.20)%2C%20Python%20(0.15)%2C%20eval%20framework%20(0.15).%20Nice-to-haves%3A%20LLM%20fine-tuning%20(0.10)%2C%20learning-to-rank%20(0.10)%2C%20HR-tech%20(0.05).%20Production%2Fretrieval%20keyword%20bonuses.%20%7C%0A%7C%20**Career%20Quality**%20%7C%200.25%20%7C%20Non-consulting%20role%20(%2B0.30).%20ML%2FAI%20title%20at%20%E2%89%A550%20person%20company%20(%2B0.15).%20Median%20tenure%20%E2%89%A536mo%20(%2B0.25)%2C%20%E2%89%A524mo%20(%2B0.20)%2C%20%E2%89%A518mo%20(%2B0.05).%20Upward%20title%20progression%20(%2B0.20).%20%7C%0A%7C%20**Availability**%20%7C%200.20%20%7C%20Open%20to%20work%20(%2B0.25).%20Active%20%E2%89%A430d%20(%2B0.20)%2C%20%E2%89%A490d%20(%2B0.12)%2C%20%E2%89%A4180d%20(%2B0.06).%20Response%20rate%20(%C3%970.15).%20Interview%20rate%20(%C3%970.15).%20Notice%20%E2%89%A430d%20(%2B0.05)%2C%20%E2%89%A460d%20(%2B0.035).%20%7C%0A%7C%20**Seniority%20Fit**%20%7C%200.12%20%7C%20YoE%206%E2%80%939%20%E2%86%92%201.0%2C%204%E2%80%935%2F10%E2%80%9312%20%E2%86%92%200.7%2C%203%2F13%E2%80%9315%20%E2%86%92%200.4%2C%20else%20%E2%86%92%200.1.%20Tier-1%20education%20(%2B0.05)%2C%20Tier-2%20(%2B0.02).%20%7C%0A%7C%20**Semantic%20Similarity**%20%7C%200.08%20%7C%20Cosine%20similarity%20between%20profile%20embedding%20and%20JD%20embedding%20%E2%80%94%20catches%20strong%20engineers%20whose%20plain%20language%20misses%20keyword%20checks.%20%7C%0A%0A%23%23%23%20Word-Boundary%20Keyword%20Matching%0A%0AAll%20keyword%20scans%20use%20%60textmatch.py%60%20%E2%80%94%20stems%20of%204%2B%20characters%20may%20extend%0A(e.g.%20%60%22eval%22%60%20matches%20%60%22evaluation%22%60)%20while%20short%20keywords%20(%60%22rag%22%60%2C%20%60%22mrr%22%60%2C%0A%60%22map%22%60%2C%20%60%22e5%22%60)%20must%20match%20as%20whole%20words.%20This%20eliminates%20false%20positives%0Alike%20%60%22rag%22%60%20inside%20%60%22storage%22%60.%0A%0A%23%23%23%20Evidence-Based%20Reasoning%0A%0A%60evidence.py%60%20traces%20every%20JD%20requirement%20hit%20back%20to%20either%20a%20declared%20skill%0A(with%20proficiency%20weight)%20or%20a%20concrete%20sentence%20in%20the%20career%20history.%20The%0Areasoning%20string%20in%20the%20CSV%20only%20claims%20what%20actually%20exists%2C%20and%20calls%20out%0Amissing%20must-haves%20as%20gaps.%0A%0A---%0A%0A%23%23%20Disqualification%20%26%20Penalties%0A%0A%23%23%23%20Hard%20Disqualify%20(Removed%20from%20Pool)%0A%0A%7C%20Rule%20%7C%20Trigger%20%7C%20Why%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20%F0%9F%8D%AF%20**Honeypot**%20%7C%20YoE%20%3E%20career%20timeline%20%2B%205%20yr%20buffer%20%7C%20Dataset%20seeds%20impossible-YoE%20profiles%20%7C%0A%7C%20%F0%9F%91%BB%20**Ghost**%20%7C%20Completeness%20%3C%205%25%20%2B%20no%20verified%20email%2Fphone%20%7C%20Near-empty%20profiles%20%7C%0A%7C%20%F0%9F%94%AC%20**Pure%20Research**%20%7C%20All%20roles%20%22researcher%22%20%2B%20zero%20deployment%20evidence%20%7C%20No%20industry%20relevance%20%7C%0A%0A%23%23%23%20Soft%20Penalties%20(Score%20Multipliers)%0A%0A%7C%20Condition%20%7C%20%C3%97%20%7C%20Effect%20%7C%0A%7C---%7C---%7C---%7C%0A%7C%20All%20roles%20at%20consulting%20firms%20(TCS%2C%20Infosys%2C%20Wipro%2C%20etc.)%20%7C%20**0.15**%20%7C%20Severely%20penalizes%20pure-consulting%20careers%20%7C%0A%7C%20No%20coding%20activity%20%3E%2018%20months%20%7C%20**0.80**%20%7C%20Flags%20stale%20skills%20%7C%0A%7C%20CV%2Fspeech%2Frobotics%20only%2C%20no%20retrieval%20signals%20%7C%20**0.85**%20%7C%20Niche%20focus%2C%20poor%20JD%20alignment%20%7C%0A%0A---%0A%0A%23%23%20Project%20Structure%0A%0A%60%60%60%0ASignalHire%2F%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%84%20config.py%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Weights%2C%20paths%2C%20keyword%20lists%2C%20penalties%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%84%20disqualify.py%20%20%20%20%20%20%20%20%20%20%23%20Honeypot%2Fghost%2Fresearch%20detection%20%2B%20soft%20penalties%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%84%20signals.py%20%20%20%20%20%20%20%20%20%20%20%20%20%23%204%20sub-score%20functions%20(technical%2C%20career%2C%20availability%2C%20seniority)%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%84%20evidence.py%20%20%20%20%20%20%20%20%20%20%20%20%23%20JD%20requirement%20%E2%86%92%20skill%2Fsentence%20trace%20%2B%20honest%20reasoning%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%84%20engine.py%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Vectorized%20re-ranking%2C%20MMR%20diversity%2C%20stability%20analysis%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%84%20textmatch.py%20%20%20%20%20%20%20%20%20%20%20%23%20Word-boundary%20keyword%20matching%20(no%20false%20positives)%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%84%20precompute.py%20%20%20%20%20%20%20%20%20%20%23%20Phase%20A%3A%20ingest%20%E2%86%92%20embed%20%E2%86%92%20score%20%E2%86%92%20serialize%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%84%20rank.py%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Phase%20B%3A%20load%20%E2%86%92%20score%20%E2%86%92%20top-100%20%E2%86%92%20reasoning%20%E2%86%92%20CSV%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%84%20app.py%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Interactive%20Streamlit%20dashboard%20(6%20tabs)%0A%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%81%20data%2F%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20candidates.jsonl%20%20%20%20%20%20%23%20100K%20candidate%20profiles%20(~487%20MB)%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20job_description.docx%20%20%23%20Target%20job%20description%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20validate_submission.py%20%20%23%20Challenge%20validator%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20candidate_schema.json%20%20%20%23%20Data%20schema%0A%E2%94%82%20%20%20%E2%94%94%E2%94%80%E2%94%80%20sample_*%20%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Samples%0A%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%81%20artifacts%2F%20%20%20%20%20%20%20%20%20%20%20%20%20%23%20Generated%20by%20precompute.py%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20embeddings.npy%20%20%20%20%20%20%20%20%23%20(99965%2C%20384)%20float32%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20candidate_ids.npy%20%20%20%20%20%23%2099965%20object%20array%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20jd_embedding.npy%20%20%20%20%20%20%23%20(384%2C)%20float32%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20subscores.pkl%20%20%20%20%20%20%20%20%20%23%2099965%20entries%0A%E2%94%82%20%20%20%E2%94%9C%E2%94%80%E2%94%80%20disqualified.json%20%20%20%20%20%23%20~35%20entries%0A%E2%94%82%20%20%20%E2%94%94%E2%94%80%E2%94%80%20demographics.csv%20%20%20%20%20%20%23%20Cached%20pool%20demographics%0A%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%81%20output%2F%0A%E2%94%82%20%20%20%E2%94%94%E2%94%80%E2%94%80%20submission.csv%20%20%20%20%20%20%20%20%23%20Final%20validated%20output%0A%E2%94%82%0A%E2%94%9C%E2%94%80%E2%94%80%20%F0%9F%93%81%20Documentation%2F%20%20%20%20%20%20%20%20%20%23%20PRD%2C%20TRD%2C%20App%20Flow%2C%20Backend%20Schema%0A%E2%94%9C%E2%94%80%E2%94%80%20requirements.txt%0A%E2%94%9C%E2%94%80%E2%94%80%20Dockerfile%0A%E2%94%94%E2%94%80%E2%94%80%20GOOD_FIRST_ISSUES.md%20%20%20%20%20%20%23%20Starter%20tasks%20for%20contributors%0A%60%60%60%0A%0A---%0A%0A%23%23%20Output%20Format%0A%0A%60output%2Fsubmission.csv%60%20%E2%80%94%20validated%20per%20challenge%20spec%3A%0A%0A%60%60%60csv%0Acandidate_id%2Crank%2Cscore%2Creasoning%0ACAND_0081846%2C1%2C0.870%2C%226.7yr%20Lead%20AI%20Engineer%20at%20Razorpay%3B%20strong%20match%20on%20embeddings%2C%20vector%20search%2C%20python%2C%20information%20retrieval%3B%20production%20evidence%20(serving%2C%20ndcg)%3B%20actively%20looking%2C%2073%25%20response%20rate%2C%2030d%20notice.%22%0ACAND_0055905%2C2%2C0.869%2C%228.1yr%20Senior%20Machine%20Learning%20Engineer%20at%20Flipkart%3B%20strong%20match%20on%20embeddings%2C%20vector%20search%2C%20python%2C%20information%20retrieval%3B%20production%20evidence%20(deployed%2C%20serving)%3B%20actively%20looking%2C%2087%25%20response%20rate.%22%0A%60%60%60%0A%0A**Validation%20rules%3A**%0A%7C%20Rule%20%7C%20Enforced%20%7C%0A%7C---%7C---%7C%0A%7C%20Exactly%20100%20rows%20(ranks%201%E2%80%93100)%20%7C%20%E2%9C%85%20%7C%0A%7C%20Scores%20non-increasing%20by%20rank%20%7C%20%E2%9C%85%20%7C%0A%7C%20Tie-breaking%20by%20candidate_id%20ascending%20%7C%20%E2%9C%85%20%7C%0A%7C%20candidate_id%20format%20%60CAND_XXXXXXX%60%20%7C%20%E2%9C%85%20%7C%0A%7C%20Reasoning%20%E2%89%A4%20300%20chars%2C%20no%20newlines%20%7C%20%E2%9C%85%20%7C%0A%0A---%0A%0A%23%23%20Sandbox%20Constraints%0A%0A%7C%20Constraint%20%7C%20How%20It&#039;s%20Met%20%7C%0A%7C---%7C---%7C%0A%7C%20**CPU-only%20ranking**%20%7C%20Phase%20B%20uses%20NumPy%20%E2%80%94%20no%20GPU%20dependency%20%7C%0A%7C%20**16%20GB%20RAM**%20%7C%20Streaming%20JSONL%2C%20batched%20embedding%2C%20vectorized%20ops%20%7C%0A%7C%20**No%20network**%20%7C%20Model%20pre-downloaded%20at%20build%20time%20%7C%0A%7C%20**%3C5%20min%20ranking**%20%7C%20%60np.argpartition%60%20O(N)%20%2B%20byte-offset%20seek%20index%20%7C%0A%0A---%0A%0A%23%23%20Performance%0A%0AMeasured%20on%20**NVIDIA%20RTX%203050%20(6%20GB)%20%2B%2012-core%20CPU**%3A%0A%0A%7C%20Phase%20%7C%20Device%20%7C%20Time%20%7C%20Throughput%20%7C%0A%7C---%7C---%7C---%7C---%7C%0A%7C%20Precompute%20(100K%20%E2%86%92%2099%2C965)%20%7C%20GPU%20(CUDA)%20%7C%20**~4.2%20min**%20%7C%20~400%20cand%2Fs%20%7C%0A%7C%20Offset%20index%20build%20%7C%20CPU%20%7C%20**~1.5%20s**%20%7C%20~67K%20lines%2Fs%20%7C%0A%7C%20Ranking%20%2B%20validation%20%7C%20CPU%20%7C%20**~5.0%20s**%20%7C%20~20K%20cand%2Fs%20%7C%0A%7C%20**Dashboard%20re-rank**%20%7C%20CPU%20%7C%20**~50%20ms**%20%7C%202M%20cand%2Fs%20%7C%0A%0A---%0A%0A%23%23%20Contributing%0A%0ACheck%20out%20%5BGOOD_FIRST_ISSUES.md%5D(GOOD_FIRST_ISSUES.md)%20%E2%80%94%20there%20are%2010%0Awell-scoped%20tasks%20from%20trivial%20(%60id_batch%60%20cleanup)%20to%20medium%20(pytest%0Aregression%20suite%2C%20spec-compliance%20fixes).%20Each%20one%20has%3A%0A%0A-%20A%20clear%20definition%20of%20done%0A-%20File%20paths%20and%20line%20references%0A-%20Estimated%20difficulty%0A%0A---%0A%0A*Built%20for%20the%20Redrob%20AI%20Challenge%20%E2%80%94%20India%20Runs%20Hackathon*%0A" style="display: none;"></div>
+                  
+                    <nav aria-label="breadcrumb" class="docmd-breadcrumbs">
+                      <ol>
+                        
+                        
+                          <li class="breadcrumb-item active" aria-current=&quot;page&quot;>
+                            
+                              <span>🎯 SignalHire — AI-Powered Candidate Ranking</span>
+                            
+                            
+                          </li>
+                        
+                      </ol>
+                    </nav>
+                  
+
+                  
+                    <div class="docmd-copy-widgets">
+                      
+                        <button class="docmd-copy-btn docmd-copy-raw-btn" data-copied="copiedToClipboard" title="copyMarkdown" aria-label="copyMarkdown">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-copy " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-copy"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+</svg>
+</span>
+                        </button>
+                      
+                      
+                        <button class="docmd-copy-btn docmd-copy-context-btn" data-copied="copiedToClipboard" title="copyContext">
+                          <span class="docmd-btn-icon">
+<svg class="lucide-icon icon-message-square " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-message-square"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="M22 17a2 2 0 0 1-2 2H6.828a2 2 0 0 0-1.414.586l-2.202 2.202A.71.71 0 0 1 2 21.286V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2z" />
+</svg>
+</span>
+                          <span class="docmd-btn-text">copyContext</span>
+                        </button>
+                      
+                    </div>
+                  
+                </div>
+                
+                <h1 id="signalhire-ai-powered-candidate-ranking" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>🎯 SignalHire — AI-Powered Candidate Ranking</h1>
+<blockquote>
+<p><strong>100,000 profiles → top 100 best matches</strong> for a Senior AI Engineer role.<br>
+Built for the Redrob AI Challenge (India Runs Hackathon).</p>
+</blockquote>
+<p><a href=""><img src="https://img.shields.io/badge/python-3.10%2B-blue?logo=python" alt="Python 3.10+"></a><br>
+<a href=""><img src="https://img.shields.io/badge/CUDA-13-green?logo=nvidia" alt="CUDA 13"></a><br>
+<a href=""><img src="https://img.shields.io/badge/sentence--transformers-all--MiniLM--L6--v2-orange" alt="sentence-transformers"></a><br>
+<a href=""><img src="https://img.shields.io/badge/Streamlit-1.28%2B-FF4B4B?logo=streamlit" alt="Streamlit"></a><br>
+<a href=""><img src="https://img.shields.io/badge/license-MIT-lightgrey" alt="License"></a></p>
+<hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-features-at-a-glance" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-features-at-a-glance" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>✨ Features at a Glance</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🚀 <strong>GPU-accelerated precompute</strong></td>
+<td>Embed 100K profiles in ~4 min via <code>all-MiniLM-L6-v2</code></td>
+</tr>
+<tr>
+<td>⚡ <strong>Live re-ranking</strong></td>
+<td>Drag sliders → instant 100K re-score (single matrix multiply)</td>
+</tr>
+<tr>
+<td>🧠 <strong>Evidence-cited reasoning</strong></td>
+<td>Every score cites the exact skill or sentence that triggered it</td>
+</tr>
+<tr>
+<td>🛡️ <strong>Adversarial detection</strong></td>
+<td>Honeypot / ghost / pure-research profiles caught &amp; disqualified</td>
+</tr>
+<tr>
+<td>📊 <strong>Fairness audit</strong></td>
+<td>Shortlist vs pool distribution by education tier, country, YoE</td>
+</tr>
+<tr>
+<td>🎛️ <strong>Diversity control</strong></td>
+<td>MMR slider — penalize near-duplicates, surface distinct archetypes</td>
+</tr>
+<tr>
+<td>🕶️ <strong>Blind screening</strong></td>
+<td>Hide names/companies/institutions to reduce reviewer bias</td>
+</tr>
+<tr>
+<td>📦 <strong>One-command export</strong></td>
+<td>Submission CSV + personalized outreach pack + ranking config</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-table-of-contents" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-table-of-contents" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>📋 Table of Contents</h2>
+<ul>
+<li><a href="#pipeline">Pipeline</a></li>
+<li><a href="#quick-start">Quick Start</a></li>
+<li><a href="#how-to-run">How to Run</a>
+<ul>
+<li><a href="#1-precompute-gpu">Precompute (GPU)</a></li>
+<li><a href="#2-rank-cpu">Rank (CPU)</a></li>
+<li><a href="#3-dashboard">Dashboard</a></li>
+<li><a href="#docker">Docker</a></li>
+</ul>
+</li>
+<li><a href="#dashboard-deep-dive">Dashboard Deep Dive</a></li>
+<li><a href="#how-scoring-works">How Scoring Works</a></li>
+<li><a href="#disqualification--penalties">Disqualification &amp; Penalties</a></li>
+<li><a href="#project-structure">Project Structure</a></li>
+<li><a href="#output-format">Output Format</a></li>
+<li><a href="#sandbox-constraints">Sandbox Constraints</a></li>
+<li><a href="#performance">Performance</a></li>
+<li><a href="#contributing">Contributing</a></li>
+</ul>
+<hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-pipeline" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-pipeline" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Pipeline</h2>
+<pre class="hljs"><code>                    candidates.<span class="hljs-title function_">jsonl</span> (100K)
+                            │
+                            ▼
+          ┌──────────────────────────────────────┐
+          │  PHASE A<span class="hljs-punctuation">:</span> <span class="hljs-title function_">Precompute</span> (GPU, <span class="hljs-punctuation">~</span><span class="hljs-number">4</span> min)   │
+          │                                      │
+          │  Stream JSONL ─► Disqualify fakes    │
+          │         └──► <span class="hljs-title function_">Embed</span> (MiniLM, <span class="hljs-number">384</span><span class="hljs-punctuation">-</span>dim) │
+          │         └──► Compute <span class="hljs-number">4</span> sub<span class="hljs-punctuation">-</span>scores    │
+          │         └──► Serialize artifacts     │
+          └──────────────┬───────────────────────┘
+                         │  embeddings.<span class="hljs-attr">npy</span> <span class="hljs-punctuation">+</span> subscores.<span class="hljs-title function_">pkl</span> (<span class="hljs-punctuation">~</span><span class="hljs-number">155</span> MB)
+                         ▼
+          ┌──────────────────────────────────────┐
+          │  PHASE B<span class="hljs-punctuation">:</span> <span class="hljs-title function_">Ranking</span> (CPU, <span class="hljs-punctuation">&lt;</span><span class="hljs-number">10</span> s)       │
+          │                                      │
+          │  Load artifacts ─► Cosine similarity │
+          │         └──► Weighted composite      │
+          │         └──► argpartition → <span class="hljs-keyword">top</span> <span class="hljs-number">100</span>  │
+          │         └──► Evidence<span class="hljs-punctuation">-</span>based reasoning│
+          │         └──► Validate <span class="hljs-punctuation">&amp;</span> write CSV    │
+          └──────────────┬───────────────────────┘
+                         │
+                         ▼
+                    submission.<span class="hljs-title function_">csv</span>
+                    (<span class="hljs-number">100</span> ranked candidates)
+</code></pre>
+<hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-quick-start" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-quick-start" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Quick Start</h2>
+<pre class="hljs"><code><span class="hljs-comment"># Setup</span>
+python <span class="hljs-punctuation">-</span>m venv venv <span class="hljs-punctuation">&amp;&amp;</span> <span class="hljs-keyword">source</span> venv<span class="hljs-punctuation">/</span>bin<span class="hljs-punctuation">/</span>activate
+pip install <span class="hljs-punctuation">-</span>r requirements.<span class="hljs-attr">txt</span>
+
+<span class="hljs-comment"># Precompute (GPU recommended)</span>
+python precompute.<span class="hljs-attr">py</span>
+
+<span class="hljs-comment"># Rank &amp; generate submission</span>
+python rank.<span class="hljs-attr">py</span>
+
+<span class="hljs-comment"># Launch interactive dashboard</span>
+streamlit run app.<span class="hljs-attr">py</span>
+</code></pre>
+<h3 id="signalhire-ai-powered-candidate-ranking-quick-start-prerequisites" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-quick-start-prerequisites" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Prerequisites</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Requirement</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Python ≥ 3.10</td>
+<td></td>
+</tr>
+<tr>
+<td>NVIDIA GPU + CUDA</td>
+<td>Optional — speeds precompute ~10×. Set <code>EMBEDDING_DEVICE = &quot;cpu&quot;</code> in <code>config.py</code> without one.</td>
+</tr>
+<tr>
+<td>Disk</td>
+<td>~500 MB for data + ~160 MB for generated artifacts</td>
+</tr>
+<tr>
+<td>RAM</td>
+<td>16 GB recommended</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-how-to-run" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-how-to-run" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>How to Run</h2>
+<h3 id="signalhire-ai-powered-candidate-ranking-how-to-run-1-precompute-gpu" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-how-to-run-1-precompute-gpu" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>1. Precompute (GPU)</h3>
+<p>Processes all 100K candidates: disqualifies bad actors, generates 384-dim<br>
+embeddings via <code>all-MiniLM-L6-v2</code>, computes 4 sub-scores per candidate.</p>
+<pre class="hljs"><code>python precompute.<span class="hljs-attr">py</span>
+</code></pre>
+<p><strong>Artifacts produced</strong> (saved to <code>artifacts/</code>):</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>File</th>
+<th>Size</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>embeddings.npy</code></td>
+<td>~147 MB</td>
+<td>384-dim normalized embeddings (99,965 × 384)</td>
+</tr>
+<tr>
+<td><code>candidate_ids.npy</code></td>
+<td>~1.5 MB</td>
+<td>Parallel array of candidate IDs</td>
+</tr>
+<tr>
+<td><code>jd_embedding.npy</code></td>
+<td>~1.7 KB</td>
+<td>JD text embedding for cosine similarity</td>
+</tr>
+<tr>
+<td><code>subscores.pkl</code></td>
+<td>~7.1 MB</td>
+<td>Dict: candidate → 4 sub-scores + penalty multiplier</td>
+</tr>
+<tr>
+<td><code>disqualified.json</code></td>
+<td>~4 KB</td>
+<td>Log of every disqualified candidate and why</td>
+</tr>
+</tbody>
+</table>
+</div><h3 id="signalhire-ai-powered-candidate-ranking-how-to-run-2-rank-cpu" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-how-to-run-2-rank-cpu" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>2. Rank (CPU)</h3>
+<p>Loads artifacts, computes composite scores, picks top 100, generates<br>
+evidence-based reasoning, validates output against challenge spec.</p>
+<pre class="hljs"><code>python rank.<span class="hljs-attr">py</span>
+</code></pre>
+<p><strong>Output:</strong> <code>output/submission.csv</code></p>
+<p>Uses a <strong>byte-offset index</strong> (~2 s build) so loading the top 100 candidates<br>
+for reasoning is ~100 seeks instead of a full 487 MB file scan.</p>
+<h3 id="signalhire-ai-powered-candidate-ranking-how-to-run-3-dashboard" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-how-to-run-3-dashboard" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>3. Dashboard</h3>
+<pre class="hljs"><code>streamlit run app.<span class="hljs-attr">py</span>
+</code></pre>
+<p>An interactive ranking workbench. Every control re-ranks all 100K candidates<br>
+in ~50 ms because scoring is a single <code>float32</code> matrix multiply over<br>
+precomputed artifacts.</p>
+<h3 id="signalhire-ai-powered-candidate-ranking-how-to-run-docker" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-how-to-run-docker" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Docker</h3>
+<pre class="hljs"><code><span class="hljs-keyword">docker</span> build <span class="hljs-punctuation">-</span>t signalhire .
+<span class="hljs-keyword">docker</span> run <span class="hljs-punctuation">--</span><span class="hljs-keyword">rm</span> <span class="hljs-punctuation">-</span>v <span class="hljs-title function_">$</span>(pwd)<span class="hljs-punctuation">/</span>data<span class="hljs-punctuation">:/</span>app<span class="hljs-punctuation">/</span>data <span class="hljs-punctuation">-</span>v <span class="hljs-title function_">$</span>(pwd)<span class="hljs-punctuation">/</span>output<span class="hljs-punctuation">:/</span>app<span class="hljs-punctuation">/</span>output signalhire python rank.<span class="hljs-attr">py</span>
+</code></pre>
+<blockquote>
+<p>The image pre-downloads the embedding model. Add <code>--gpus all</code> for GPU.</p>
+</blockquote>
+<hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-dashboard-deep-dive" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Dashboard Deep Dive</h2>
+<h3 id="signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-shortlist-tab" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-shortlist-tab" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>🏆 Shortlist Tab</h3>
+<p>Each candidate card shows:</p>
+<ul>
+<li><strong>Stability badge</strong> — how often the candidate stays top-100 under ±20%<br>
+random weight perturbations (200 trials). If 98% → robust ranking, not an<br>
+artifact of one weight choice.</li>
+<li><strong>Penalty badge</strong> — flagged if consulting/no-code/CV-only penalties applied</li>
+<li><strong>Horizontal score bars</strong> — technical fit, career quality, availability,<br>
+seniority fit, semantic match</li>
+<li><strong>Evidence chips</strong> — every JD requirement that matched, with the exact<br>
+skill or text snippet that triggered it. Missing must-haves are flagged in<br>
+red.</li>
+<li><strong>One-liner reasoning</strong> — cites actual skills and production signals, not<br>
+templated claims</li>
+</ul>
+<h3 id="signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-compare-tab" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-compare-tab" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>⚖️ Compare Tab</h3>
+<p>Radar-chart side-by-side of up to 4 candidates across all 5 score dimensions.<br>
+Shows matched/missing criteria for each.</p>
+<h3 id="signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-insights-tab" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-insights-tab" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>📊 Insights Tab</h3>
+<ul>
+<li><strong>Score landscape</strong> — histogram of top 5000 scores with top-100 cutoff</li>
+<li><strong>Fairness audit</strong> — shortlist vs full-pool distribution by education tier,<br>
+country, and years of experience. Helps detect encoded bias.</li>
+</ul>
+<h3 id="signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-integrity-tab" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-integrity-tab" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>🛡️ Integrity Tab</h3>
+<p>Displays all disqualified candidates by category (honeypot, ghost, pure<br>
+research) with concrete examples showing <em>why</em> each was caught.</p>
+<h3 id="signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-export-tab" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-export-tab" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>📤 Export Tab</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Export</th>
+<th>Format</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Submission CSV</td>
+<td>CSV</td>
+<td>Challenge-format: id, rank, score, evidence reasoning</td>
+</tr>
+<tr>
+<td>Outreach pack</td>
+<td>Markdown</td>
+<td>Top-10 personalized first-touch drafts</td>
+</tr>
+<tr>
+<td>Ranking config</td>
+<td>JSON</td>
+<td>Weights, JD label, shortlist IDs — reproducible snapshot</td>
+</tr>
+</tbody>
+</table>
+</div><h3 id="signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-sidebar-controls" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-sidebar-controls" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>🎛️ Sidebar Controls</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Control</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Custom JD</strong></td>
+<td>Paste any job description or query → embedded on the fly and ranked against</td>
+</tr>
+<tr>
+<td><strong>Weight sliders</strong></td>
+<td>Drag any signal weight → 100K re-score in ~50 ms</td>
+</tr>
+<tr>
+<td><strong>Diversity (MMR)</strong></td>
+<td>0 = pure score. Higher values penalize similarity to already-selected profiles</td>
+</tr>
+<tr>
+<td><strong>Blind screening</strong></td>
+<td>Hides names, companies, institutions</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-how-scoring-works" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-how-scoring-works" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>How Scoring Works</h2>
+<h3 id="signalhire-ai-powered-candidate-ranking-how-scoring-works-composite-formula" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-how-scoring-works-composite-formula" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Composite Formula</h3>
+<pre class="hljs"><code>S <span class="hljs-punctuation">=</span> penalty_multiplier × (
+    <span class="hljs-number">0.35</span> × technical_fit
+  <span class="hljs-punctuation">+</span> <span class="hljs-number">0.25</span> × career_quality
+  <span class="hljs-punctuation">+</span> <span class="hljs-number">0.20</span> × availability_signal
+  <span class="hljs-punctuation">+</span> <span class="hljs-number">0.12</span> × seniority_fit
+  <span class="hljs-punctuation">+</span> <span class="hljs-number">0.08</span> × semantic_similarity
+)
+</code></pre>
+<p>All sub-scores normalized to [0, 1].</p>
+<h3 id="signalhire-ai-powered-candidate-ranking-how-scoring-works-signal-details" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-how-scoring-works-signal-details" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Signal Details</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Signal</th>
+<th>Weight</th>
+<th>Components</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Technical Fit</strong></td>
+<td>0.35</td>
+<td>JD must-haves: embeddings/retrieval (0.25), vector DBs (0.20), Python (0.15), eval framework (0.15). Nice-to-haves: LLM fine-tuning (0.10), learning-to-rank (0.10), HR-tech (0.05). Production/retrieval keyword bonuses.</td>
+</tr>
+<tr>
+<td><strong>Career Quality</strong></td>
+<td>0.25</td>
+<td>Non-consulting role (+0.30). ML/AI title at ≥50 person company (+0.15). Median tenure ≥36mo (+0.25), ≥24mo (+0.20), ≥18mo (+0.05). Upward title progression (+0.20).</td>
+</tr>
+<tr>
+<td><strong>Availability</strong></td>
+<td>0.20</td>
+<td>Open to work (+0.25). Active ≤30d (+0.20), ≤90d (+0.12), ≤180d (+0.06). Response rate (×0.15). Interview rate (×0.15). Notice ≤30d (+0.05), ≤60d (+0.035).</td>
+</tr>
+<tr>
+<td><strong>Seniority Fit</strong></td>
+<td>0.12</td>
+<td>YoE 6–9 → 1.0, 4–5/10–12 → 0.7, 3/13–15 → 0.4, else → 0.1. Tier-1 education (+0.05), Tier-2 (+0.02).</td>
+</tr>
+<tr>
+<td><strong>Semantic Similarity</strong></td>
+<td>0.08</td>
+<td>Cosine similarity between profile embedding and JD embedding — catches strong engineers whose plain language misses keyword checks.</td>
+</tr>
+</tbody>
+</table>
+</div><h3 id="signalhire-ai-powered-candidate-ranking-how-scoring-works-word-boundary-keyword-matching" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-how-scoring-works-word-boundary-keyword-matching" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Word-Boundary Keyword Matching</h3>
+<p>All keyword scans use <code>textmatch.py</code> — stems of 4+ characters may extend<br>
+(e.g. <code>&quot;eval&quot;</code> matches <code>&quot;evaluation&quot;</code>) while short keywords (<code>&quot;rag&quot;</code>, <code>&quot;mrr&quot;</code>,<br>
+<code>&quot;map&quot;</code>, <code>&quot;e5&quot;</code>) must match as whole words. This eliminates false positives<br>
+like <code>&quot;rag&quot;</code> inside <code>&quot;storage&quot;</code>.</p>
+<h3 id="signalhire-ai-powered-candidate-ranking-how-scoring-works-evidence-based-reasoning" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-how-scoring-works-evidence-based-reasoning" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Evidence-Based Reasoning</h3>
+<p><code>evidence.py</code> traces every JD requirement hit back to either a declared skill<br>
+(with proficiency weight) or a concrete sentence in the career history. The<br>
+reasoning string in the CSV only claims what actually exists, and calls out<br>
+missing must-haves as gaps.</p>
+<hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-disqualification-penalties" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-disqualification-penalties" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Disqualification &amp; Penalties</h2>
+<h3 id="signalhire-ai-powered-candidate-ranking-disqualification-penalties-hard-disqualify-removed-from-pool" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-disqualification-penalties-hard-disqualify-removed-from-pool" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Hard Disqualify (Removed from Pool)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Trigger</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>🍯 <strong>Honeypot</strong></td>
+<td>YoE &gt; career timeline + 5 yr buffer</td>
+<td>Dataset seeds impossible-YoE profiles</td>
+</tr>
+<tr>
+<td>👻 <strong>Ghost</strong></td>
+<td>Completeness &lt; 5% + no verified email/phone</td>
+<td>Near-empty profiles</td>
+</tr>
+<tr>
+<td>🔬 <strong>Pure Research</strong></td>
+<td>All roles “researcher” + zero deployment evidence</td>
+<td>No industry relevance</td>
+</tr>
+</tbody>
+</table>
+</div><h3 id="signalhire-ai-powered-candidate-ranking-disqualification-penalties-soft-penalties-score-multipliers" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-disqualification-penalties-soft-penalties-score-multipliers" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Soft Penalties (Score Multipliers)</h3>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Condition</th>
+<th>×</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>All roles at consulting firms (TCS, Infosys, Wipro, etc.)</td>
+<td><strong>0.15</strong></td>
+<td>Severely penalizes pure-consulting careers</td>
+</tr>
+<tr>
+<td>No coding activity &gt; 18 months</td>
+<td><strong>0.80</strong></td>
+<td>Flags stale skills</td>
+</tr>
+<tr>
+<td>CV/speech/robotics only, no retrieval signals</td>
+<td><strong>0.85</strong></td>
+<td>Niche focus, poor JD alignment</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-project-structure" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-project-structure" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Project Structure</h2>
+<pre class="hljs"><code>SignalHire<span class="hljs-punctuation">/</span>
+├── 📄 config.<span class="hljs-attr">py</span>              <span class="hljs-comment"># Weights, paths, keyword lists, penalties</span>
+├── 📄 disqualify.<span class="hljs-attr">py</span>          <span class="hljs-comment"># Honeypot/ghost/research detection + soft penalties</span>
+├── 📄 signals.<span class="hljs-attr">py</span>             <span class="hljs-comment"># 4 sub-score functions (technical, career, availability, seniority)</span>
+├── 📄 evidence.<span class="hljs-attr">py</span>            <span class="hljs-comment"># JD requirement → skill/sentence trace + honest reasoning</span>
+├── 📄 engine.<span class="hljs-attr">py</span>              <span class="hljs-comment"># Vectorized re-ranking, MMR diversity, stability analysis</span>
+├── 📄 textmatch.<span class="hljs-attr">py</span>           <span class="hljs-comment"># Word-boundary keyword matching (no false positives)</span>
+├── 📄 precompute.<span class="hljs-attr">py</span>          <span class="hljs-comment"># Phase A: ingest → embed → score → serialize</span>
+├── 📄 rank.<span class="hljs-attr">py</span>                <span class="hljs-comment"># Phase B: load → score → top-100 → reasoning → CSV</span>
+├── 📄 app.<span class="hljs-attr">py</span>                 <span class="hljs-comment"># Interactive Streamlit dashboard (6 tabs)</span>
+│
+├── 📁 data<span class="hljs-punctuation">/</span>
+│   ├── candidates.<span class="hljs-attr">jsonl</span>      <span class="hljs-comment"># 100K candidate profiles (~487 MB)</span>
+│   ├── job_description.<span class="hljs-attr">docx</span>  <span class="hljs-comment"># Target job description</span>
+│   ├── validate_submission.<span class="hljs-attr">py</span>  <span class="hljs-comment"># Challenge validator</span>
+│   ├── candidate_schema.<span class="hljs-attr">json</span>   <span class="hljs-comment"># Data schema</span>
+│   └── sample_<span class="hljs-punctuation">*</span>              <span class="hljs-comment"># Samples</span>
+│
+├── 📁 artifacts<span class="hljs-punctuation">/</span>             <span class="hljs-comment"># Generated by precompute.py</span>
+│   ├── embeddings.<span class="hljs-attr">npy</span>        <span class="hljs-comment"># (99965, 384) float32</span>
+│   ├── candidate_ids.<span class="hljs-attr">npy</span>     <span class="hljs-comment"># 99965 object array</span>
+│   ├── jd_embedding.<span class="hljs-attr">npy</span>      <span class="hljs-comment"># (384,) float32</span>
+│   ├── subscores.<span class="hljs-attr">pkl</span>         <span class="hljs-comment"># 99965 entries</span>
+│   ├── disqualified.<span class="hljs-attr">json</span>     <span class="hljs-comment"># ~35 entries</span>
+│   └── demographics.<span class="hljs-attr">csv</span>      <span class="hljs-comment"># Cached pool demographics</span>
+│
+├── 📁 output<span class="hljs-punctuation">/</span>
+│   └── submission.<span class="hljs-attr">csv</span>        <span class="hljs-comment"># Final validated output</span>
+│
+├── 📁 Documentation<span class="hljs-punctuation">/</span>         <span class="hljs-comment"># PRD, TRD, App Flow, Backend Schema</span>
+├── requirements.<span class="hljs-attr">txt</span>
+├── Dockerfile
+└── GOOD_FIRST_ISSUES.<span class="hljs-attr">md</span>      <span class="hljs-comment"># Starter tasks for contributors</span>
+</code></pre>
+<hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-output-format" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-output-format" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Output Format</h2>
+<p><code>output/submission.csv</code> — validated per challenge spec:</p>
+<pre class="hljs"><code>candidate_id,rank,score,reasoning
+CAND_0081846,<span class="hljs-number">1</span>,<span class="hljs-number">0.870</span>,<span class="hljs-string">&quot;6.7yr Lead AI Engineer at Razorpay; strong match on embeddings, vector search, python, information retrieval; production evidence (serving, ndcg); actively looking, 73% response rate, 30d notice.&quot;</span>
+CAND_0055905,<span class="hljs-number">2</span>,<span class="hljs-number">0.869</span>,<span class="hljs-string">&quot;8.1yr Senior Machine Learning Engineer at Flipkart; strong match on embeddings, vector search, python, information retrieval; production evidence (deployed, serving); actively looking, 87% response rate.&quot;</span>
+</code></pre>
+<p><strong>Validation rules:</strong></p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Enforced</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Exactly 100 rows (ranks 1–100)</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Scores non-increasing by rank</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Tie-breaking by candidate_id ascending</td>
+<td>✅</td>
+</tr>
+<tr>
+<td>candidate_id format <code>CAND_XXXXXXX</code></td>
+<td>✅</td>
+</tr>
+<tr>
+<td>Reasoning ≤ 300 chars, no newlines</td>
+<td>✅</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-sandbox-constraints" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-sandbox-constraints" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Sandbox Constraints</h2>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Constraint</th>
+<th>How It’s Met</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CPU-only ranking</strong></td>
+<td>Phase B uses NumPy — no GPU dependency</td>
+</tr>
+<tr>
+<td><strong>16 GB RAM</strong></td>
+<td>Streaming JSONL, batched embedding, vectorized ops</td>
+</tr>
+<tr>
+<td><strong>No network</strong></td>
+<td>Model pre-downloaded at build time</td>
+</tr>
+<tr>
+<td><strong>&lt;5 min ranking</strong></td>
+<td><code>np.argpartition</code> O(N) + byte-offset seek index</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-performance" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-performance" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Performance</h2>
+<p>Measured on <strong>NVIDIA RTX 3050 (6 GB) + 12-core CPU</strong>:</p>
+<div class="table-wrapper"><table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Device</th>
+<th>Time</th>
+<th>Throughput</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Precompute (100K → 99,965)</td>
+<td>GPU (CUDA)</td>
+<td><strong>~4.2 min</strong></td>
+<td>~400 cand/s</td>
+</tr>
+<tr>
+<td>Offset index build</td>
+<td>CPU</td>
+<td><strong>~1.5 s</strong></td>
+<td>~67K lines/s</td>
+</tr>
+<tr>
+<td>Ranking + validation</td>
+<td>CPU</td>
+<td><strong>~5.0 s</strong></td>
+<td>~20K cand/s</td>
+</tr>
+<tr>
+<td><strong>Dashboard re-rank</strong></td>
+<td>CPU</td>
+<td><strong>~50 ms</strong></td>
+<td>2M cand/s</td>
+</tr>
+</tbody>
+</table>
+</div><hr>
+<h2 id="signalhire-ai-powered-candidate-ranking-contributing" class="docmd-heading"><a href="#signalhire-ai-powered-candidate-ranking-contributing" class="heading-anchor" aria-label="Permalink to this section"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link2-icon lucide-link-2"><path d="M9 17H7A5 5 0 0 1 7 7h2m6 0h2a5 5 0 1 1 0 10h-2m-7-5h8"/></svg></a>Contributing</h2>
+<p>Check out <a href="GOOD_FIRST_ISSUES/">GOOD_FIRST_ISSUES.md</a> — there are 10<br>
+well-scoped tasks from trivial (<code>id_batch</code> cleanup) to medium (pytest<br>
+regression suite, spec-compliance fixes). Each one has:</p>
+<ul>
+<li>A clear definition of done</li>
+<li>File paths and line references</li>
+<li>Estimated difficulty</li>
+</ul>
+<hr>
+<p><em>Built for the Redrob AI Challenge — India Runs Hackathon</em></p>
+
+                
+              </div>
+              <div class="toc-sidebar">
+                
+
+
+  <div class="toc-container">
+    <h2 class="toc-title">onThisPage<span class="mobile-view toc-menu-button float-right">
+<svg class="lucide-icon icon-chevron-down " width="1em" height="1em" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"
+  class="lucide lucide-chevron-down"
+  xmlns="http://www.w3.org/2000/svg"
+  width="24"
+  height="24"
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <path d="m6 9 6 6 6-6" />
+</svg>
+</span></h2>
+    <ul class="toc-list">
+      
+        <li class="toc-item toc-level-1">
+          <a href="#signalhire-ai-powered-candidate-ranking" class="toc-link">🎯 SignalHire — AI-Powered Candidate Ranking</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-features-at-a-glance" class="toc-link">✨ Features at a Glance</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-table-of-contents" class="toc-link">📋 Table of Contents</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-pipeline" class="toc-link">Pipeline</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-quick-start" class="toc-link">Quick Start</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-quick-start-prerequisites" class="toc-link">Prerequisites</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-how-to-run" class="toc-link">How to Run</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-how-to-run-1-precompute-gpu" class="toc-link">1. Precompute (GPU)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-how-to-run-2-rank-cpu" class="toc-link">2. Rank (CPU)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-how-to-run-3-dashboard" class="toc-link">3. Dashboard</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-how-to-run-docker" class="toc-link">Docker</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive" class="toc-link">Dashboard Deep Dive</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-shortlist-tab" class="toc-link">🏆 Shortlist Tab</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-compare-tab" class="toc-link">⚖️ Compare Tab</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-insights-tab" class="toc-link">📊 Insights Tab</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-integrity-tab" class="toc-link">🛡️ Integrity Tab</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-export-tab" class="toc-link">📤 Export Tab</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-dashboard-deep-dive-sidebar-controls" class="toc-link">🎛️ Sidebar Controls</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-how-scoring-works" class="toc-link">How Scoring Works</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-how-scoring-works-composite-formula" class="toc-link">Composite Formula</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-how-scoring-works-signal-details" class="toc-link">Signal Details</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-how-scoring-works-word-boundary-keyword-matching" class="toc-link">Word-Boundary Keyword Matching</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-how-scoring-works-evidence-based-reasoning" class="toc-link">Evidence-Based Reasoning</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-disqualification-penalties" class="toc-link">Disqualification &amp; Penalties</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-disqualification-penalties-hard-disqualify-removed-from-pool" class="toc-link">Hard Disqualify (Removed from Pool)</a>
+        </li>
+      
+        <li class="toc-item toc-level-3">
+          <a href="#signalhire-ai-powered-candidate-ranking-disqualification-penalties-soft-penalties-score-multipliers" class="toc-link">Soft Penalties (Score Multipliers)</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-project-structure" class="toc-link">Project Structure</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-output-format" class="toc-link">Output Format</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-sandbox-constraints" class="toc-link">Sandbox Constraints</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-performance" class="toc-link">Performance</a>
+        </li>
+      
+        <li class="toc-item toc-level-2">
+          <a href="#signalhire-ai-powered-candidate-ranking-contributing" class="toc-link">Contributing</a>
+        </li>
+      
+    </ul>
+  </div>
+
+              </div>
+            </div>
+            <div class="page-footer-actions">
+              
+              
+                <span class="git-last-updated" data-timestamp="1781208575000">
+                  <svg class="git-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                  <span class="git-label">Last updated:</span>
+                  <span class="git-time" data-timestamp="1781208575000"></span>
+                  
+                  <div class="git-commit-tooltip" role="tooltip">
+                    <div class="git-tooltip-title">Recent commits</div>
+                    <ul class="git-commit-list">
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="DevanshSrajput">
+                            
+                              <img src="https://www.gravatar.com/avatar/7f22948119fdb4e2d70c1be1a1f39659?d=mp&amp;s=64" alt="DevanshSrajput">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="docs: overhaul README and GOOD_FIRST_ISSUES with verified descriptions">docs: overhaul README and GOOD_FIRST_...</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">DevanshSrajput</span>
+                              <span class="git-commit-date" data-timestamp="1781208575000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="DevanshSrajput">
+                            
+                              <img src="https://www.gravatar.com/avatar/7f22948119fdb4e2d70c1be1a1f39659?d=mp&amp;s=64" alt="DevanshSrajput">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="feat: UI polish — dark theme, KPI header, styled cards, docs sync">feat: UI polish — dark theme, KPI hea...</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">DevanshSrajput</span>
+                              <span class="git-commit-date" data-timestamp="1781200321000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="DevanshSrajput">
+                            
+                              <img src="https://www.gravatar.com/avatar/7f22948119fdb4e2d70c1be1a1f39659?d=mp&amp;s=64" alt="DevanshSrajput">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="docs: overhaul README with comprehensive run instructions and project details">docs: overhaul README with comprehens...</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">DevanshSrajput</span>
+                              <span class="git-commit-date" data-timestamp="1781198419000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                        <li class="git-commit-item">
+                          <div class="git-commit-avatar" title="DevanshSrajput">
+                            
+                              <img src="https://www.gravatar.com/avatar/7f22948119fdb4e2d70c1be1a1f39659?d=mp&amp;s=64" alt="DevanshSrajput">
+                            
+                          </div>
+                          <div class="git-commit-details">
+                            <div class="git-commit-message" title="Add README">Add README</div>
+                            <div class="git-commit-meta">
+                              <span class="git-commit-author">DevanshSrajput</span>
+                              <span class="git-commit-date" data-timestamp="1781171753000"></span>
+                            </div>
+                          </div>
+                        </li>
+                      
+                    </ul>
+                  </div>
+                  
+                </span>
+              
+              <span class="git-spacer"></span>
+              
+            </div>
+          </main>
+          
+
+
+<footer class="page-footer">
+  <div class="footer-content">
+    <div class="user-footer"></div>
+    
+      <div class="branding-footer">
+        builtWith <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path><path d="M12 5 9.04 7.96a2.17 2.17 0 0 0 0 3.08c.82.82 2.13.85 3 .07l2.07-1.9a2.82 2.82 0 0 1 3.79 0l2.96 2.66"></path><path d="m18 15-2-2"></path><path d="m15 18-2-2"></path></svg> <a href="https://docmd.io" target="_blank" rel="noopener">docmd.</a>
+      </div>
+    
+  </div>
+</footer>
+
+        </div>
+      </div>
+      
+      <script src="./assets/js/docmd-main.js?v=mqcpwj52"></script>
+      
+      <script src="./assets/js/docmd-git.js?v=mqcpwj52"></script>
+      <script src="./assets/js/docmd-image-lightbox.js?v=mqcpwj52" ></script>
+<script src="https://cdn.jsdelivr.net/npm/minisearch@7.2.0/dist/umd/index.min.js" ></script>
+<script src="./assets/js/docmd-search.js?v=mqcpwj52" ></script>
+<script src="./assets/js/init-mermaid.js?v=mqcpwj52" type="module"></script>
+<script src="./assets/js/docmd-git.js?v=mqcpwj52" type="module"></script>
+
+  <!-- Search Modal (Injected by @docmd/plugin-search) -->
+  <div id="docmd-search-modal" class="docmd-search-modal" style="display: none;" data-show-confidence="false" data-show-filters="true"
+       data-search-placeholder="Search documentation..."
+       data-search-no-results="No results found."
+       data-search-error="Failed to load search index."
+       data-search-initial="Type to start searching..."
+       data-search-navigate="to navigate"
+       data-search-escape="to close">
+      <div class="docmd-search-box">
+          <div class="docmd-search-header">
+              <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-search"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path></svg>
+              <input type="text" id="docmd-search-input" placeholder="Search documentation..." autocomplete="off" spellcheck="false">
+              <button onclick="window.closeDocmdSearch()" class="docmd-search-close" aria-label="Close search">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide-icon icon-x"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg>
+              </button>
+          </div>
+          <div id="docmd-search-results" class="docmd-search-results"></div>
+          <div class="docmd-search-footer">
+              <span><kbd class="docmd-kbd">↑</kbd> <kbd class="docmd-kbd">↓</kbd> to navigate</span>
+              <span><kbd class="docmd-kbd">ESC</kbd> to close</span>
+          </div>
+      </div>
+  </div>
+
+    <script>
+      (function() {
+        var searchDebounceTimer;
+
+        document.addEventListener('click', function(e) {
+          var link = e.target.closest('a');
+          if (!link || !window.gtag) return;
+          
+          var url = link.href;
+          var hostname = window.location.hostname;
+          var isExternal = link.hostname && link.hostname !== hostname;
+          var isDownload = link.hasAttribute('download') || url.match(/\.(pdf|zip|tar|gz|exe|pkg)$/i);
+          
+          if (isExternal) {
+            gtag('event', 'click_external', { 'url': url, 'link_text': link.innerText.trim() });
+          } else if (isDownload) {
+            gtag('event', 'download', { 'file_name': url.split('/').pop(), 'url': url });
+          }
+
+          // TOC tracking
+          if (link.classList.contains('toc-link')) {
+            gtag('event', 'toc_click', { 'target_id': link.getAttribute('href'), 'title': link.innerText.trim() });
+          }
+
+          // Permalink tracking
+          if (link.classList.contains('heading-anchor')) {
+            gtag('event', 'permalink_click', { 'url': url });
+          }
+        });
+
+        
+        // Search Keyword Tracking
+        document.addEventListener('input', function(e) {
+          if (e.target.id === 'docmd-search-input' && window.gtag) {
+            var query = e.target.value.trim();
+            if (query.length < 3) return;
+            
+            clearTimeout(searchDebounceTimer);
+            searchDebounceTimer = setTimeout(function() {
+              gtag('event', 'search', { 'search_term': query });
+            }, 1000);
+          }
+        });
+        
+      })();
+    </script>
+
+<script>window.__git_config={"repo":null,"branch":"main","editLink":false,"lastUpdated":true,"commitHistory":true,"maxCommits":5,"dateFormat":"relative"};window.__git_i18n={"lastUpdated":"Last updated","recentCommits":"Recent commits","viewCommitHistory":"View commit history","editOnGitHub":"Edit on GitHub","editOnGitLab":"Edit on GitLab","editOnBitbucket":"Edit on Bitbucket","editThisPage":"Edit this page","justNow":"just now","minutesAgo":"{n}m ago","hoursAgo":"{n}h ago","daysAgo":"{n}d ago"}</script>
+      
+  </body>
+</html>
